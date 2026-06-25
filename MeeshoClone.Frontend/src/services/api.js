@@ -25,7 +25,9 @@ export const vendorAPI = {
   register: (data) => api.post('/vendor/register', data),
   getAll: () => api.get('/vendor'),
   getById: (id) => api.get(`/vendor/${id}`),
+  create: (data) => api.post('/vendor', data),
   update: (id, data) => api.put(`/vendor/${id}`, data),
+  delete: (id) => api.delete(`/vendor/${id}`),
   verify: (id) => api.post(`/vendor/${id}/verify`),
 };
 
@@ -63,6 +65,20 @@ export const categoryAPI = {
   getById: (id) => api.get(`/category/${id}`),
   getFeatured: () => api.get('/category/featured'),
   getByCategory: (category) => api.get(`/category/category/${category}`),
+  create: (data) => api.post('/category', data),
+  update: (id, data) => api.put(`/category/${id}`, data),
+  delete: (id) => api.delete(`/category/${id}`),
+};
+
+// SubCategory API
+export const subCategoryAPI = {
+  getAll: () => api.get('/subcategory'),
+  getById: (id) => api.get(`/subcategory/${id}`),
+  getByCategory: (categoryId) => api.get(`/subcategory/category/${categoryId}`),
+  getFeatured: () => api.get('/subcategory/featured'),
+  create: (data) => api.post('/subcategory', data),
+  update: (id, data) => api.put(`/subcategory/${id}`, data),
+  delete: (id) => api.delete(`/subcategory/${id}`),
 };
 
 // Company API
@@ -89,6 +105,26 @@ export const siteConfigAPI = {
   updateHeader: (data) => api.put('/siteconfiguration/header', data),
   updateFooter: (data) => api.put('/siteconfiguration/footer', data),
   updateTheme: (data) => api.put('/siteconfiguration/theme', data),
+};
+
+// User API
+export const userAPI = {
+  getAll: () => api.get('/user'),
+  getById: (id) => api.get(`/user/${id}`),
+  create: (data) => api.post('/user', data),
+  update: (id, data) => api.put(`/user/${id}`, data),
+  delete: (id) => api.delete(`/user/${id}`),
+  updateRole: (id, data) => api.put(`/user/${id}/role`, data),
+  toggleActive: (id) => api.put(`/user/${id}/toggle-active`),
+};
+
+// Validation Rules API
+export const validationRulesAPI = {
+  getAll: () => api.get('/validationrules'),
+  getByEntity: (entity) => api.get(`/validationrules/entity/${entity}`),
+  create: (data) => api.post('/validationrules', data),
+  update: (id, data) => api.put(`/validationrules/${id}`, data),
+  delete: (id) => api.delete(`/validationrules/${id}`),
 };
 
 export default api;

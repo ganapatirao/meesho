@@ -25,6 +25,7 @@ public class SeedController : ControllerBase
         await _context.Products.DeleteManyAsync(_ => true);
         await _context.Companies.DeleteManyAsync(_ => true);
         await _context.Categories.DeleteManyAsync(_ => true);
+        await _context.SubCategories.DeleteManyAsync(_ => true);
         await _context.Orders.DeleteManyAsync(_ => true);
         await _context.Carts.DeleteManyAsync(_ => true);
         await _context.Reviews.DeleteManyAsync(_ => true);
@@ -59,6 +60,78 @@ public class SeedController : ControllerBase
         };
 
         await _context.Categories.InsertManyAsync(categories);
+
+        // Get the inserted categories with their IDs
+        var insertedCategories = await _context.Categories.Find(_ => true).ToListAsync();
+
+        // Seed SubCategories
+        var subCategories = new List<SubCategory>();
+        
+        if (insertedCategories.Count > 0)
+        {
+            // Fashion SubCategories
+            var fashionCategory = insertedCategories.FirstOrDefault(c => c.Name == "Fashion");
+            if (fashionCategory != null)
+            {
+                subCategories.AddRange(new List<SubCategory>
+                {
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "mens-wear", DisplayName = "Men's Wear", CategoryId = fashionCategory.Id, Image = "", Description = "Clothing for men", IsFeatured = true, DisplayOrder = 1, ProductCount = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "womens-wear", DisplayName = "Women's Wear", CategoryId = fashionCategory.Id, Image = "", Description = "Clothing for women", IsFeatured = true, DisplayOrder = 2, ProductCount = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "kids-wear", DisplayName = "Kids' Wear", CategoryId = fashionCategory.Id, Image = "", Description = "Clothing for kids", IsFeatured = false, DisplayOrder = 3, ProductCount = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "ethnic-wear", DisplayName = "Ethnic Wear", CategoryId = fashionCategory.Id, Image = "", Description = "Traditional clothing", IsFeatured = true, DisplayOrder = 4, ProductCount = 0 }
+                });
+            }
+
+            // Electronics SubCategories
+            var electronicsCategory = insertedCategories.FirstOrDefault(c => c.Name == "Electronics");
+            if (electronicsCategory != null)
+            {
+                subCategories.AddRange(new List<SubCategory>
+                {
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "mobiles", DisplayName = "Mobiles", CategoryId = electronicsCategory.Id, Image = "", Description = "Smartphones and mobiles", IsFeatured = true, DisplayOrder = 1, ProductCount = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "laptops", DisplayName = "Laptops", CategoryId = electronicsCategory.Id, Image = "", Description = "Laptops and computers", IsFeatured = true, DisplayOrder = 2, ProductCount = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "audio", DisplayName = "Audio", CategoryId = electronicsCategory.Id, Image = "", Description = "Audio equipment", IsFeatured = false, DisplayOrder = 3, ProductCount = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "wearables", DisplayName = "Wearables", CategoryId = electronicsCategory.Id, Image = "", Description = "Smartwatches and fitness", IsFeatured = true, DisplayOrder = 4, ProductCount = 0 }
+                });
+            }
+
+            // Home & Living SubCategories
+            var homeCategory = insertedCategories.FirstOrDefault(c => c.Name == "Home & Living");
+            if (homeCategory != null)
+            {
+                subCategories.AddRange(new List<SubCategory>
+                {
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "furniture", DisplayName = "Furniture", CategoryId = homeCategory.Id, Image = "", Description = "Home furniture", IsFeatured = true, DisplayOrder = 1, ProductCount = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "bedding", DisplayName = "Bedding", CategoryId = homeCategory.Id, Image = "", Description = "Bed sheets and linens", IsFeatured = false, DisplayOrder = 2, ProductCount = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "decor", DisplayName = "Decor", CategoryId = homeCategory.Id, Image = "", Description = "Home decoration", IsFeatured = true, DisplayOrder = 3, ProductCount = 0 }
+                });
+            }
+
+            // Beauty SubCategories
+            var beautyCategory = insertedCategories.FirstOrDefault(c => c.Name == "Beauty");
+            if (beautyCategory != null)
+            {
+                subCategories.AddRange(new List<SubCategory>
+                {
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "makeup", DisplayName = "Makeup", CategoryId = beautyCategory.Id, Image = "", Description = "Makeup products", IsFeatured = true, DisplayOrder = 1, ProductCount = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "skincare", DisplayName = "Skincare", CategoryId = beautyCategory.Id, Image = "", Description = "Skin care products", IsFeatured = true, DisplayOrder = 2, ProductCount = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "haircare", DisplayName = "Haircare", CategoryId = beautyCategory.Id, Image = "", Description = "Hair care products", IsFeatured = false, DisplayOrder = 3, ProductCount = 0 }
+                });
+            }
+
+            // Sports SubCategories
+            var sportsCategory = insertedCategories.FirstOrDefault(c => c.Name == "Sports");
+            if (sportsCategory != null)
+            {
+                subCategories.AddRange(new List<SubCategory>
+                {
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "fitness", DisplayName = "Fitness", CategoryId = sportsCategory.Id, Image = "", Description = "Fitness equipment", IsFeatured = true, DisplayOrder = 1, ProductCount = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "outdoor-sports", DisplayName = "Outdoor Sports", CategoryId = sportsCategory.Id, Image = "", Description = "Outdoor sports gear", IsFeatured = false, DisplayOrder = 2, ProductCount = 0 }
+                });
+            }
+        }
+
+        await _context.SubCategories.InsertManyAsync(subCategories);
 
         // Seed Companies - 18 diverse companies
         var companies = new List<Company>
