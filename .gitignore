@@ -15,7 +15,6 @@ out/
 *.obj
 *.iobj
 *.pch
-*.pdb
 *.ipdb
 *.pgc
 *.pgd
@@ -24,26 +23,27 @@ out/
 *.tlb
 *.tli
 *.tlh
-*.tmp
 *.tmp_proj
-*.log
 *.vspscc
 *.vssscc
 .builds
 *.pidb
 *.svclog
 *.scc
+*.csproj.user
+*.csproj.web.cache
 
 # Visual Studio
 .vs/
-.vscode/
 *.vsidx
-*.vspscc
-*.vssscc
 builds/
-*.pidb
-*.svclog
-*.scc
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # Rider
 .idea/
@@ -56,6 +56,7 @@ builds/
 !**/packages/build/
 *.nuget.props
 *.nuget.targets
+.nuget/
 
 # Node.js / React
 node_modules/
@@ -67,11 +68,22 @@ lerna-debug.log*
 dist/
 dist-ssr/
 *.local
+
+# Environment files
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
 
 # Build outputs
 build/
@@ -80,12 +92,31 @@ out/
 .nuxt/
 .cache/
 .vuepress/dist/
+.vite/
 
-# Testing
+# Test results
+TestResults/
+*.trx
+*.coverage
 coverage/
+*.lcov
 .nyc_output/
 
+# MongoDB
+*.db
+*.mdb
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# Backup files
+*.bak
+*.backup
+
 # Misc
-.DS_Store
 *.pem
-Thumbs.db
+*.cache
+*.lock

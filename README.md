@@ -4,8 +4,8 @@ A full-stack e-commerce application built with .NET Web API and React frontend.
 
 ## Project Structure
 
-- **MeeshoClone.API** - .NET Web API backend
-- **MeeshoClone.Frontend** - React frontend application
+- **BusinessPlatform.API** - .NET Web API backend
+- **BusinessPlatform.Frontend** - React frontend application
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ A full-stack e-commerce application built with .NET Web API and React frontend.
 
 1. Navigate to the API directory:
 ```bash
-cd MeeshoClone.API
+cd BusinessPlatform.API
 ```
 
 2. Restore dependencies:
@@ -38,7 +38,7 @@ dotnet run
 
 1. Navigate to the frontend directory:
 ```bash
-cd MeeshoClone.Frontend
+cd BusinessPlatform.Frontend
 ```
 
 2. Install dependencies:
