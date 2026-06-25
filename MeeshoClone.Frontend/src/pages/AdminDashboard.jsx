@@ -899,15 +899,15 @@ const AdminDashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       {/* Header */}
       <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 sm:py-6">
-        <div className="container mx-auto px-3 sm:px-2 sm:px-3 md:px-4">
+        <div className="container mx-auto px-3 sm:px-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
               <h1 className="text-xl sm:text-2xl font-bold">Admin Dashboard</h1>
-              <p className="opacity-90 text-xs sm:text-sm">Welcome back, {user?.fullName}</p>
+              <p className="opacity-90 text-sm sm:text-base">Welcome back, {user?.fullName}</p>
             </div>
             <button
               onClick={handleSeedDatabase}
-              className="bg-white text-purple-600 px-3 py-2 sm:px-2 sm:px-3 md:px-4 sm:py-2 rounded-lg font-semibold hover:bg-pink-100 transition-colors flex items-center gap-2 text-xs sm:text-sm w-full sm:w-auto justify-center"
+              className="bg-white text-purple-600 px-3 py-2 sm:px-4 sm:py-2 rounded-lg font-semibold hover:bg-pink-100 transition-colors flex items-center gap-2 text-sm sm:text-base w-full sm:w-auto justify-center"
             >
               <Database size={16} />
               <span className="hidden sm:inline">Seed Database</span>
@@ -917,21 +917,21 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-3 sm:px-2 sm:px-3 md:px-4 py-4 sm:py-8">
-        <div className="flex flex-col lg:flex-row gap-2 sm:gap-3 md:gap-4 sm:gap-6">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
           {/* Sidebar */}
-          <aside className="lg:w-full sm:w-64 flex-shrink-0 w-full">
+          <aside className="lg:w-64 flex-shrink-0 w-full">
             <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 sticky top-4 sm:top-20">
               <nav className="space-y-4 sm:space-y-6">
                 {/* Management Section */}
                 <div>
-                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-2 sm:px-3 md:px-4">Management</h3>
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-4">Management</h3>
                   <div className="space-y-2">
                     {tabs.filter(tab => tab.section === 'management').map(tab => (
                       <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`w-full flex items-center gap-3 px-2 sm:px-3 md:px-4 py-3 rounded-lg transition-colors ${
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                           activeTab === tab.id
                             ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
                             : 'hover:bg-gray-100 text-gray-700'
@@ -946,13 +946,13 @@ const AdminDashboard = () => {
 
                 {/* Personal Section */}
                 <div>
-                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-2 sm:px-3 md:px-4">Personal</h3>
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-4">Personal</h3>
                   <div className="space-y-2">
                     {tabs.filter(tab => tab.section === 'personal').map(tab => (
                       <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`w-full flex items-center gap-3 px-2 sm:px-3 md:px-4 py-3 rounded-lg transition-colors ${
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                           activeTab === tab.id
                             ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
                             : 'hover:bg-gray-100 text-gray-700'
@@ -967,13 +967,13 @@ const AdminDashboard = () => {
 
                 {/* Configuration Section */}
                 <div>
-                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-2 sm:px-3 md:px-4">Configuration</h3>
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-4">Configuration</h3>
                   <div className="space-y-2">
                     {tabs.filter(tab => tab.section === 'configuration').map(tab => (
                       <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`w-full flex items-center gap-3 px-2 sm:px-3 md:px-4 py-3 rounded-lg transition-colors ${
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                           activeTab === tab.id
                             ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
                             : 'hover:bg-gray-100 text-gray-700'
@@ -992,12 +992,12 @@ const AdminDashboard = () => {
           {/* Main Content */}
           <main className="flex-1">
             {activeTab === 'profile' && (
-              <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
-                <h2 className="text-base sm:text-lg font-bold text-gray-800 mb-4 sm:mb-6">My Profile</h2>
+              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4 sm:mb-6">My Profile</h2>
                 
                 {/* Profile Header */}
-                <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl p-3 sm:p-4 md:p-6 mb-6 text-white">
-                  <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 md:gap-4 sm:gap-6">
+                <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl p-4 sm:p-6 mb-6 text-white">
+                  <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
                     <div className="relative">
                       <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white/20 rounded-full flex items-center justify-center text-white text-3xl sm:text-4xl font-bold border-4 border-white/30">
                         {user?.fullName?.charAt(0).toUpperCase() || 'A'}
@@ -1008,7 +1008,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="text-center sm:text-left">
                       <h3 className="text-xl sm:text-2xl font-bold">{user?.fullName || 'Admin'}</h3>
-                      <p className="opacity-90 text-xs sm:text-sm">{user?.email || 'admin@meesho.com'}</p>
+                      <p className="opacity-90 text-sm sm:text-base">{user?.email || 'admin@meesho.com'}</p>
                       <div className="flex gap-2 mt-2 justify-center sm:justify-start">
                         <span className="bg-white/20 px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
                           Administrator
@@ -1031,7 +1031,7 @@ const AdminDashboard = () => {
                       <input
                         type="text"
                         defaultValue={user?.fullName || ''}
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Enter your full name"
                       />
                     </div>
@@ -1041,7 +1041,7 @@ const AdminDashboard = () => {
                         type="email"
                         defaultValue={user?.email || ''}
                         disabled
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg bg-gray-100 focus:outline-none"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg bg-gray-100 focus:outline-none"
                       />
                     </div>
                     <div>
@@ -1049,7 +1049,7 @@ const AdminDashboard = () => {
                       <input
                         type="tel"
                         defaultValue={user?.phone || ''}
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Enter your phone number"
                       />
                     </div>
@@ -1058,7 +1058,7 @@ const AdminDashboard = () => {
                       <textarea
                         defaultValue={user?.address || ''}
                         rows={3}
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
                         placeholder="Enter your address"
                       />
                     </div>
@@ -1143,7 +1143,7 @@ const AdminDashboard = () => {
                       <label className="block text-sm font-semibold text-gray-700 mb-1">Bank Name</label>
                       <input
                         type="text"
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Enter bank name"
                       />
                     </div>
@@ -1151,7 +1151,7 @@ const AdminDashboard = () => {
                       <label className="block text-sm font-semibold text-gray-700 mb-1">Account Number</label>
                       <input
                         type="text"
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Enter account number"
                       />
                     </div>
@@ -1159,13 +1159,13 @@ const AdminDashboard = () => {
                       <label className="block text-sm font-semibold text-gray-700 mb-1">IFSC Code</label>
                       <input
                         type="text"
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Enter IFSC code"
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-1">Account Type</label>
-                      <select className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all">
+                      <select className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all">
                         <option value="">Select account type</option>
                         <option value="savings">Savings Account</option>
                         <option value="current">Current Account</option>
@@ -1183,7 +1183,7 @@ const AdminDashboard = () => {
                       <label className="block text-sm font-semibold text-gray-700 mb-1">PAN Number</label>
                       <input
                         type="text"
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Enter PAN number"
                       />
                     </div>
@@ -1191,7 +1191,7 @@ const AdminDashboard = () => {
                       <label className="block text-sm font-semibold text-gray-700 mb-1">GST Number</label>
                       <input
                         type="text"
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Enter GST number"
                       />
                     </div>
@@ -1199,7 +1199,7 @@ const AdminDashboard = () => {
                       <label className="block text-sm font-semibold text-gray-700 mb-1">Tax ID</label>
                       <input
                         type="text"
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Enter tax ID"
                       />
                     </div>
@@ -1218,12 +1218,12 @@ const AdminDashboard = () => {
                     <Shield size={18} />
                     Security Settings
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-1">Current Password</label>
                       <input
                         type="password"
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Enter current password"
                       />
                     </div>
@@ -1231,7 +1231,7 @@ const AdminDashboard = () => {
                       <label className="block text-sm font-semibold text-gray-700 mb-1">New Password</label>
                       <input
                         type="password"
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Enter new password"
                       />
                     </div>
@@ -1239,7 +1239,7 @@ const AdminDashboard = () => {
                       <label className="block text-sm font-semibold text-gray-700 mb-1">Confirm New Password</label>
                       <input
                         type="password"
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Confirm new password"
                       />
                     </div>
@@ -1253,10 +1253,10 @@ const AdminDashboard = () => {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-6 border-t">
-                  <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-2 sm:px-3 md:px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all">
+                  <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 sm:py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all">
                     Update Profile
                   </button>
-                  <button className="flex-1 border-2 border-purple-600 text-purple-600 px-2 sm:px-3 md:px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg font-semibold hover:bg-purple-50 transition-all">
+                  <button className="flex-1 border-2 border-purple-600 text-purple-600 px-4 py-2 sm:py-3 rounded-lg font-semibold hover:bg-purple-50 transition-all">
                     Cancel
                   </button>
                 </div>
@@ -1266,8 +1266,8 @@ const AdminDashboard = () => {
             {activeTab === 'overview' && (
               <div className="space-y-6">
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
-                  <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="bg-blue-100 p-3 rounded-lg">
                         <Package className="text-blue-600" size={20} sm:size={24} />
@@ -1275,14 +1275,14 @@ const AdminDashboard = () => {
                       <TrendingUp className="text-green-600" size={16} sm:size={20} />
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800">{dashboardStats.totalProducts}</h3>
-                    <p className="text-gray-600 text-xs sm:text-sm">Total Products</p>
+                    <p className="text-gray-600 text-sm sm:text-base">Total Products</p>
                     <div className="mt-2 text-xs text-gray-500">
                       <span className="text-green-600">{dashboardStats.activeProducts} active</span> • 
                       <span className="text-purple-600"> {dashboardStats.featuredProducts} featured</span>
                     </div>
                   </div>
 
-                  <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+                  <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="bg-purple-100 p-3 rounded-lg">
                         <Users className="text-purple-600" size={20} sm:size={24} />
@@ -1290,14 +1290,14 @@ const AdminDashboard = () => {
                       <TrendingUp className="text-green-600" size={16} sm:size={20} />
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800">{dashboardStats.totalVendors}</h3>
-                    <p className="text-gray-600 text-xs sm:text-sm">Total Vendors</p>
+                    <p className="text-gray-600 text-sm sm:text-base">Total Vendors</p>
                     <div className="mt-2 text-xs text-gray-500">
                       <span className="text-green-600">{dashboardStats.activeVendors} active</span> • 
                       <span className="text-blue-600"> {dashboardStats.verifiedVendors} verified</span>
                     </div>
                   </div>
 
-                  <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+                  <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="bg-green-100 p-3 rounded-lg">
                         <ShoppingCart className="text-green-600" size={20} sm:size={24} />
@@ -1305,14 +1305,14 @@ const AdminDashboard = () => {
                       <TrendingUp className="text-green-600" size={16} sm:size={20} />
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800">{dashboardStats.totalOrders}</h3>
-                    <p className="text-gray-600 text-xs sm:text-sm">Total Orders</p>
+                    <p className="text-gray-600 text-sm sm:text-base">Total Orders</p>
                     <div className="mt-2 text-xs text-gray-500">
                       <span className="text-yellow-600">{dashboardStats.pendingOrders} pending</span> • 
                       <span className="text-green-600"> {dashboardStats.completedOrders} completed</span>
                     </div>
                   </div>
 
-                  <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+                  <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="bg-yellow-100 p-3 rounded-lg">
                         <DollarSign className="text-yellow-600" size={20} sm:size={24} />
@@ -1320,13 +1320,13 @@ const AdminDashboard = () => {
                       <TrendingUp className="text-green-600" size={16} sm:size={20} />
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800">₹{dashboardStats.totalRevenue.toLocaleString()}</h3>
-                    <p className="text-gray-600 text-xs sm:text-sm">Total Revenue</p>
+                    <p className="text-gray-600 text-sm sm:text-base">Total Revenue</p>
                   </div>
                 </div>
 
                 {/* Additional Stats Row */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
-                  <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl shadow-lg p-3 sm:p-4 md:p-6 text-white">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl shadow-lg p-4 sm:p-6 text-white">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="bg-white/20 p-2 rounded-lg">
                         <Folder size={20} sm:size={24} />
@@ -1339,7 +1339,7 @@ const AdminDashboard = () => {
                     <p className="text-white/70 text-xs">{dashboardStats.totalSubCategories} subcategories</p>
                   </div>
 
-                  <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl shadow-lg p-3 sm:p-4 md:p-6 text-white">
+                  <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl shadow-lg p-4 sm:p-6 text-white">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="bg-white/20 p-2 rounded-lg">
                         <UserCheck size={20} sm:size={24} />
@@ -1351,7 +1351,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
 
-                  <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl shadow-lg p-3 sm:p-4 md:p-6 text-white">
+                  <div className="bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl shadow-lg p-4 sm:p-6 text-white">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="bg-white/20 p-2 rounded-lg">
                         <TrendingUp size={20} sm:size={24} />
@@ -1368,7 +1368,7 @@ const AdminDashboard = () => {
                 <div className="bg-white rounded-xl shadow-lg p-6">
                   <h2 className="text-xl font-bold text-gray-800 mb-4">Recent Activity</h2>
                   <div className="space-y-4">
-                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
                       <div className="bg-green-100 p-2 rounded-full">
                         <CheckCircle className="text-green-600" size={20} />
                       </div>
@@ -1378,7 +1378,7 @@ const AdminDashboard = () => {
                       </div>
                       <span className="text-sm text-gray-500 ml-auto">2 min ago</span>
                     </div>
-                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
                       <div className="bg-blue-100 p-2 rounded-full">
                         <Package className="text-blue-600" size={20} />
                       </div>
@@ -1388,7 +1388,7 @@ const AdminDashboard = () => {
                       </div>
                       <span className="text-sm text-gray-500 ml-auto">15 min ago</span>
                     </div>
-                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4 p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
                       <div className="bg-purple-100 p-2 rounded-full">
                         <Users className="text-purple-600" size={20} />
                       </div>
@@ -1404,13 +1404,13 @@ const AdminDashboard = () => {
             )}
 
             {activeTab === 'products' && (
-              <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3">
-                  <h2 className="text-base sm:text-lg font-bold text-gray-800">Products Management</h2>
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-800">Products Management</h2>
                   <div className="flex gap-2 w-full sm:w-auto">
                     <button 
                       onClick={() => handleOpenProductModal()}
-                      className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-2 sm:px-2 sm:px-3 md:px-4 sm:py-2 rounded-lg font-semibold flex items-center gap-2 text-xs sm:text-sm justify-center"
+                      className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg font-semibold flex items-center gap-2 text-sm sm:text-base justify-center"
                     >
                       <Plus size={16} sm:size={18} />
                       <span>Add Product</span>
@@ -1420,12 +1420,12 @@ const AdminDashboard = () => {
                       placeholder="Search..."
                       value={productFilter.search}
                       onChange={(e) => setProductFilter({ ...productFilter, search: e.target.value })}
-                      className="flex-1 sm:flex-none px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+                      className="flex-1 sm:flex-none px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
                     />
                     <select 
                       value={productFilter.category}
                       onChange={(e) => setProductFilter({ ...productFilter, category: e.target.value })}
-                      className="px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
                     >
                       <option value="">All Categories</option>
                       {categories.map(cat => (
@@ -1435,7 +1435,7 @@ const AdminDashboard = () => {
                     <select 
                       value={productFilter.status}
                       onChange={(e) => setProductFilter({ ...productFilter, status: e.target.value })}
-                      className="px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
                     >
                       <option value="">All Status</option>
                       <option value="active">Active</option>
@@ -1447,15 +1447,15 @@ const AdminDashboard = () => {
                 </div>
                 
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-[500px] sm:min-w-[600px]">
+                  <table className="w-full min-w-[600px]">
                     <thead>
                       <tr className="border-b">
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Product</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Price</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Stock</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Category</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Product</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Price</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Stock</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Category</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1473,7 +1473,7 @@ const AdminDashboard = () => {
                         })
                         .map(product => (
                         <tr key={product.id} className="border-b hover:bg-gray-50">
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
                             <div className="flex items-center gap-2 sm:gap-3">
                               <img 
                                 src={product.imageUrls?.[0] || product.imageBase64?.[0] || 'https://via.placeholder.com/50'} 
@@ -1481,23 +1481,23 @@ const AdminDashboard = () => {
                                 className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-lg"
                               />
                               <div>
-                                <p className="font-semibold text-gray-800 text-xs sm:text-sm">{product.name}</p>
+                                <p className="font-semibold text-gray-800 text-sm sm:text-base">{product.name}</p>
                                 <p className="text-xs sm:text-sm text-gray-600">{product.category}</p>
                               </div>
                             </div>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                            <p className="font-semibold text-xs sm:text-sm">₹{product.price?.toLocaleString()}</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
+                            <p className="font-semibold text-sm sm:text-base">₹{product.price?.toLocaleString()}</p>
                             <p className="text-xs sm:text-sm text-gray-600 line-through">₹{product.originalPrice?.toLocaleString()}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                            <p className="font-semibold text-xs sm:text-sm">{product.stock}</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
+                            <p className="font-semibold text-sm sm:text-base">{product.stock}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                            <p className="text-gray-700 text-xs sm:text-sm">{product.category}</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
+                            <p className="text-gray-700 text-sm sm:text-base">{product.category}</p>
                             <p className="text-xs sm:text-sm text-gray-500">{product.subCategory}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
                             <div className="flex flex-wrap gap-1 sm:gap-2">
                               <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
                                 product.isActive 
@@ -1518,7 +1518,7 @@ const AdminDashboard = () => {
                               )}
                             </div>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
                             <div className="flex gap-2">
                               <button 
                                 onClick={() => handleOpenProductModal(product)}
@@ -1549,21 +1549,21 @@ const AdminDashboard = () => {
             )}
 
             {activeTab === 'categories' && (
-              <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3">
-                  <h2 className="text-base sm:text-lg font-bold text-gray-800">Categories Management</h2>
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-800">Categories Management</h2>
                   <div className="flex gap-2 w-full sm:w-auto">
                     <input
                       type="text"
                       placeholder="Search categories..."
                       value={categoryFilter.search}
                       onChange={(e) => setCategoryFilter({ ...categoryFilter, search: e.target.value })}
-                      className="flex-1 sm:flex-none px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+                      className="flex-1 sm:flex-none px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
                     />
                     <select 
                       value={categoryFilter.status}
                       onChange={(e) => setCategoryFilter({ ...categoryFilter, status: e.target.value })}
-                      className="px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
                     >
                       <option value="">All Status</option>
                       <option value="active">Active</option>
@@ -1573,7 +1573,7 @@ const AdminDashboard = () => {
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-2 sm:gap-3 md:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   {categories
                     .filter(cat => {
                       const matchesSearch = cat.displayName?.toLowerCase().includes(categoryFilter.search.toLowerCase()) || 
@@ -1590,7 +1590,7 @@ const AdminDashboard = () => {
                         <div className="flex items-center gap-2 sm:gap-3">
                           <span className="text-2xl sm:text-3xl">{category.icon || '📦'}</span>
                           <div>
-                            <h3 className="font-semibold text-gray-800 text-xs sm:text-sm">{category.displayName || category.name}</h3>
+                            <h3 className="font-semibold text-gray-800 text-sm sm:text-base">{category.displayName || category.name}</h3>
                             <p className="text-xs sm:text-sm text-gray-600">{category.productCount || 0} products</p>
                           </div>
                         </div>
@@ -1626,21 +1626,21 @@ const AdminDashboard = () => {
             )}
 
             {activeTab === 'subcategories' && (
-              <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3">
-                  <h2 className="text-base sm:text-lg font-bold text-gray-800">SubCategories Management</h2>
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-800">SubCategories Management</h2>
                   <div className="flex gap-2 w-full sm:w-auto">
                     <input
                       type="text"
                       placeholder="Search subcategories..."
                       value={subCategoryFilter.search}
                       onChange={(e) => setSubCategoryFilter({ ...subCategoryFilter, search: e.target.value })}
-                      className="flex-1 sm:flex-none px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+                      className="flex-1 sm:flex-none px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
                     />
                     <select 
                       value={subCategoryFilter.categoryId}
                       onChange={(e) => setSubCategoryFilter({ ...subCategoryFilter, categoryId: e.target.value })}
-                      className="px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
                     >
                       <option value="">All Categories</option>
                       {categories.map(cat => (
@@ -1650,7 +1650,7 @@ const AdminDashboard = () => {
                     <select 
                       value={subCategoryFilter.status}
                       onChange={(e) => setSubCategoryFilter({ ...subCategoryFilter, status: e.target.value })}
-                      className="px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
                     >
                       <option value="">All Status</option>
                       <option value="active">Active</option>
@@ -1661,14 +1661,14 @@ const AdminDashboard = () => {
                 </div>
                 
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-[500px] sm:min-w-[600px]">
+                  <table className="w-full min-w-[600px]">
                     <thead>
                       <tr className="border-b">
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">SubCategory</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Parent Category</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Products</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">SubCategory</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Parent Category</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Products</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1687,19 +1687,19 @@ const AdminDashboard = () => {
                           const parentCategory = categories.find(c => c.id === subCategory.categoryId);
                           return (
                           <tr key={subCategory.id} className="border-b hover:bg-gray-50">
-                            <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                            <td className="py-2 sm:py-3 px-2 sm:px-4">
                               <div>
-                                <p className="font-semibold text-gray-800 text-xs sm:text-sm">{subCategory.displayName || subCategory.name}</p>
+                                <p className="font-semibold text-gray-800 text-sm sm:text-base">{subCategory.displayName || subCategory.name}</p>
                                 <p className="text-xs sm:text-sm text-gray-600">{subCategory.description}</p>
                               </div>
                             </td>
-                            <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                              <p className="text-gray-700 text-xs sm:text-sm">{parentCategory?.displayName || parentCategory?.name || 'N/A'}</p>
+                            <td className="py-2 sm:py-3 px-2 sm:px-4">
+                              <p className="text-gray-700 text-sm sm:text-base">{parentCategory?.displayName || parentCategory?.name || 'N/A'}</p>
                             </td>
-                            <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                              <p className="font-semibold text-xs sm:text-sm">{subCategory.productCount || 0}</p>
+                            <td className="py-2 sm:py-3 px-2 sm:px-4">
+                              <p className="font-semibold text-sm sm:text-base">{subCategory.productCount || 0}</p>
                             </td>
-                            <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                            <td className="py-2 sm:py-3 px-2 sm:px-4">
                               <div className="flex flex-wrap gap-1 sm:gap-2">
                                 <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
                                   subCategory.isActive 
@@ -1715,7 +1715,7 @@ const AdminDashboard = () => {
                                 )}
                               </div>
                             </td>
-                            <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                            <td className="py-2 sm:py-3 px-2 sm:px-4">
                               <div className="flex gap-2">
                                 <button 
                                   onClick={() => handleOpenSubCategoryModal(subCategory)}
@@ -1746,14 +1746,14 @@ const AdminDashboard = () => {
             )}
 
             {activeTab === 'configuration' && (
-              <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                 <div className="mb-4 sm:mb-6">
-                  <h2 className="text-base sm:text-lg font-bold text-gray-800">Site Configuration</h2>
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-800">Site Configuration</h2>
                   <p className="text-sm text-gray-600 mt-1">Customize your website appearance and settings</p>
                 </div>
                 
                 {/* Site Information Card */}
-                <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-3 sm:p-4 md:p-6 mb-6">
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 sm:p-6 mb-6">
                   <div className="flex items-center gap-2 sm:gap-3 mb-4">
                     <div className="bg-purple-600 p-2 rounded-lg">
                       <Settings className="text-white" size={20} />
@@ -1767,7 +1767,7 @@ const AdminDashboard = () => {
                         type="text"
                         value={config.siteName}
                         onChange={(e) => setConfig({ ...config, siteName: e.target.value })}
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                         placeholder="Enter site name"
                       />
                     </div>
@@ -1776,7 +1776,7 @@ const AdminDashboard = () => {
                       <textarea
                         value={config.siteDescription}
                         onChange={(e) => setConfig({ ...config, siteDescription: e.target.value })}
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
                         rows={3}
                         placeholder="Enter site description"
                       />
@@ -1785,7 +1785,7 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Header Configuration Card */}
-                <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-3 sm:p-4 md:p-6 mb-6">
+                <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-4 sm:p-6 mb-6">
                   <div className="flex items-center gap-2 sm:gap-3 mb-4">
                     <div className="bg-blue-600 p-2 rounded-lg">
                       <LayoutDashboard className="text-white" size={20} />
@@ -1807,7 +1807,7 @@ const AdminDashboard = () => {
                           type="text"
                           value={config.header?.logo || ''}
                           onChange={(e) => setConfig({ ...config, header: { ...config.header, logo: e.target.value } })}
-                          className="flex-1 px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                          className="flex-1 px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
                           placeholder="Logo URL"
                         />
                       </div>
@@ -1818,7 +1818,7 @@ const AdminDashboard = () => {
                         type="text"
                         value={config.header?.backgroundColor}
                         onChange={(e) => setConfig({ ...config, header: { ...config.header, backgroundColor: e.target.value } })}
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
                         placeholder="e.g., from-purple-600 to-pink-600"
                       />
                     </div>
@@ -1828,7 +1828,7 @@ const AdminDashboard = () => {
                         type="text"
                         value={config.header?.textColor}
                         onChange={(e) => setConfig({ ...config, header: { ...config.header, textColor: e.target.value } })}
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
                         placeholder="e.g., white or #ffffff"
                       />
                     </div>
@@ -1874,7 +1874,7 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Footer Configuration Card */}
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-3 sm:p-4 md:p-6 mb-6">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 sm:p-6 mb-6">
                   <div className="flex items-center gap-2 sm:gap-3 mb-4">
                     <div className="bg-green-600 p-2 rounded-lg">
                       <Database className="text-white" size={20} />
@@ -1888,7 +1888,7 @@ const AdminDashboard = () => {
                         type="text"
                         value={config.footer?.text || ''}
                         onChange={(e) => setConfig({ ...config, footer: { ...config.footer, text: e.target.value } })}
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all"
                         placeholder="Footer copyright text"
                       />
                     </div>
@@ -1898,7 +1898,7 @@ const AdminDashboard = () => {
                         type="email"
                         value={config.footer?.email || ''}
                         onChange={(e) => setConfig({ ...config, footer: { ...config.footer, email: e.target.value } })}
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all"
                         placeholder="contact@example.com"
                       />
                     </div>
@@ -1908,7 +1908,7 @@ const AdminDashboard = () => {
                         type="text"
                         value={config.footer?.socialLinks || ''}
                         onChange={(e) => setConfig({ ...config, footer: { ...config.footer, socialLinks: e.target.value } })}
-                        className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all"
                         placeholder="Comma-separated social media links"
                       />
                     </div>
@@ -1919,11 +1919,11 @@ const AdminDashboard = () => {
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={handleSaveConfiguration}
-                    className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-2 sm:px-3 md:px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all"
+                    className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 sm:py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all"
                   >
                     Save Configuration
                   </button>
-                  <button className="flex-1 border-2 border-gray-300 text-gray-700 px-2 sm:px-3 md:px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg font-semibold hover:bg-gray-50 transition-all">
+                  <button className="flex-1 border-2 border-gray-300 text-gray-700 px-4 py-2 sm:py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all">
                     Reset to Default
                   </button>
                 </div>
@@ -1933,16 +1933,16 @@ const AdminDashboard = () => {
             {/* Category Modal */}
             {showCategoryModal && (
               <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4 animate-in fade-in duration-200">
-                <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 mx-2 sm:mx-0">
+                <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 mx-2 sm:mx-0">
                   {/* Header with gradient */}
-                  <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-pink-500 p-3 sm:p-4 md:p-6 rounded-t-2xl">
+                  <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-pink-500 p-4 sm:p-6 rounded-t-2xl">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 sm:gap-3">
                         <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                           <Folder size={20} sm:size={24} className="text-white" />
                         </div>
                         <div>
-                          <h3 className="text-base sm:text-lg font-bold text-white">
+                          <h3 className="text-lg sm:text-xl font-bold text-white">
                             {editingCategory ? 'Edit Category' : 'Add Category'}
                           </h3>
                           <p className="text-purple-100 text-xs sm:text-sm">
@@ -1959,7 +1959,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                   
-                  <div className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-5">
+                  <div className="p-4 sm:p-6 space-y-4 sm:space-y-5">
                     {/* Name Field */}
                     <div className="space-y-2">
                       <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
@@ -1972,7 +1972,7 @@ const AdminDashboard = () => {
                           value={categoryForm.name}
                           onChange={(e) => setCategoryForm({ ...categoryForm, name: e.target.value })}
                           onBlur={() => validateField('name', categoryForm.name, { required: true, minLength: 2, maxLength: 50 })}
-                          className={`w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
+                          className={`w-full px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
                           placeholder="e.g., fashion"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">📝</span>
@@ -1994,7 +1994,7 @@ const AdminDashboard = () => {
                           value={categoryForm.displayName}
                           onChange={(e) => setCategoryForm({ ...categoryForm, displayName: e.target.value })}
                           onBlur={() => validateField('displayName', categoryForm.displayName, { required: true, minLength: 2, maxLength: 100 })}
-                          className={`w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.displayName ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
+                          className={`w-full px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.displayName ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
                           placeholder="e.g., Fashion"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">✨</span>
@@ -2015,7 +2015,7 @@ const AdminDashboard = () => {
                           type="text"
                           value={categoryForm.icon}
                           onChange={(e) => setCategoryForm({ ...categoryForm, icon: e.target.value })}
-                          className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                          className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                           placeholder="e.g., 👗"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🎨</span>
@@ -2074,7 +2074,7 @@ const AdminDashboard = () => {
                         value={categoryForm.description}
                         onChange={(e) => setCategoryForm({ ...categoryForm, description: e.target.value })}
                         onBlur={() => validateField('description', categoryForm.description, { maxLength: 500 })}
-                        className={`w-full px-2 sm:px-3 md:px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all resize-none ${validationErrors.description ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
+                        className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all resize-none ${validationErrors.description ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
                         rows={3}
                         placeholder="Category description"
                       />
@@ -2094,7 +2094,7 @@ const AdminDashboard = () => {
                           type="number"
                           value={categoryForm.displayOrder}
                           onChange={(e) => setCategoryForm({ ...categoryForm, displayOrder: parseInt(e.target.value) })}
-                          className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                          className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                           placeholder="0"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🔢</span>
@@ -2102,7 +2102,7 @@ const AdminDashboard = () => {
                     </div>
 
                     {/* Toggle Switches */}
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 pt-2">
+                    <div className="flex flex-col sm:flex-row gap-4 pt-2">
                       <label className="flex items-center gap-3 p-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl cursor-pointer hover:from-purple-100 hover:to-pink-100 transition-all border-2 border-transparent hover:border-purple-300">
                         <div className="relative">
                           <input
@@ -2140,14 +2140,14 @@ const AdminDashboard = () => {
                   <div className="flex gap-3 p-6 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
                     <button
                       onClick={handleCloseCategoryModal}
-                      className="flex-1 px-2 sm:px-3 md:px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all flex items-center justify-center gap-2"
                     >
                       <X size={18} />
                       Cancel
                     </button>
                     <button
                       onClick={handleSaveCategory}
-                      className="flex-1 px-2 sm:px-3 md:px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                     >
                       {editingCategory ? <Edit size={18} /> : <Plus size={18} />}
                       {editingCategory ? 'Update' : 'Create'}
@@ -2160,16 +2160,16 @@ const AdminDashboard = () => {
             {/* SubCategory Modal */}
             {showSubCategoryModal && (
               <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4 animate-in fade-in duration-200">
-                <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 mx-2 sm:mx-0">
+                <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 mx-2 sm:mx-0">
                   {/* Header with gradient */}
-                  <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-pink-500 p-3 sm:p-4 md:p-6 rounded-t-2xl">
+                  <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-pink-500 p-4 sm:p-6 rounded-t-2xl">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 sm:gap-3">
                         <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                           <FolderOpen size={20} sm:size={24} className="text-white" />
                         </div>
                         <div>
-                          <h3 className="text-base sm:text-lg font-bold text-white">
+                          <h3 className="text-lg sm:text-xl font-bold text-white">
                             {editingSubCategory ? 'Edit SubCategory' : 'Add SubCategory'}
                           </h3>
                           <p className="text-purple-100 text-xs sm:text-sm">
@@ -2186,7 +2186,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                   
-                  <div className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-5">
+                  <div className="p-4 sm:p-6 space-y-4 sm:space-y-5">
                     {/* Parent Category Field */}
                     <div className="space-y-2">
                       <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
@@ -2197,7 +2197,7 @@ const AdminDashboard = () => {
                         <select
                           value={subCategoryForm.categoryId}
                           onChange={(e) => setSubCategoryForm({ ...subCategoryForm, categoryId: e.target.value })}
-                          className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all appearance-none bg-white"
+                          className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all appearance-none bg-white"
                         >
                           <option value="">Select a category</option>
                           {categories.map((category) => (
@@ -2222,7 +2222,7 @@ const AdminDashboard = () => {
                           type="text"
                           value={subCategoryForm.name}
                           onChange={(e) => setSubCategoryForm({ ...subCategoryForm, name: e.target.value })}
-                          className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                          className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                           placeholder="e.g., men-clothing"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">📝</span>
@@ -2240,7 +2240,7 @@ const AdminDashboard = () => {
                           type="text"
                           value={subCategoryForm.displayName}
                           onChange={(e) => setSubCategoryForm({ ...subCategoryForm, displayName: e.target.value })}
-                          className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                          className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                           placeholder="e.g., Men's Clothing"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">✨</span>
@@ -2298,7 +2298,7 @@ const AdminDashboard = () => {
                       <textarea
                         value={subCategoryForm.description}
                         onChange={(e) => setSubCategoryForm({ ...subCategoryForm, description: e.target.value })}
-                        className="w-full px-2 sm:px-3 md:px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
                         rows={3}
                         placeholder="Subcategory description"
                       />
@@ -2315,7 +2315,7 @@ const AdminDashboard = () => {
                           type="number"
                           value={subCategoryForm.displayOrder}
                           onChange={(e) => setSubCategoryForm({ ...subCategoryForm, displayOrder: parseInt(e.target.value) })}
-                          className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                          className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                           placeholder="0"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🔢</span>
@@ -2323,7 +2323,7 @@ const AdminDashboard = () => {
                     </div>
 
                     {/* Toggle Switches */}
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 pt-2">
+                    <div className="flex flex-col sm:flex-row gap-4 pt-2">
                       <label className="flex items-center gap-3 p-3 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl cursor-pointer hover:from-purple-100 hover:to-pink-100 transition-all border-2 border-transparent hover:border-purple-300">
                         <div className="relative">
                           <input
@@ -2361,14 +2361,14 @@ const AdminDashboard = () => {
                   <div className="flex gap-3 p-6 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
                     <button
                       onClick={handleCloseSubCategoryModal}
-                      className="flex-1 px-2 sm:px-3 md:px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all flex items-center justify-center gap-2"
                     >
                       <X size={18} />
                       Cancel
                     </button>
                     <button
                       onClick={handleSaveSubCategory}
-                      className="flex-1 px-2 sm:px-3 md:px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                     >
                       {editingSubCategory ? <Edit size={18} /> : <Plus size={18} />}
                       {editingSubCategory ? 'Update' : 'Create'}
@@ -2383,14 +2383,14 @@ const AdminDashboard = () => {
               <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4 animate-in fade-in duration-200">
                 <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 mx-2 sm:mx-0">
                   {/* Header with gradient */}
-                  <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-pink-500 p-3 sm:p-4 md:p-6 rounded-t-2xl">
+                  <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-pink-500 p-4 sm:p-6 rounded-t-2xl">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 sm:gap-3">
                         <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                           <Package size={20} sm:size={24} className="text-white" />
                         </div>
                         <div>
-                          <h3 className="text-base sm:text-lg font-bold text-white">
+                          <h3 className="text-lg sm:text-xl font-bold text-white">
                             {editingProduct ? 'Edit Product' : 'Add Product'}
                           </h3>
                           <p className="text-purple-100 text-xs sm:text-sm">
@@ -2407,9 +2407,9 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                   
-                  <div className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-5">
+                  <div className="p-4 sm:p-6 space-y-4 sm:space-y-5">
                     {/* Product Name & Category */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                           <span className="w-1 h-4 bg-gradient-to-b from-purple-600 to-pink-500 rounded-full"></span>
@@ -2420,7 +2420,7 @@ const AdminDashboard = () => {
                             type="text"
                             value={productForm.name}
                             onChange={(e) => setProductForm({ ...productForm, name: e.target.value })}
-                            className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                            className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                             placeholder="Product name"
                           />
                           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">📦</span>
@@ -2435,7 +2435,7 @@ const AdminDashboard = () => {
                           <select
                             value={productForm.category}
                             onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
-                            className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all appearance-none bg-white"
+                            className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all appearance-none bg-white"
                           >
                             <option value="">Select a category</option>
                             {categories.map((category) => (
@@ -2451,7 +2451,7 @@ const AdminDashboard = () => {
                     </div>
 
                     {/* SubCategory & Stock */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                           <span className="w-1 h-4 bg-gradient-to-b from-purple-600 to-pink-500 rounded-full"></span>
@@ -2462,7 +2462,7 @@ const AdminDashboard = () => {
                             type="text"
                             value={productForm.subCategory}
                             onChange={(e) => setProductForm({ ...productForm, subCategory: e.target.value })}
-                            className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                            className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                             placeholder="Subcategory name"
                           />
                           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">📂</span>
@@ -2478,7 +2478,7 @@ const AdminDashboard = () => {
                             type="number"
                             value={productForm.stock}
                             onChange={(e) => setProductForm({ ...productForm, stock: e.target.value })}
-                            className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                            className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                             placeholder="0"
                           />
                           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">📊</span>
@@ -2487,7 +2487,7 @@ const AdminDashboard = () => {
                     </div>
 
                     {/* Price & Original Price */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                           <span className="w-1 h-4 bg-gradient-to-b from-purple-600 to-pink-500 rounded-full"></span>
@@ -2498,7 +2498,7 @@ const AdminDashboard = () => {
                             type="number"
                             value={productForm.price}
                             onChange={(e) => setProductForm({ ...productForm, price: e.target.value })}
-                            className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                            className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                             placeholder="0"
                           />
                           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">💰</span>
@@ -2514,7 +2514,7 @@ const AdminDashboard = () => {
                             type="number"
                             value={productForm.originalPrice}
                             onChange={(e) => setProductForm({ ...productForm, originalPrice: e.target.value })}
-                            className="w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                            className="w-full px-4 py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
                             placeholder="0"
                           />
                           <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🏷️</span>
@@ -2531,7 +2531,7 @@ const AdminDashboard = () => {
                       <textarea
                         value={productForm.description}
                         onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
-                        className="w-full px-2 sm:px-3 md:px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
                         rows={4}
                         placeholder="Product description"
                       />
@@ -2588,7 +2588,7 @@ const AdminDashboard = () => {
                     </div>
 
                     {/* Toggle Switches */}
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 pt-2">
+                    <div className="flex flex-col sm:flex-row gap-4 pt-2">
                       <label className="flex items-center gap-3 p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl cursor-pointer hover:from-green-100 hover:to-emerald-100 transition-all border-2 border-transparent hover:border-green-300">
                         <div className="relative">
                           <input
@@ -2641,14 +2641,14 @@ const AdminDashboard = () => {
                   <div className="flex gap-3 p-6 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
                     <button
                       onClick={handleCloseProductModal}
-                      className="flex-1 px-2 sm:px-3 md:px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all flex items-center justify-center gap-2"
                     >
                       <X size={18} />
                       Cancel
                     </button>
                     <button
                       onClick={handleSaveProduct}
-                      className="flex-1 px-2 sm:px-3 md:px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                     >
                       {editingProduct ? <Edit size={18} /> : <Plus size={18} />}
                       {editingProduct ? 'Update' : 'Create'}
@@ -2663,14 +2663,14 @@ const AdminDashboard = () => {
               <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4 animate-in fade-in duration-200">
                 <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-in zoom-in-95 duration-200 mx-2 sm:mx-0">
                   {/* Header with gradient */}
-                  <div className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 p-3 sm:p-4 md:p-6 rounded-t-2xl">
+                  <div className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 p-4 sm:p-6 rounded-t-2xl">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 sm:gap-3">
                         <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                           <Trash2 size={20} sm:size={24} className="text-white" />
                         </div>
                         <div>
-                          <h3 className="text-base sm:text-lg font-bold text-white">Confirm Delete</h3>
+                          <h3 className="text-lg sm:text-xl font-bold text-white">Confirm Delete</h3>
                           <p className="text-red-100 text-xs sm:text-sm">
                             This action cannot be undone
                           </p>
@@ -2685,7 +2685,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                   
-                  <div className="p-3 sm:p-4 md:p-6 space-y-4">
+                  <div className="p-4 sm:p-6 space-y-4">
                     {/* Warning Message */}
                     <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4">
                       <div className="flex items-start gap-3">
@@ -2718,14 +2718,14 @@ const AdminDashboard = () => {
                   <div className="flex gap-3 p-6 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
                     <button
                       onClick={handleCloseDeleteModal}
-                      className="flex-1 px-2 sm:px-3 md:px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all flex items-center justify-center gap-2"
                     >
                       <X size={18} />
                       Cancel
                     </button>
                     <button
                       onClick={handleConfirmDelete}
-                      className="flex-1 px-2 sm:px-3 md:px-4 py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-xl font-semibold hover:from-red-700 hover:to-orange-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-xl font-semibold hover:from-red-700 hover:to-orange-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                     >
                       <Trash2 size={18} />
                       Delete
@@ -2738,15 +2738,15 @@ const AdminDashboard = () => {
             {/* Vendor Modal */}
             {showVendorModal && (
               <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-2 sm:p-4 animate-in fade-in duration-200">
-                <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md sm:max-w-lg max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 mx-2 sm:mx-0">
-                  <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-pink-500 p-3 sm:p-4 md:p-6 rounded-t-2xl">
+                <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 mx-2 sm:mx-0">
+                  <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-pink-500 p-4 sm:p-6 rounded-t-2xl">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 sm:gap-3">
                         <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                           <Users size={20} sm:size={24} className="text-white" />
                         </div>
                         <div>
-                          <h3 className="text-base sm:text-lg font-bold text-white">
+                          <h3 className="text-lg sm:text-xl font-bold text-white">
                             {editingVendor ? 'Edit Vendor' : 'Add Vendor'}
                           </h3>
                           <p className="text-purple-100 text-xs sm:text-sm">
@@ -2763,7 +2763,7 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                   
-                  <div className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-5">
+                  <div className="p-4 sm:p-6 space-y-4 sm:space-y-5">
                     <div className="space-y-2">
                       <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                         <span className="w-1 h-4 bg-gradient-to-b from-purple-600 to-pink-500 rounded-full"></span>
@@ -2775,7 +2775,7 @@ const AdminDashboard = () => {
                           value={vendorForm.name}
                           onChange={(e) => setVendorForm({ ...vendorForm, name: e.target.value })}
                           onBlur={() => validateField('name', vendorForm.name, { required: true, minLength: 2, maxLength: 100 })}
-                          className={`w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
+                          className={`w-full px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.name ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
                           placeholder="Contact name"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">👤</span>
@@ -2796,7 +2796,7 @@ const AdminDashboard = () => {
                           value={vendorForm.businessName}
                           onChange={(e) => setVendorForm({ ...vendorForm, businessName: e.target.value })}
                           onBlur={() => validateField('businessName', vendorForm.businessName, { required: true, minLength: 2, maxLength: 200 })}
-                          className={`w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.businessName ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
+                          className={`w-full px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.businessName ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
                           placeholder="Business name"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🏢</span>
@@ -2817,7 +2817,7 @@ const AdminDashboard = () => {
                           value={vendorForm.email}
                           onChange={(e) => setVendorForm({ ...vendorForm, email: e.target.value })}
                           onBlur={() => validateField('email', vendorForm.email, { required: true, pattern: defaultValidationRules.email })}
-                          className={`w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
+                          className={`w-full px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.email ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
                           placeholder="Email address"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">📧</span>
@@ -2838,7 +2838,7 @@ const AdminDashboard = () => {
                           value={vendorForm.phone}
                           onChange={(e) => setVendorForm({ ...vendorForm, phone: e.target.value })}
                           onBlur={() => validateField('phone', vendorForm.phone, { required: true, pattern: defaultValidationRules.phone })}
-                          className={`w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.phone ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
+                          className={`w-full px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.phone ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
                           placeholder="Phone number"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">📱</span>
@@ -2859,7 +2859,7 @@ const AdminDashboard = () => {
                           value={vendorForm.businessType}
                           onChange={(e) => setVendorForm({ ...vendorForm, businessType: e.target.value })}
                           onBlur={() => validateField('businessType', vendorForm.businessType, { required: true })}
-                          className={`w-full px-2 sm:px-3 md:px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.businessType ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
+                          className={`w-full px-4 py-3 pl-11 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${validationErrors.businessType ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-gray-200 focus:border-purple-500 focus:ring-purple-500/20'}`}
                           placeholder="Business type"
                         />
                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🏷️</span>
@@ -2877,7 +2877,7 @@ const AdminDashboard = () => {
                       <textarea
                         value={vendorForm.address}
                         onChange={(e) => setVendorForm({ ...vendorForm, address: e.target.value })}
-                        className="w-full px-2 sm:px-3 md:px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
                         rows={3}
                         placeholder="Business address"
                       />
@@ -2891,13 +2891,13 @@ const AdminDashboard = () => {
                       <textarea
                         value={vendorForm.description}
                         onChange={(e) => setVendorForm({ ...vendorForm, description: e.target.value })}
-                        className="w-full px-2 sm:px-3 md:px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
                         rows={3}
                         placeholder="Vendor description"
                       />
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 pt-2">
+                    <div className="flex flex-col sm:flex-row gap-4 pt-2">
                       <label className="flex items-center gap-3 p-3 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl cursor-pointer hover:from-green-100 hover:to-emerald-100 transition-all border-2 border-transparent hover:border-green-300">
                         <div className="relative">
                           <input
@@ -2931,17 +2931,17 @@ const AdminDashboard = () => {
                     </div>
                   </div>
 
-                  <div className="flex gap-3 p-3 sm:p-4 md:p-6 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
+                  <div className="flex gap-3 p-4 sm:p-6 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
                     <button
                       onClick={handleCloseVendorModal}
-                      className="flex-1 px-2 sm:px-3 md:px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all flex items-center justify-center gap-2"
                     >
                       <X size={18} />
                       Cancel
                     </button>
                     <button
                       onClick={handleSaveVendor}
-                      className="flex-1 px-2 sm:px-3 md:px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                     >
                       {editingVendor ? <Edit size={18} /> : <Plus size={18} />}
                       {editingVendor ? 'Update' : 'Create'}
@@ -2952,13 +2952,13 @@ const AdminDashboard = () => {
             )}
 
             {activeTab === 'vendors' && (
-              <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3">
-                  <h2 className="text-base sm:text-lg font-bold text-gray-800">Vendors Management</h2>
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-800">Vendors Management</h2>
                   <div className="flex gap-2 w-full sm:w-auto">
                     <button 
                       onClick={() => handleOpenVendorModal()}
-                      className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-2 sm:px-2 sm:px-3 md:px-4 sm:py-2 rounded-lg font-semibold flex items-center gap-2 text-xs sm:text-sm justify-center"
+                      className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg font-semibold flex items-center gap-2 text-sm sm:text-base justify-center"
                     >
                       <Plus size={16} sm:size={18} />
                       <span>Add Vendor</span>
@@ -2968,12 +2968,12 @@ const AdminDashboard = () => {
                       placeholder="Search..."
                       value={vendorFilter.search}
                       onChange={(e) => setVendorFilter({ ...vendorFilter, search: e.target.value })}
-                      className="flex-1 sm:flex-none px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+                      className="flex-1 sm:flex-none px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
                     />
                     <select 
                       value={vendorFilter.status}
                       onChange={(e) => setVendorFilter({ ...vendorFilter, status: e.target.value })}
-                      className="px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
                     >
                       <option value="">All Status</option>
                       <option value="active">Active</option>
@@ -2985,14 +2985,14 @@ const AdminDashboard = () => {
                 </div>
                 
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-[500px] sm:min-w-[600px]">
+                  <table className="w-full min-w-[600px]">
                     <thead>
                       <tr className="border-b">
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Vendor</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Business Type</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Email</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Vendor</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Business Type</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Email</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -3010,19 +3010,19 @@ const AdminDashboard = () => {
                         })
                         .map((vendor) => (
                         <tr key={vendor.id} className="border-b hover:bg-gray-50">
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
                             <div>
-                              <p className="font-semibold text-gray-800 text-xs sm:text-sm">{vendor.name}</p>
+                              <p className="font-semibold text-gray-800 text-sm sm:text-base">{vendor.name}</p>
                               <p className="text-xs sm:text-sm text-gray-600">{vendor.businessName}</p>
                             </div>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                            <p className="text-gray-700 text-xs sm:text-sm">{vendor.businessType}</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
+                            <p className="text-gray-700 text-sm sm:text-base">{vendor.businessType}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                            <p className="text-gray-700 text-xs sm:text-sm">{vendor.email}</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
+                            <p className="text-gray-700 text-sm sm:text-base">{vendor.email}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
                             <div className="flex flex-wrap gap-1 sm:gap-2">
                               <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
                                 vendor.isActive 
@@ -3038,7 +3038,7 @@ const AdminDashboard = () => {
                               )}
                             </div>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
                             <div className="flex gap-2">
                               <button 
                                 onClick={() => handleOpenVendorModal(vendor)}
@@ -3068,16 +3068,16 @@ const AdminDashboard = () => {
             )}
 
             {activeTab === 'orders' && (
-              <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3">
-                  <h2 className="text-base sm:text-lg font-bold text-gray-800">Orders Management</h2>
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-800">Orders Management</h2>
                   <div className="flex gap-2 w-full sm:w-auto">
                     <input
                       type="text"
                       placeholder="Search orders..."
-                      className="flex-1 sm:flex-none px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
+                      className="flex-1 sm:flex-none px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
                     />
-                    <select className="px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500">
+                    <select className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500">
                       <option value="">All Status</option>
                       <option value="pending">Pending</option>
                       <option value="processing">Processing</option>
@@ -3089,35 +3089,35 @@ const AdminDashboard = () => {
                 </div>
                 
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-[500px] sm:min-w-[600px]">
+                  <table className="w-full min-w-[600px]">
                     <thead>
                       <tr className="border-b">
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Order ID</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Customer</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Items</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Total</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Date</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Order ID</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Customer</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Items</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Total</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Date</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       {orders.map((order) => (
                         <tr key={order.id} className="border-b hover:bg-gray-50">
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                            <p className="font-semibold text-gray-800 text-xs sm:text-sm">#{order.id}</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
+                            <p className="font-semibold text-gray-800 text-sm sm:text-base">#{order.id}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                            <p className="text-gray-700 text-xs sm:text-sm">{order.customerName || 'N/A'}</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
+                            <p className="text-gray-700 text-sm sm:text-base">{order.customerName || 'N/A'}</p>
                             <p className="text-xs text-gray-500">{order.customerEmail || ''}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                            <p className="text-gray-700 text-xs sm:text-sm">{order.items?.length || 0} items</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
+                            <p className="text-gray-700 text-sm sm:text-base">{order.items?.length || 0} items</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                            <p className="font-semibold text-gray-800 text-xs sm:text-sm">₹{order.totalAmount?.toLocaleString() || 0}</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
+                            <p className="font-semibold text-gray-800 text-sm sm:text-base">₹{order.totalAmount?.toLocaleString() || 0}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
                             <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
                               order.status === 'delivered' ? 'bg-green-100 text-green-700' :
                               order.status === 'shipped' ? 'bg-blue-100 text-blue-700' :
@@ -3128,10 +3128,10 @@ const AdminDashboard = () => {
                               {order.status || 'pending'}
                             </span>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
-                            <p className="text-gray-700 text-xs sm:text-sm">{new Date(order.createdAt).toLocaleDateString()}</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
+                            <p className="text-gray-700 text-sm sm:text-base">{new Date(order.createdAt).toLocaleDateString()}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
                             <div className="flex gap-2">
                               <button className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors">
                                 <Eye size={16} sm:size={18} className="text-blue-600" />
@@ -3201,7 +3201,7 @@ const AdminDashboard = () => {
                 </div>
                 
                 {/* Stats cards */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6">
                   <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-2 sm:p-3 md:p-4 border border-purple-200">
                     <div className="flex items-center gap-2">
                       <div className="bg-purple-600 p-1.5 sm:p-2 rounded-lg">
@@ -3249,15 +3249,15 @@ const AdminDashboard = () => {
                 </div>
                 
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-[500px] sm:min-w-[500px] sm:min-w-[600px]">
+                  <table className="w-full min-w-[500px] sm:min-w-[600px]">
                     <thead>
                       <tr className="border-b border-gray-200 bg-gray-50">
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">User</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm hidden sm:table-cell">Email</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Role</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm hidden md:table-cell">Joined</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">User</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm hidden sm:table-cell">Email</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Role</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm hidden md:table-cell">Joined</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -3273,7 +3273,7 @@ const AdminDashboard = () => {
                         })
                         .map((user) => (
                         <tr key={user.id} className="border-b border-gray-100 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 transition-all">
-                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-4">
                             <div className="flex items-center gap-2">
                               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs sm:text-sm font-bold">
                                 {user.fullName?.charAt(0).toUpperCase() || 'U'}
@@ -3284,10 +3284,10 @@ const AdminDashboard = () => {
                               </div>
                             </div>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-2 sm:px-3 md:px-4 hidden sm:table-cell">
+                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-4 hidden sm:table-cell">
                             <p className="text-gray-700 text-xs sm:text-sm">{user.email}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-4">
                             <span className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-semibold ${
                               user.role === 'Admin' ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white' :
                               user.role === 'Vendor' ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' :
@@ -3297,17 +3297,17 @@ const AdminDashboard = () => {
                               {user.role === 'Admin' ? 'Admin' : user.role === 'Normal' && user.isPremier ? 'Premier' : user.role || 'User'}
                             </span>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-4">
                             <span className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-semibold ${
                               user.isActive ? 'bg-gradient-to-r from-green-500 to-green-600 text-white' : 'bg-gradient-to-r from-red-500 to-red-600 text-white'
                             }`}>
                               {user.isActive ? 'Active' : 'Inactive'}
                             </span>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-2 sm:px-3 md:px-4 hidden md:table-cell">
+                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-4 hidden md:table-cell">
                             <p className="text-gray-700 text-xs sm:text-sm">{new Date(user.createdAt).toLocaleDateString()}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-2 sm:px-3 md:px-4">
+                          <td className="py-2 sm:py-3 px-2 sm:px-4">
                             <div className="flex gap-2">
                               <button 
                                 onClick={() => {
@@ -3364,14 +3364,14 @@ const AdminDashboard = () => {
             )}
 
             {activeTab === 'settings' && (
-              <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                 <div className="mb-4 sm:mb-6">
-                  <h2 className="text-base sm:text-lg font-bold text-gray-800">My Settings</h2>
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-800">My Settings</h2>
                   <p className="text-sm text-gray-600 mt-1">Manage your account preferences and settings</p>
                 </div>
                 
                 {/* Account Preferences */}
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3 sm:p-4 md:p-6 mb-6">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 sm:p-6 mb-6">
                   <div className="flex items-center gap-2 sm:gap-3 mb-4">
                     <div className="bg-blue-600 p-2 rounded-lg">
                       <Settings className="text-white" size={20} />
@@ -3381,7 +3381,7 @@ const AdminDashboard = () => {
                   <div className="space-y-4">
                     <label className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-colors">
                       <div>
-                        <p className="font-medium text-gray-800 text-xs sm:text-sm">Email Notifications</p>
+                        <p className="font-medium text-gray-800 text-sm sm:text-base">Email Notifications</p>
                         <p className="text-xs sm:text-sm text-gray-600">Receive email updates about your account</p>
                       </div>
                       <input
@@ -3392,7 +3392,7 @@ const AdminDashboard = () => {
                     </label>
                     <label className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-colors">
                       <div>
-                        <p className="font-medium text-gray-800 text-xs sm:text-sm">SMS Notifications</p>
+                        <p className="font-medium text-gray-800 text-sm sm:text-base">SMS Notifications</p>
                         <p className="text-xs sm:text-sm text-gray-600">Receive SMS updates about orders</p>
                       </div>
                       <input
@@ -3403,7 +3403,7 @@ const AdminDashboard = () => {
                     </label>
                     <label className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-colors">
                       <div>
-                        <p className="font-medium text-gray-800 text-xs sm:text-sm">Two-Factor Authentication</p>
+                        <p className="font-medium text-gray-800 text-sm sm:text-base">Two-Factor Authentication</p>
                         <p className="text-xs sm:text-sm text-gray-600">Add an extra layer of security</p>
                       </div>
                       <input
@@ -3416,7 +3416,7 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Theme Settings */}
-                <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-3 sm:p-4 md:p-6 mb-6">
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 sm:p-6 mb-6">
                   <div className="flex items-center gap-2 sm:gap-3 mb-4">
                     <div className="bg-purple-600 p-2 rounded-lg">
                       <TrendingUp className="text-white" size={20} />
@@ -3452,7 +3452,7 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Language & Region */}
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-3 sm:p-4 md:p-6 mb-6">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 sm:p-6 mb-6">
                   <div className="flex items-center gap-2 sm:gap-3 mb-4">
                     <div className="bg-green-600 p-2 rounded-lg">
                       <Database className="text-white" size={20} />
@@ -3462,7 +3462,7 @@ const AdminDashboard = () => {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-1">Language</label>
-                      <select className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all">
+                      <select className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all">
                         <option value="en">English</option>
                         <option value="hi">Hindi</option>
                         <option value="es">Spanish</option>
@@ -3471,7 +3471,7 @@ const AdminDashboard = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-1">Timezone</label>
-                      <select className="w-full px-3 sm:px-2 sm:px-3 md:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all">
+                      <select className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all">
                         <option value="IST">India Standard Time (IST)</option>
                         <option value="UTC">Coordinated Universal Time (UTC)</option>
                         <option value="EST">Eastern Standard Time (EST)</option>
@@ -3482,7 +3482,7 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Danger Zone */}
-                <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-3 sm:p-4 md:p-6">
+                <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-4 sm:p-6">
                   <div className="flex items-center gap-2 sm:gap-3 mb-4">
                     <div className="bg-red-600 p-2 rounded-lg">
                       <Trash2 className="text-white" size={20} />
@@ -3492,10 +3492,10 @@ const AdminDashboard = () => {
                   <div className="space-y-4">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 bg-white rounded-lg border-2 border-red-200">
                       <div>
-                        <p className="font-medium text-gray-800 text-xs sm:text-sm">Delete Account</p>
+                        <p className="font-medium text-gray-800 text-sm sm:text-base">Delete Account</p>
                         <p className="text-xs sm:text-sm text-gray-600">Permanently delete your account and all data</p>
                       </div>
-                      <button className="bg-red-500 text-white px-2 sm:px-3 md:px-4 py-2 rounded-lg font-semibold hover:bg-red-600 transition-colors whitespace-nowrap">
+                      <button className="bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600 transition-colors whitespace-nowrap">
                         Delete Account
                       </button>
                     </div>
@@ -3504,10 +3504,10 @@ const AdminDashboard = () => {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-6 border-t">
-                  <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-2 sm:px-3 md:px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all">
+                  <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 sm:py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all">
                     Save Settings
                   </button>
-                  <button className="flex-1 border-2 border-gray-300 text-gray-700 px-2 sm:px-3 md:px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg font-semibold hover:bg-gray-50 transition-all">
+                  <button className="flex-1 border-2 border-gray-300 text-gray-700 px-4 py-2 sm:py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all">
                     Reset to Default
                   </button>
                 </div>
