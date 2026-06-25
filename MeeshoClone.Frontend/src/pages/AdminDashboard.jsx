@@ -23,7 +23,11 @@ import {
   Shield,
   Power,
   Eye,
-  Camera
+  Camera,
+  CreditCard,
+  MapPin,
+  Building,
+  FileText
 } from 'lucide-react';
 
 const AdminDashboard = () => {
@@ -1018,7 +1022,7 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Profile Form */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   {/* Personal Information */}
                   <div className="space-y-4">
                     <h4 className="text-lg font-semibold text-gray-800 border-b pb-2">Personal Information</h4>
@@ -1060,9 +1064,161 @@ const AdminDashboard = () => {
                     </div>
                   </div>
 
-                  {/* Security Settings */}
+                  {/* Payment Methods */}
                   <div className="space-y-4">
-                    <h4 className="text-lg font-semibold text-gray-800 border-b pb-2">Security Settings</h4>
+                    <h4 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
+                      <CreditCard size={18} />
+                      Payment Methods
+                    </h4>
+                    <div className="space-y-3">
+                      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border-2 border-gray-200">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <CreditCard size={16} className="text-blue-600" />
+                            <span className="font-semibold text-gray-800">Visa Card</span>
+                          </div>
+                          <span className="text-xs bg-green-500 text-white px-2 py-1 rounded">Default</span>
+                        </div>
+                        <p className="text-sm text-gray-600">**** **** **** 4242</p>
+                        <p className="text-xs text-gray-500">Expires: 12/25</p>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg border-2 border-gray-200">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <CreditCard size={16} className="text-gray-600" />
+                            <span className="font-semibold text-gray-800">MasterCard</span>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-600">**** **** **** 5555</p>
+                        <p className="text-xs text-gray-500">Expires: 08/26</p>
+                      </div>
+                      <button className="w-full py-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-purple-500 hover:text-purple-600 transition-colors flex items-center justify-center gap-2">
+                        <Plus size={16} />
+                        Add Payment Method
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Addresses */}
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
+                      <MapPin size={18} />
+                      Addresses
+                    </h4>
+                    <div className="space-y-3">
+                      <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-lg border-2 border-gray-200">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-semibold text-gray-800">Home Address</span>
+                          <span className="text-xs bg-green-500 text-white px-2 py-1 rounded">Default</span>
+                        </div>
+                        <p className="text-sm text-gray-600">123 Main Street</p>
+                        <p className="text-sm text-gray-600">Mumbai, Maharashtra 400001</p>
+                        <p className="text-xs text-gray-500">India</p>
+                      </div>
+                      <div className="bg-white p-4 rounded-lg border-2 border-gray-200">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-semibold text-gray-800">Office Address</span>
+                        </div>
+                        <p className="text-sm text-gray-600">456 Business Park</p>
+                        <p className="text-sm text-gray-600">Bangalore, Karnataka 560001</p>
+                        <p className="text-xs text-gray-500">India</p>
+                      </div>
+                      <button className="w-full py-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-purple-500 hover:text-purple-600 transition-colors flex items-center justify-center gap-2">
+                        <Plus size={16} />
+                        Add Address
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bank Details & Tax Information */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 pt-6 border-t">
+                  {/* Bank Details */}
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
+                      <Building size={18} />
+                      Bank Details
+                    </h4>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Bank Name</label>
+                      <input
+                        type="text"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        placeholder="Enter bank name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Account Number</label>
+                      <input
+                        type="text"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        placeholder="Enter account number"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">IFSC Code</label>
+                      <input
+                        type="text"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        placeholder="Enter IFSC code"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Account Type</label>
+                      <select className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all">
+                        <option value="">Select account type</option>
+                        <option value="savings">Savings Account</option>
+                        <option value="current">Current Account</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Tax Information */}
+                  <div className="space-y-4">
+                    <h4 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2">
+                      <FileText size={18} />
+                      Tax Information
+                    </h4>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">PAN Number</label>
+                      <input
+                        type="text"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        placeholder="Enter PAN number"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">GST Number</label>
+                      <input
+                        type="text"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        placeholder="Enter GST number"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Tax ID</label>
+                      <input
+                        type="text"
+                        className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                        placeholder="Enter tax ID"
+                      />
+                    </div>
+                    <div>
+                      <label className="flex items-center gap-2">
+                        <input type="checkbox" defaultChecked={false} className="w-4 h-4" />
+                        <span className="text-sm text-gray-700">I am tax-exempt</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Security Settings */}
+                <div className="mt-6 pt-6 border-t">
+                  <h4 className="text-lg font-semibold text-gray-800 border-b pb-2 flex items-center gap-2 mb-4">
+                    <Shield size={18} />
+                    Security Settings
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-sm font-semibold text-gray-700 mb-1">Current Password</label>
                       <input
@@ -1087,11 +1243,11 @@ const AdminDashboard = () => {
                         placeholder="Confirm new password"
                       />
                     </div>
-                    <div className="pt-4">
-                      <button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all">
-                        Change Password
-                      </button>
-                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all">
+                      Change Password
+                    </button>
                   </div>
                 </div>
 
@@ -3144,9 +3300,153 @@ const AdminDashboard = () => {
             )}
 
             {activeTab === 'settings' && (
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-bold text-gray-800 mb-6">Platform Settings</h2>
-                <p className="text-gray-600">Settings panel coming soon...</p>
+              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+                <div className="mb-4 sm:mb-6">
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-800">My Settings</h2>
+                  <p className="text-sm text-gray-600 mt-1">Manage your account preferences and settings</p>
+                </div>
+                
+                {/* Account Preferences */}
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 sm:p-6 mb-6">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-4">
+                    <div className="bg-blue-600 p-2 rounded-lg">
+                      <Settings className="text-white" size={20} />
+                    </div>
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800">Account Preferences</h3>
+                  </div>
+                  <div className="space-y-4">
+                    <label className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-colors">
+                      <div>
+                        <p className="font-medium text-gray-800 text-sm sm:text-base">Email Notifications</p>
+                        <p className="text-xs sm:text-sm text-gray-600">Receive email updates about your account</p>
+                      </div>
+                      <input
+                        type="checkbox"
+                        defaultChecked={true}
+                        className="w-5 h-5"
+                      />
+                    </label>
+                    <label className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-colors">
+                      <div>
+                        <p className="font-medium text-gray-800 text-sm sm:text-base">SMS Notifications</p>
+                        <p className="text-xs sm:text-sm text-gray-600">Receive SMS updates about orders</p>
+                      </div>
+                      <input
+                        type="checkbox"
+                        defaultChecked={false}
+                        className="w-5 h-5"
+                      />
+                    </label>
+                    <label className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-gray-200 cursor-pointer hover:border-blue-500 transition-colors">
+                      <div>
+                        <p className="font-medium text-gray-800 text-sm sm:text-base">Two-Factor Authentication</p>
+                        <p className="text-xs sm:text-sm text-gray-600">Add an extra layer of security</p>
+                      </div>
+                      <input
+                        type="checkbox"
+                        defaultChecked={false}
+                        className="w-5 h-5"
+                      />
+                    </label>
+                  </div>
+                </div>
+
+                {/* Theme Settings */}
+                <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 sm:p-6 mb-6">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-4">
+                    <div className="bg-purple-600 p-2 rounded-lg">
+                      <TrendingUp className="text-white" size={20} />
+                    </div>
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800">Theme Settings</h3>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Theme Mode</label>
+                      <div className="flex gap-3">
+                        <button className="flex-1 p-3 bg-white border-2 border-purple-500 rounded-lg text-purple-600 font-semibold">
+                          Light
+                        </button>
+                        <button className="flex-1 p-3 bg-white border-2 border-gray-200 rounded-lg text-gray-600 font-semibold hover:border-gray-300">
+                          Dark
+                        </button>
+                        <button className="flex-1 p-3 bg-white border-2 border-gray-200 rounded-lg text-gray-600 font-semibold hover:border-gray-300">
+                          Auto
+                        </button>
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Accent Color</label>
+                      <div className="flex gap-2">
+                        <button className="w-10 h-10 rounded-full bg-purple-500 border-4 border-purple-300"></button>
+                        <button className="w-10 h-10 rounded-full bg-blue-500 border-2 border-gray-200"></button>
+                        <button className="w-10 h-10 rounded-full bg-green-500 border-2 border-gray-200"></button>
+                        <button className="w-10 h-10 rounded-full bg-pink-500 border-2 border-gray-200"></button>
+                        <button className="w-10 h-10 rounded-full bg-orange-500 border-2 border-gray-200"></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Language & Region */}
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 sm:p-6 mb-6">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-4">
+                    <div className="bg-green-600 p-2 rounded-lg">
+                      <Database className="text-white" size={20} />
+                    </div>
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800">Language & Region</h3>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Language</label>
+                      <select className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all">
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Timezone</label>
+                      <select className="w-full px-3 sm:px-4 py-2 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all">
+                        <option value="IST">India Standard Time (IST)</option>
+                        <option value="UTC">Coordinated Universal Time (UTC)</option>
+                        <option value="EST">Eastern Standard Time (EST)</option>
+                        <option value="PST">Pacific Standard Time (PST)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Danger Zone */}
+                <div className="bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-4 sm:p-6">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-4">
+                    <div className="bg-red-600 p-2 rounded-lg">
+                      <Trash2 className="text-white" size={20} />
+                    </div>
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800">Danger Zone</h3>
+                  </div>
+                  <div className="space-y-4">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 bg-white rounded-lg border-2 border-red-200">
+                      <div>
+                        <p className="font-medium text-gray-800 text-sm sm:text-base">Delete Account</p>
+                        <p className="text-xs sm:text-sm text-gray-600">Permanently delete your account and all data</p>
+                      </div>
+                      <button className="bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600 transition-colors whitespace-nowrap">
+                        Delete Account
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 mt-6 pt-6 border-t">
+                  <button className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 sm:py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-all">
+                    Save Settings
+                  </button>
+                  <button className="flex-1 border-2 border-gray-300 text-gray-700 px-4 py-2 sm:py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all">
+                    Reset to Default
+                  </button>
+                </div>
               </div>
             )}
           </main>
