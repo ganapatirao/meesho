@@ -3155,50 +3155,109 @@ const AdminDashboard = () => {
             )}
 
             {activeTab === 'users' && (
-              <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3">
-                  <h2 className="text-lg sm:text-xl font-bold text-gray-800">Users Management</h2>
-                  <div className="flex gap-2 w-full sm:w-auto">
-                    <input
-                      type="text"
-                      placeholder="Search users..."
-                      value={userFilter.search}
-                      onChange={(e) => setUserFilter({ ...userFilter, search: e.target.value })}
-                      className="flex-1 sm:flex-none px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
-                    />
-                    <select 
-                      value={userFilter.role}
-                      onChange={(e) => setUserFilter({ ...userFilter, role: e.target.value })}
-                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
-                    >
-                      <option value="">All Roles</option>
-                      <option value="admin">Admin</option>
-                      <option value="vendor">Vendor</option>
-                      <option value="user">User</option>
-                      <option value="premier">Premier</option>
-                    </select>
-                    <select 
-                      value={userFilter.status}
-                      onChange={(e) => setUserFilter({ ...userFilter, status: e.target.value })}
-                      className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-purple-500"
-                    >
-                      <option value="">All Status</option>
-                      <option value="active">Active</option>
-                      <option value="inactive">Inactive</option>
-                    </select>
+              <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6">
+                {/* Header with gradient background */}
+                <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-t-xl p-3 sm:p-4 md:p-6 mb-4 sm:mb-6 -mx-3 sm:-mx-4 md:-mx-6">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
+                        <Users size={20} sm:size={24} className="text-white" />
+                      </div>
+                      <div>
+                        <h2 className="text-base sm:text-lg md:text-xl font-bold text-white">Users Management</h2>
+                        <p className="text-purple-100 text-xs sm:text-sm">Manage user accounts and permissions</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-2 w-full sm:w-auto">
+                      <input
+                        type="text"
+                        placeholder="Search users..."
+                        value={userFilter.search}
+                        onChange={(e) => setUserFilter({ ...userFilter, search: e.target.value })}
+                        className="flex-1 sm:flex-none px-2 sm:px-3 py-1.5 sm:py-2 border border-white/30 bg-white/10 text-white placeholder-white/70 rounded-lg text-xs sm:text-sm focus:outline-none focus:border-white/50 focus:bg-white/20 backdrop-blur-sm"
+                      />
+                      <select 
+                        value={userFilter.role}
+                        onChange={(e) => setUserFilter({ ...userFilter, role: e.target.value })}
+                        className="px-2 sm:px-3 py-1.5 sm:py-2 border border-white/30 bg-white/10 text-white rounded-lg text-xs sm:text-sm focus:outline-none focus:border-white/50 backdrop-blur-sm"
+                      >
+                        <option value="" className="text-gray-800">All Roles</option>
+                        <option value="admin" className="text-gray-800">Admin</option>
+                        <option value="vendor" className="text-gray-800">Vendor</option>
+                        <option value="user" className="text-gray-800">User</option>
+                        <option value="premier" className="text-gray-800">Premier</option>
+                      </select>
+                      <select 
+                        value={userFilter.status}
+                        onChange={(e) => setUserFilter({ ...userFilter, status: e.target.value })}
+                        className="px-2 sm:px-3 py-1.5 sm:py-2 border border-white/30 bg-white/10 text-white rounded-lg text-xs sm:text-sm focus:outline-none focus:border-white/50 backdrop-blur-sm"
+                      >
+                        <option value="" className="text-gray-800">All Status</option>
+                        <option value="active" className="text-gray-800">Active</option>
+                        <option value="inactive" className="text-gray-800">Inactive</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Stats cards */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6">
+                  <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-2 sm:p-3 md:p-4 border border-purple-200">
+                    <div className="flex items-center gap-2">
+                      <div className="bg-purple-600 p-1.5 sm:p-2 rounded-lg">
+                        <Users size={14} sm:size={16} className="text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs sm:text-sm text-gray-600">Total Users</p>
+                        <p className="text-base sm:text-lg md:text-xl font-bold text-gray-800">{users.length}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-2 sm:p-3 md:p-4 border border-blue-200">
+                    <div className="flex items-center gap-2">
+                      <div className="bg-blue-600 p-1.5 sm:p-2 rounded-lg">
+                        <UserCheck size={14} sm:size={16} className="text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs sm:text-sm text-gray-600">Active</p>
+                        <p className="text-base sm:text-lg md:text-xl font-bold text-gray-800">{users.filter(u => u.isActive).length}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-2 sm:p-3 md:p-4 border border-green-200">
+                    <div className="flex items-center gap-2">
+                      <div className="bg-green-600 p-1.5 sm:p-2 rounded-lg">
+                        <Shield size={14} sm:size={16} className="text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs sm:text-sm text-gray-600">Admins</p>
+                        <p className="text-base sm:text-lg md:text-xl font-bold text-gray-800">{users.filter(u => u.role === 'Admin').length}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-2 sm:p-3 md:p-4 border border-orange-200">
+                    <div className="flex items-center gap-2">
+                      <div className="bg-orange-600 p-1.5 sm:p-2 rounded-lg">
+                        <Power size={14} sm:size={16} className="text-white" />
+                      </div>
+                      <div>
+                        <p className="text-xs sm:text-sm text-gray-600">Inactive</p>
+                        <p className="text-base sm:text-lg md:text-xl font-bold text-gray-800">{users.filter(u => !u.isActive).length}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
                 <div className="overflow-x-auto">
-                  <table className="w-full min-w-[600px]">
+                  <table className="w-full min-w-[500px] sm:min-w-[600px]">
                     <thead>
-                      <tr className="border-b">
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">User</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Email</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Role</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Joined</th>
-                        <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
+                      <tr className="border-b border-gray-200 bg-gray-50">
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">User</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm hidden sm:table-cell">Email</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Role</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Status</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm hidden md:table-cell">Joined</th>
+                        <th className="text-left py-2 sm:py-3 px-2 sm:px-3 md:px-4 font-semibold text-gray-700 text-xs sm:text-sm">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -3213,35 +3272,40 @@ const AdminDashboard = () => {
                           return matchesSearch && matchesRole && matchesStatus;
                         })
                         .map((user) => (
-                        <tr key={user.id} className="border-b hover:bg-gray-50">
-                          <td className="py-2 sm:py-3 px-2 sm:px-4">
-                            <div>
-                              <p className="font-semibold text-gray-800 text-sm sm:text-base">{user.fullName || 'N/A'}</p>
-                              <p className="text-xs text-gray-500">{user.phone || ''}</p>
+                        <tr key={user.id} className="border-b border-gray-100 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 transition-all">
+                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-4">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs sm:text-sm font-bold">
+                                {user.fullName?.charAt(0).toUpperCase() || 'U'}
+                              </div>
+                              <div>
+                                <p className="font-semibold text-gray-800 text-xs sm:text-sm">{user.fullName || 'N/A'}</p>
+                                <p className="text-xs text-gray-500 hidden sm:block">{user.phone || ''}</p>
+                              </div>
                             </div>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-4">
-                            <p className="text-gray-700 text-sm sm:text-base">{user.email}</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-4 hidden sm:table-cell">
+                            <p className="text-gray-700 text-xs sm:text-sm">{user.email}</p>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-4">
-                            <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
-                              user.role === 'admin' ? 'bg-purple-100 text-purple-700' :
-                              user.role === 'vendor' ? 'bg-blue-100 text-blue-700' :
-                              user.role === 'premier' ? 'bg-yellow-100 text-yellow-700' :
+                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-4">
+                            <span className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-semibold ${
+                              user.role === 'Admin' ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white' :
+                              user.role === 'Vendor' ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' :
+                              user.role === 'Normal' && user.isPremier ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-white' :
                               'bg-gray-100 text-gray-700'
                             }`}>
-                              {user.role || 'user'}
+                              {user.role === 'Admin' ? 'Admin' : user.role === 'Normal' && user.isPremier ? 'Premier' : user.role || 'User'}
                             </span>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-4">
-                            <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
-                              user.isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-4">
+                            <span className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-semibold ${
+                              user.isActive ? 'bg-gradient-to-r from-green-500 to-green-600 text-white' : 'bg-gradient-to-r from-red-500 to-red-600 text-white'
                             }`}>
                               {user.isActive ? 'Active' : 'Inactive'}
                             </span>
                           </td>
-                          <td className="py-2 sm:py-3 px-2 sm:px-4">
-                            <p className="text-gray-700 text-sm sm:text-base">{new Date(user.createdAt).toLocaleDateString()}</p>
+                          <td className="py-2 sm:py-3 px-2 sm:px-3 md:px-4 hidden md:table-cell">
+                            <p className="text-gray-700 text-xs sm:text-sm">{new Date(user.createdAt).toLocaleDateString()}</p>
                           </td>
                           <td className="py-2 sm:py-3 px-2 sm:px-4">
                             <div className="flex gap-2">
