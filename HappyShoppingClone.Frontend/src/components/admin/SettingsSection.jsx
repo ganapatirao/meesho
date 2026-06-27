@@ -1,9 +1,8 @@
-import { Settings, TrendingUp, Shield, Power, Database, CheckCircle, XCircle } from 'lucide-react';
+import { Settings, TrendingUp, Shield, Power, CheckCircle, XCircle } from 'lucide-react';
 
 const SettingsSection = ({ 
   user, 
-  logout, 
-  seedDatabase 
+  logout 
 }) => {
   return (
     <div className="space-y-6">
@@ -74,27 +73,6 @@ const SettingsSection = ({
               </button>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Database Management */}
-      <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-3 sm:p-4 md:p-6">
-        <div className="flex items-center gap-2 sm:gap-3 mb-4">
-          <div className="bg-orange-600 p-2 rounded-lg">
-            <Database className="text-white" size={20} />
-          </div>
-          <h3 className="text-base sm:text-lg font-semibold text-gray-800">Database Management</h3>
-        </div>
-        <div className="space-y-4">
-          <button
-            onClick={seedDatabase}
-            className="w-full bg-gradient-to-r from-orange-600 to-red-600 text-white px-4 py-3 rounded-lg font-semibold hover:from-orange-700 hover:to-red-700 transition-all"
-          >
-            Seed Database
-          </button>
-          <p className="text-xs sm:text-sm text-gray-600">
-            This will populate the database with sample data. Use with caution in production.
-          </p>
         </div>
       </div>
 

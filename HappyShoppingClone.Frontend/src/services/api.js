@@ -133,9 +133,4 @@ export const validationRulesAPI = {
   delete: (id) => api.delete(`/auth/validation-rules/${id}`),
 };
 
-// Seed API
-export const seedAPI = {
-  seedDatabase: () => api.post('/seed'),
-};
-
 export default api;
