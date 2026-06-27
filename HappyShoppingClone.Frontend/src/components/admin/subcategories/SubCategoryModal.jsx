@@ -1,70 +1,41 @@
-import { X, Plus, Edit, Folder, Image as ImageIcon, Sparkles, Hash, AlignLeft, Layers, Star, CheckCircle2, AlertCircle } from 'lucide-react';
+import { X, Plus, Edit, FolderOpen, Image as ImageIcon, Sparkles, Hash, AlignLeft, Layers, Star, CheckCircle2, Folder } from 'lucide-react';
 
-const CategoryModal = ({ 
+const SubCategoryModal = ({ 
   show, 
   onClose, 
   onSave, 
-  editingCategory, 
-  categoryForm, 
-  setCategoryForm, 
+  editingSubCategory, 
+  subCategoryForm, 
+  setSubCategoryForm, 
+  categories,
   handleImageDrop,
   handleImageUpload,
   handleRemoveImage,
   validationErrors,
-  categoryValidationRules,
+  subCategoryValidationRules,
   onFieldValidate
 }) => {
   if (!show) return null;
 
-  // Check if form has minimum required data
-  const hasRequiredData = categoryForm.name && categoryForm.name.trim() !== '' &&
-                          categoryForm.displayName && categoryForm.displayName.trim() !== '';
-
   const validateField = (fieldName, value) => {
-    // Client-side validation rules
-    const validationRules = {
-      name: {
-        required: true,
-        minLength: 2,
-        maxLength: 50,
-        regex: /^[a-z0-9-]+$/,
-        errorMessage: 'Category name is required, must be 2-50 characters, lowercase letters, numbers, and hyphens only'
-      },
-      displayName: {
-        required: true,
-        minLength: 2,
-        maxLength: 100,
-        errorMessage: 'Display name is required, must be 2-100 characters'
-      },
-      icon: {
-        maxLength: 2,
-        errorMessage: 'Icon cannot exceed 2 characters'
-      },
-      description: {
-        maxLength: 500,
-        errorMessage: 'Description cannot exceed 500 characters'
-      },
-      displayOrder: {
-        errorMessage: 'Display order must be a positive number'
-      }
-    };
-
-    const rules = validationRules[fieldName];
+    if (!subCategoryValidationRules) return null;
+    
+    const rules = subCategoryValidationRules[fieldName];
     if (!rules) return null;
 
     let error = null;
 
-    if (rules.required && (!value || value.trim() === '')) {
-      error = rules.errorMessage;
+    if (rules.Required && (!value || value.trim() === '')) {
+      error = rules.ErrorMessage || `${fieldName} is required`;
     } else if (value) {
-      if (rules.minLength && value.length < rules.minLength) {
-        error = rules.errorMessage;
+      if (rules.MinLength && value.length < rules.MinLength) {
+        error = rules.ErrorMessage || `${fieldName} must be at least ${rules.MinLength} characters`;
       }
-      if (rules.maxLength && value.length > rules.maxLength) {
-        error = rules.errorMessage;
+      if (rules.MaxLength && value.length > rules.MaxLength) {
+        error = rules.ErrorMessage || `${fieldName} cannot exceed ${rules.MaxLength} characters`;
       }
-      if (rules.regex && !new RegExp(rules.regex).test(value)) {
-        error = rules.errorMessage;
+      if (rules.Regex && !new RegExp(rules.Regex).test(value)) {
+        error = rules.ErrorMessage || `${fieldName} format is invalid`;
       }
     }
 
@@ -79,7 +50,7 @@ const CategoryModal = ({
   };
 
   const handleFieldChange = (fieldName, value) => {
-    setCategoryForm({ ...categoryForm, [fieldName]: value });
+    setSubCategoryForm({ ...subCategoryForm, [fieldName]: value });
     // Clear error when user starts typing
     if (validationErrors[fieldName] && onFieldValidate) {
       onFieldValidate(fieldName, null);
@@ -98,14 +69,14 @@ const CategoryModal = ({
           <div className="relative flex items-center justify-between">
             <div className="flex items-center gap-3 sm:gap-4">
               <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-sm shadow-lg">
-                <Folder size={24} sm:size={28} className="text-white" />
+                <FolderOpen size={24} sm:size={28} className="text-white" />
               </div>
               <div>
                 <h3 className="text-xl sm:text-2xl font-bold text-white">
-                  {editingCategory ? 'Edit Category' : 'Add Category'}
+                  {editingSubCategory ? 'Edit SubCategory' : 'Add SubCategory'}
                 </h3>
                 <p className="text-violet-100 text-sm sm:text-base mt-1">
-                  {editingCategory ? 'Update category details' : 'Create a new category'}
+                  {editingSubCategory ? 'Update subcategory details' : 'Create a new subcategory'}
                 </p>
               </div>
             </div>
@@ -119,18 +90,53 @@ const CategoryModal = ({
         </div>
         
         <div className="p-4 sm:p-6 md:p-8 space-y-5 sm:space-y-6">
+          {/* Parent Category Field */}
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
+              <Folder size={16} className="text-violet-600" />
+              Parent Category
+            </label>
+            <div className="relative">
+              <select
+                value={subCategoryForm.categoryId}
+                onChange={(e) => handleFieldChange('categoryId', e.target.value)}
+                onBlur={(e) => handleFieldBlur('categoryId', e.target.value)}
+                className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all text-sm sm:text-base bg-slate-50/50 appearance-none cursor-pointer ${
+                  validationErrors.categoryId 
+                    ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' 
+                    : 'border-slate-200 focus:border-violet-500 focus:ring-violet-500/20'
+                }`}
+              >
+                <option value="">Select a category</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.displayName || category.name}
+                  </option>
+                ))}
+              </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+              {validationErrors.categoryId && (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.categoryId}</p>
+              )}
+            </div>
+          </div>
+
           {/* Two-column layout for name and display name */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             {/* Name Field */}
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
                 <Hash size={16} className="text-violet-600" />
-                Category Name
+                SubCategory Name
               </label>
               <div className="relative">
                 <input
                   type="text"
-                  value={categoryForm.name}
+                  value={subCategoryForm.name}
                   onChange={(e) => handleFieldChange('name', e.target.value)}
                   onBlur={(e) => handleFieldBlur('name', e.target.value)}
                   className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all text-sm sm:text-base bg-slate-50/50 ${
@@ -138,13 +144,10 @@ const CategoryModal = ({
                       ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' 
                       : 'border-slate-200 focus:border-violet-500 focus:ring-violet-500/20'
                   }`}
-                  placeholder="e.g., fashion"
+                  placeholder="e.g., men-clothing"
                 />
                 {validationErrors.name && (
-                  <div className="mt-2 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-r-lg p-2.5 flex items-start gap-2 animate-in slide-in-from-left duration-200">
-                    <AlertCircle size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
-                    <p className="text-red-700 text-xs font-medium leading-tight">{validationErrors.name}</p>
-                  </div>
+                  <p className="text-red-500 text-xs mt-1">{validationErrors.name}</p>
                 )}
               </div>
             </div>
@@ -158,7 +161,7 @@ const CategoryModal = ({
               <div className="relative">
                 <input
                   type="text"
-                  value={categoryForm.displayName}
+                  value={subCategoryForm.displayName}
                   onChange={(e) => handleFieldChange('displayName', e.target.value)}
                   onBlur={(e) => handleFieldBlur('displayName', e.target.value)}
                   className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all text-sm sm:text-base bg-slate-50/50 ${
@@ -166,13 +169,10 @@ const CategoryModal = ({
                       ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' 
                       : 'border-slate-200 focus:border-violet-500 focus:ring-violet-500/20'
                   }`}
-                  placeholder="e.g., Fashion"
+                  placeholder="e.g., Men's Clothing"
                 />
                 {validationErrors.displayName && (
-                  <div className="mt-2 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-r-lg p-2.5 flex items-start gap-2 animate-in slide-in-from-left duration-200">
-                    <AlertCircle size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
-                    <p className="text-red-700 text-xs font-medium leading-tight">{validationErrors.displayName}</p>
-                  </div>
+                  <p className="text-red-500 text-xs mt-1">{validationErrors.displayName}</p>
                 )}
               </div>
             </div>
@@ -189,8 +189,8 @@ const CategoryModal = ({
               <div className="relative">
                 <input
                   type="text"
-                  value={categoryForm.icon}
-                  onChange={(e) => setCategoryForm({ ...categoryForm, icon: e.target.value })}
+                  value={subCategoryForm.icon}
+                  onChange={(e) => setSubCategoryForm({ ...subCategoryForm, icon: e.target.value, image: '' })}
                   className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-500/20 transition-all text-sm sm:text-base bg-slate-50/50 text-center text-2xl"
                   placeholder="📦"
                   maxLength={2}
@@ -207,8 +207,8 @@ const CategoryModal = ({
               <div className="relative">
                 <input
                   type="number"
-                  value={categoryForm.displayOrder}
-                  onChange={(e) => setCategoryForm({ ...categoryForm, displayOrder: parseInt(e.target.value) || 0 })}
+                  value={subCategoryForm.displayOrder}
+                  onChange={(e) => setSubCategoryForm({ ...subCategoryForm, displayOrder: parseInt(e.target.value) || 0 })}
                   className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-500/20 transition-all text-sm sm:text-base bg-slate-50/50"
                   placeholder="0"
                 />
@@ -220,32 +220,32 @@ const CategoryModal = ({
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
               <ImageIcon size={16} className="text-violet-600" />
-              Category Image
+              SubCategory Image
             </label>
             <div
               className={`border-2 border-dashed rounded-2xl p-6 text-center transition-all cursor-pointer relative overflow-hidden ${
                 validationErrors.image 
                   ? 'border-red-400 bg-red-50/50' 
-                  : categoryForm.image 
+                  : subCategoryForm.image 
                   ? 'border-violet-300 bg-violet-50/50' 
-                  : categoryForm.icon
+                  : subCategoryForm.icon
                   ? 'border-slate-300 bg-slate-100 cursor-not-allowed'
                   : 'border-slate-300 hover:border-violet-400 hover:bg-violet-50/30'
               }`}
               onDragOver={(e) => e.preventDefault()}
-              onDrop={(e) => !categoryForm.icon && handleImageDrop(e, 'category')}
+              onDrop={(e) => !subCategoryForm.icon && handleImageDrop(e, 'subcategory')}
             >
-              {categoryForm.image ? (
+              {subCategoryForm.image ? (
                 <div className="relative inline-block">
                   <img
-                    src={categoryForm.image}
-                    alt="Category preview"
+                    src={subCategoryForm.image}
+                    alt="SubCategory preview"
                     className="max-h-48 mx-auto rounded-xl shadow-lg object-contain"
                     style={{ maxWidth: '100%' }}
                   />
                   <button
                     type="button"
-                    onClick={(e) => handleRemoveImage(e, 'category')}
+                    onClick={(e) => handleRemoveImage(e, 'subcategory')}
                     className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full transition-all hover:scale-110 shadow-lg z-10"
                   >
                     <X size={16} />
@@ -254,12 +254,12 @@ const CategoryModal = ({
               ) : (
                 <div className="py-4">
                   <div className={`bg-gradient-to-br w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 ${
-                    categoryForm.icon ? 'from-slate-100 to-slate-200' : 'from-violet-100 to-purple-100'
+                    subCategoryForm.icon ? 'from-slate-100 to-slate-200' : 'from-violet-100 to-purple-100'
                   }`}>
-                    <ImageIcon size={32} className={categoryForm.icon ? 'text-slate-400' : 'text-violet-600'} />
+                    <ImageIcon size={32} className={subCategoryForm.icon ? 'text-slate-400' : 'text-violet-600'} />
                   </div>
-                  <p className={`font-medium mb-1 ${categoryForm.icon ? 'text-slate-500' : 'text-slate-700'}`}>
-                    {categoryForm.icon ? 'Image disabled when icon is set' : 'Drag & drop an image here'}
+                  <p className={`font-medium mb-1 ${subCategoryForm.icon ? 'text-slate-500' : 'text-slate-700'}`}>
+                    {subCategoryForm.icon ? 'Image disabled when icon is set' : 'Drag & drop an image here'}
                   </p>
                   <p className="text-slate-500 text-sm">or click to select a file</p>
                 </div>
@@ -267,16 +267,13 @@ const CategoryModal = ({
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => !categoryForm.icon && handleImageUpload(e, 'category')}
+                onChange={(e) => !subCategoryForm.icon && handleImageUpload(e, 'subcategory')}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                disabled={!!categoryForm.icon}
+                disabled={!!subCategoryForm.icon}
               />
             </div>
             {validationErrors.image && (
-              <div className="mt-2 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-r-lg p-2.5 flex items-start gap-2 animate-in slide-in-from-left duration-200">
-                <AlertCircle size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
-                <p className="text-red-700 text-xs font-medium leading-tight">{validationErrors.image}</p>
-              </div>
+              <p className="text-red-500 text-xs mt-1">{validationErrors.image}</p>
             )}
           </div>
 
@@ -287,7 +284,7 @@ const CategoryModal = ({
               Description
             </label>
             <textarea
-              value={categoryForm.description}
+              value={subCategoryForm.description}
               onChange={(e) => handleFieldChange('description', e.target.value)}
               onBlur={(e) => handleFieldBlur('description', e.target.value)}
               className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all resize-none text-sm sm:text-base bg-slate-50/50 ${
@@ -296,13 +293,10 @@ const CategoryModal = ({
                   : 'border-slate-200 focus:border-violet-500 focus:ring-violet-500/20'
               }`}
               rows={4}
-              placeholder="Category description..."
+              placeholder="Subcategory description..."
             />
             {validationErrors.description && (
-              <div className="mt-2 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-r-lg p-2.5 flex items-start gap-2 animate-in slide-in-from-left duration-200">
-                <AlertCircle size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
-                <p className="text-red-700 text-xs font-medium leading-tight">{validationErrors.description}</p>
-              </div>
+              <p className="text-red-500 text-xs mt-1">{validationErrors.description}</p>
             )}
           </div>
 
@@ -312,8 +306,8 @@ const CategoryModal = ({
               <div className="relative">
                 <input
                   type="checkbox"
-                  checked={categoryForm.isFeatured}
-                  onChange={(e) => setCategoryForm({ ...categoryForm, isFeatured: e.target.checked })}
+                  checked={subCategoryForm.isFeatured}
+                  onChange={(e) => setSubCategoryForm({ ...subCategoryForm, isFeatured: e.target.checked })}
                   className="sr-only peer"
                 />
                 <div className="w-14 h-7 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-amber-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-amber-500 peer-checked:to-orange-500 shadow-inner"></div>
@@ -325,7 +319,7 @@ const CategoryModal = ({
                 </div>
                 <p className="text-xs text-slate-500 mt-1">Show on homepage</p>
               </div>
-              {categoryForm.isFeatured && (
+              {subCategoryForm.isFeatured && (
                 <CheckCircle2 size={20} className="text-amber-600" />
               )}
             </label>
@@ -333,8 +327,8 @@ const CategoryModal = ({
               <div className="relative">
                 <input
                   type="checkbox"
-                  checked={categoryForm.isActive}
-                  onChange={(e) => setCategoryForm({ ...categoryForm, isActive: e.target.checked })}
+                  checked={subCategoryForm.isActive}
+                  onChange={(e) => setSubCategoryForm({ ...subCategoryForm, isActive: e.target.checked })}
                   className="sr-only peer"
                 />
                 <div className="w-14 h-7 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-emerald-500/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-emerald-500 peer-checked:to-green-500 shadow-inner"></div>
@@ -346,7 +340,7 @@ const CategoryModal = ({
                 </div>
                 <p className="text-xs text-slate-500 mt-1">Visible to users</p>
               </div>
-              {categoryForm.isActive && (
+              {subCategoryForm.isActive && (
                 <CheckCircle2 size={20} className="text-emerald-600" />
               )}
             </label>
@@ -364,15 +358,10 @@ const CategoryModal = ({
           </button>
           <button
             onClick={onSave}
-            disabled={Object.keys(validationErrors).length > 0 || !hasRequiredData}
-            className={`flex-1 px-4 sm:px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white rounded-xl font-semibold transition-all shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 flex items-center justify-center gap-2 text-sm sm:text-base ${
-              Object.keys(validationErrors).length > 0 || !hasRequiredData
-                ? 'opacity-50 cursor-not-allowed' 
-                : 'hover:scale-105'
-            }`}
+            className="flex-1 px-4 sm:px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white rounded-xl font-semibold transition-all shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 flex items-center justify-center gap-2 text-sm sm:text-base"
           >
-            {editingCategory ? <Edit size={18} /> : <Plus size={18} />}
-            {editingCategory ? 'Update Category' : 'Create Category'}
+            {editingSubCategory ? <Edit size={18} /> : <Plus size={18} />}
+            {editingSubCategory ? 'Update SubCategory' : 'Create SubCategory'}
           </button>
         </div>
       </div>
@@ -380,4 +369,4 @@ const CategoryModal = ({
   );
 };
 
-export default CategoryModal;
+export default SubCategoryModal;

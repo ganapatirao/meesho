@@ -2,7 +2,7 @@ import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { X, Users, AlertCircle, Crown, Shield, UserCheck, UserX, Sparkles } from 'lucide-react';
 import { authAPI, userAPI } from '../../../services/api';
 
-const UserModal = forwardRef(({ onSuccess }, ref) => {
+const UserModal = forwardRef(({ onSuccess, showToast }, ref) => {
   const [show, setShow] = useState(false);
   const [validationRules, setValidationRules] = useState(null);
   const [errors, setErrors] = useState({});
@@ -142,7 +142,7 @@ const UserModal = forwardRef(({ onSuccess }, ref) => {
         console.log('Using userId:', userId);
         
         if (!userId) {
-          alert('Error: User ID is missing. Cannot update user.');
+          if (showToast) showToast('Error: User ID is missing. Cannot update user.', 'error');
           return;
         }
         
@@ -159,7 +159,7 @@ const UserModal = forwardRef(({ onSuccess }, ref) => {
         }
         
         await userAPI.update(userId, userData);
-        alert('User updated successfully!');
+        if (showToast) showToast('User updated successfully!', 'success');
       } else {
         console.log('Creating new user with form:', userForm);
         console.log('Form keys:', Object.keys(userForm));
@@ -174,14 +174,15 @@ const UserModal = forwardRef(({ onSuccess }, ref) => {
         };
         console.log('Sending to API:', userData);
         await userAPI.create(userData);
-        alert('User created successfully!');
+        if (showToast) showToast('User created successfully!', 'success');
       }
       handleClose();
       if (onSuccess) onSuccess();
     } catch (error) {
       console.error('Error saving user:', error);
       console.error('Error response:', error.response?.data);
-      alert('Error saving user: ' + (error.response?.data?.message || error.message));
+      const errorMessage = error.response?.data?.error || error.response?.data?.message || error.message;
+      if (showToast) showToast(errorMessage, 'error');
     }
   };
 
@@ -207,7 +208,8 @@ const UserModal = forwardRef(({ onSuccess }, ref) => {
       if (onSuccess) onSuccess();
     } catch (error) {
       console.error('Error toggling user status:', error);
-      alert('Error toggling user status');
+      const errorMessage = error.response?.data?.error || error.response?.data?.message || 'Error toggling user status';
+      if (showToast) showToast(errorMessage, 'error');
     }
   };
 
@@ -217,11 +219,12 @@ const UserModal = forwardRef(({ onSuccess }, ref) => {
     try {
       const userId = user.Id || user.id || user._id;
       await userAPI.delete(userId);
-      alert('User deleted successfully!');
+      if (showToast) showToast('User deleted successfully!', 'success');
       if (onSuccess) onSuccess();
     } catch (error) {
       console.error('Error deleting user:', error);
-      alert('Error deleting user');
+      const errorMessage = error.response?.data?.error || error.response?.data?.message || 'Error deleting user';
+      if (showToast) showToast(errorMessage, 'error');
     }
   };
 

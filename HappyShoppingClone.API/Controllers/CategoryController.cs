@@ -130,7 +130,7 @@ public class CategoryController : ControllerBase
             category.DisplayOrder = categories.Any() ? categories.Max(c => c.DisplayOrder) + 1 : 0;
         }
 
-        category.Id = null;
+        category.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
         category.CreatedAt = DateTime.UtcNow;
         category.UpdatedAt = DateTime.UtcNow;
         await _context.Categories.InsertOneAsync(category);
@@ -205,6 +205,13 @@ public class CategoryController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteCategory(string id)
     {
+        // Check if category has subcategories
+        var subCategories = await _context.SubCategories.Find(sc => sc.CategoryId == id).ToListAsync();
+        if (subCategories.Any())
+        {
+            return BadRequest(new { success = false, error = "Cannot delete category because it has subcategories. Please delete the subcategories first." });
+        }
+
         var result = await _context.Categories.DeleteOneAsync(c => c.Id == id);
         if (result.DeletedCount == 0)
         {

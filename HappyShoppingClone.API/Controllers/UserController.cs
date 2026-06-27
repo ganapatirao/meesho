@@ -53,6 +53,23 @@ namespace HappyShoppingClone.API.Controllers
         {
             try
             {
+                // Check if email already exists
+                var existingUserByEmail = await _context.Users.Find(u => u.Email.ToLower() == user.Email.ToLower()).FirstOrDefaultAsync();
+                if (existingUserByEmail != null)
+                {
+                    return BadRequest(new { success = false, error = "A user with this email already exists." });
+                }
+
+                // Check if phone number already exists
+                if (!string.IsNullOrEmpty(user.PhoneNumber))
+                {
+                    var existingUserByPhone = await _context.Users.Find(u => u.PhoneNumber == user.PhoneNumber).FirstOrDefaultAsync();
+                    if (existingUserByPhone != null)
+                    {
+                        return BadRequest(new { success = false, error = "A user with this phone number already exists." });
+                    }
+                }
+
                 user.Id = Guid.NewGuid().ToString();
                 user.CreatedAt = DateTime.UtcNow;
                 user.UpdatedAt = DateTime.UtcNow;
@@ -61,7 +78,7 @@ namespace HappyShoppingClone.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { success = false, message = ex.Message });
+                return StatusCode(500, new { success = false, error = ex.Message });
             }
         }
 
@@ -73,7 +90,24 @@ namespace HappyShoppingClone.API.Controllers
                 var existingUser = await _context.Users.Find(u => u.Id == id).FirstOrDefaultAsync();
                 if (existingUser == null)
                 {
-                    return NotFound(new { success = false, message = "User not found" });
+                    return NotFound(new { success = false, error = "User not found" });
+                }
+
+                // Check if email already exists for another user
+                var existingUserByEmail = await _context.Users.Find(u => u.Email.ToLower() == user.Email.ToLower() && u.Id != id).FirstOrDefaultAsync();
+                if (existingUserByEmail != null)
+                {
+                    return BadRequest(new { success = false, error = "A user with this email already exists." });
+                }
+
+                // Check if phone number already exists for another user
+                if (!string.IsNullOrEmpty(user.PhoneNumber))
+                {
+                    var existingUserByPhone = await _context.Users.Find(u => u.PhoneNumber == user.PhoneNumber && u.Id != id).FirstOrDefaultAsync();
+                    if (existingUserByPhone != null)
+                    {
+                        return BadRequest(new { success = false, error = "A user with this phone number already exists." });
+                    }
                 }
 
                 user.Id = id;
@@ -83,7 +117,7 @@ namespace HappyShoppingClone.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { success = false, message = ex.Message });
+                return StatusCode(500, new { success = false, error = ex.Message });
             }
         }
 

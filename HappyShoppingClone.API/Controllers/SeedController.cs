@@ -76,10 +76,10 @@ public class SeedController : ControllerBase
             {
                 subCategories.AddRange(new List<SubCategory>
                 {
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "mens-wear", DisplayName = "Men's Wear", CategoryId = fashionCategory.Id, Image = "", Description = "Clothing for men", IsFeatured = true, DisplayOrder = 0 },
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "womens-wear", DisplayName = "Women's Wear", CategoryId = fashionCategory.Id, Image = "", Description = "Clothing for women", IsFeatured = true, DisplayOrder = 1 },
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "kids-wear", DisplayName = "Kids' Wear", CategoryId = fashionCategory.Id, Image = "", Description = "Clothing for kids", IsFeatured = false, DisplayOrder = 2 },
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "ethnic-wear", DisplayName = "Ethnic Wear", CategoryId = fashionCategory.Id, Image = "", Description = "Traditional clothing", IsFeatured = true, DisplayOrder = 3 }
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "mens-wear", DisplayName = "Men's Wear", CategoryId = fashionCategory.Id, Icon = "👔", Image = "", Description = "Clothing for men", IsFeatured = true, DisplayOrder = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "womens-wear", DisplayName = "Women's Wear", CategoryId = fashionCategory.Id, Icon = "👗", Image = "", Description = "Clothing for women", IsFeatured = true, DisplayOrder = 1 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "kids-wear", DisplayName = "Kids' Wear", CategoryId = fashionCategory.Id, Icon = "👶", Image = "", Description = "Clothing for kids", IsFeatured = false, DisplayOrder = 2 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "ethnic-wear", DisplayName = "Ethnic Wear", CategoryId = fashionCategory.Id, Icon = "🎎", Image = "", Description = "Traditional clothing", IsFeatured = true, DisplayOrder = 3 }
                 });
             }
 
@@ -89,10 +89,10 @@ public class SeedController : ControllerBase
             {
                 subCategories.AddRange(new List<SubCategory>
                 {
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "mobiles", DisplayName = "Mobiles", CategoryId = electronicsCategory.Id, Image = "", Description = "Smartphones and mobiles", IsFeatured = true, DisplayOrder = 0 },
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "laptops", DisplayName = "Laptops", CategoryId = electronicsCategory.Id, Image = "", Description = "Laptops and computers", IsFeatured = true, DisplayOrder = 1 },
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "audio", DisplayName = "Audio", CategoryId = electronicsCategory.Id, Image = "", Description = "Audio equipment", IsFeatured = false, DisplayOrder = 2 },
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "wearables", DisplayName = "Wearables", CategoryId = electronicsCategory.Id, Image = "", Description = "Smartwatches and fitness", IsFeatured = true, DisplayOrder = 3 }
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "mobiles", DisplayName = "Mobiles", CategoryId = electronicsCategory.Id, Icon = "📱", Image = "", Description = "Smartphones and mobiles", IsFeatured = true, DisplayOrder = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "laptops", DisplayName = "Laptops", CategoryId = electronicsCategory.Id, Icon = "💻", Image = "", Description = "Laptops and computers", IsFeatured = true, DisplayOrder = 1 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "audio", DisplayName = "Audio", CategoryId = electronicsCategory.Id, Icon = "🎧", Image = "", Description = "Audio equipment", IsFeatured = false, DisplayOrder = 2 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "wearables", DisplayName = "Wearables", CategoryId = electronicsCategory.Id, Icon = "⌚", Image = "", Description = "Smartwatches and fitness", IsFeatured = true, DisplayOrder = 3 }
                 });
             }
 
@@ -102,9 +102,9 @@ public class SeedController : ControllerBase
             {
                 subCategories.AddRange(new List<SubCategory>
                 {
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "furniture", DisplayName = "furniture", CategoryId = homeCategory.Id, Image = "", Description = "Home furniture", IsFeatured = true, DisplayOrder = 0 },
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "bedding", DisplayName = "Bedding", CategoryId = homeCategory.Id, Image = "", Description = "Bed sheets and linens", IsFeatured = false, DisplayOrder = 1 },
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "decor", DisplayName = "Decor", CategoryId = homeCategory.Id, Image = "", Description = "Home decoration", IsFeatured = true, DisplayOrder = 2 }
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "furniture", DisplayName = "furniture", CategoryId = homeCategory.Id, Icon = "🛋️", Image = "", Description = "Home furniture", IsFeatured = true, DisplayOrder = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "bedding", DisplayName = "Bedding", CategoryId = homeCategory.Id, Icon = "🛏️", Image = "", Description = "Bed sheets and linens", IsFeatured = false, DisplayOrder = 1 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "decor", DisplayName = "Decor", CategoryId = homeCategory.Id, Icon = "🏺", Image = "", Description = "Home decoration", IsFeatured = true, DisplayOrder = 2 }
                 });
             }
 
@@ -114,9 +114,9 @@ public class SeedController : ControllerBase
             {
                 subCategories.AddRange(new List<SubCategory>
                 {
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "makeup", DisplayName = "Makeup", CategoryId = beautyCategory.Id, Image = "", Description = "Makeup products", IsFeatured = true, DisplayOrder = 0 },
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "skincare", DisplayName = "Skincare", CategoryId = beautyCategory.Id, Image = "", Description = "Skin care products", IsFeatured = true, DisplayOrder = 1 },
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "haircare", DisplayName = "Haircare", CategoryId = beautyCategory.Id, Image = "", Description = "Hair care products", IsFeatured = false, DisplayOrder = 2 }
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "makeup", DisplayName = "Makeup", CategoryId = beautyCategory.Id, Icon = "💄", Image = "", Description = "Makeup products", IsFeatured = true, DisplayOrder = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "skincare", DisplayName = "Skincare", CategoryId = beautyCategory.Id, Icon = "🧴", Image = "", Description = "Skin care products", IsFeatured = true, DisplayOrder = 1 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "haircare", DisplayName = "Haircare", CategoryId = beautyCategory.Id, Icon = "💇", Image = "", Description = "Hair care products", IsFeatured = false, DisplayOrder = 2 }
                 });
             }
 
@@ -126,8 +126,8 @@ public class SeedController : ControllerBase
             {
                 subCategories.AddRange(new List<SubCategory>
                 {
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "fitness", DisplayName = "Fitness", CategoryId = sportsCategory.Id, Image = "", Description = "Fitness equipment", IsFeatured = true, DisplayOrder = 0 },
-                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "outdoor-sports", DisplayName = "Outdoor Sports", CategoryId = sportsCategory.Id, Image = "", Description = "Outdoor sports gear", IsFeatured = false, DisplayOrder = 1 }
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "fitness", DisplayName = "Fitness", CategoryId = sportsCategory.Id, Icon = "🏋️", Image = "", Description = "Fitness equipment", IsFeatured = true, DisplayOrder = 0 },
+                    new SubCategory { Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(), Name = "outdoor-sports", DisplayName = "Outdoor Sports", CategoryId = sportsCategory.Id, Icon = "⚽", Image = "", Description = "Outdoor sports gear", IsFeatured = false, DisplayOrder = 1 }
                 });
             }
         }

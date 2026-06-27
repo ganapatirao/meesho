@@ -70,7 +70,7 @@ import ProductsSection from '../components/admin/ProductsSection';
 
 import CategoriesSection from '../components/admin/categories/CategoriesSection';
 
-import SubCategoriesSection from '../components/admin/SubCategoriesSection';
+import SubCategoriesSection from '../components/admin/subcategories/SubCategoriesSection';
 
 import VendorsSection from '../components/admin/VendorsSection';
 
@@ -86,13 +86,15 @@ import ProductModal from '../components/admin/ProductModal';
 
 import CategoryModal from '../components/admin/categories/CategoryModal';
 
-import SubCategoryModal from '../components/admin/SubCategoryModal';
+import SubCategoryModal from '../components/admin/subcategories/SubCategoryModal';
 
 import VendorModal from '../components/admin/VendorModal';
 
 import UserModal from '../components/admin/users/UserModal';
 
 import DeleteConfirmationModal from '../components/admin/DeleteConfirmationModal';
+
+import Toast from '../components/Toast';
 
 
 
@@ -138,6 +140,8 @@ const AdminDashboard = () => {
   const [deleteTarget, setDeleteTarget] = useState({ type: '', id: '', name: '' });
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
 
   
 
@@ -197,6 +201,8 @@ const AdminDashboard = () => {
 
   const [categoryValidationRules, setCategoryValidationRules] = useState({});
 
+  const [subCategoryValidationRules, setSubCategoryValidationRules] = useState({});
+
   
 
   // Modal states
@@ -248,6 +254,8 @@ const AdminDashboard = () => {
     displayName: '',
 
     categoryId: '',
+
+    icon: '',
 
     image: '',
 
@@ -418,6 +426,17 @@ const AdminDashboard = () => {
     }
   };
 
+  const fetchSubCategoryValidationRules = async () => {
+    try {
+      const response = await subCategoryAPI.getValidationRules();
+      if (response.data.success) {
+        setSubCategoryValidationRules(response.data.rules);
+      }
+    } catch (error) {
+      console.error('Error fetching subcategory validation rules:', error);
+    }
+  };
+
   const fetchMaxDisplayOrder = async () => {
     try {
       const response = await categoryAPI.getMaxDisplayOrder();
@@ -432,6 +451,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     fetchCategoryValidationRules();
+    fetchSubCategoryValidationRules();
   }, []);
 
   
@@ -812,7 +832,11 @@ const AdminDashboard = () => {
 
       if (response.data.success) {
 
-        alert('Configuration saved successfully!');
+        setToast({
+          show: true,
+          message: 'Configuration saved successfully!',
+          type: 'success'
+        });
 
       }
 
@@ -820,7 +844,11 @@ const AdminDashboard = () => {
 
       console.error('Error saving configuration:', error);
 
-      alert('Failed to save configuration');
+      setToast({
+        show: true,
+        message: 'Failed to save configuration',
+        type: 'error'
+      });
 
     }
 
@@ -1100,7 +1128,11 @@ const AdminDashboard = () => {
 
       }
 
-      alert(`${deleteTarget.type.charAt(0).toUpperCase() + deleteTarget.type.slice(1)} deleted successfully!`);
+      setToast({
+        show: true,
+        message: `${deleteTarget.type.charAt(0).toUpperCase() + deleteTarget.type.slice(1)} deleted successfully!`,
+        type: 'success'
+      });
 
       loadDashboardData();
 
@@ -1108,7 +1140,12 @@ const AdminDashboard = () => {
 
       console.error(`Error deleting ${deleteTarget.type}:`, error);
 
-      alert(`Error deleting ${deleteTarget.type}`);
+      const errorMessage = error.response?.data?.error || error.response?.data?.message || `Error deleting ${deleteTarget.type}`;
+      setToast({
+        show: true,
+        message: errorMessage,
+        type: 'error'
+      });
 
     }
 
@@ -1132,60 +1169,54 @@ const AdminDashboard = () => {
 
   // SubCategory handlers
 
-  const handleOpenSubCategoryModal = (subCategory = null) => {
-
-    if (subCategory) {
-
-      setEditingSubCategory(subCategory);
-
-      setSubCategoryForm({
-
-        name: subCategory.name,
-
-        displayName: subCategory.displayName,
-
-        categoryId: subCategory.categoryId,
-
-        image: subCategory.image,
-
-        description: subCategory.description,
-
-        isFeatured: subCategory.isFeatured,
-
-        displayOrder: subCategory.displayOrder,
-
-        isActive: subCategory.isActive,
-
-      });
-
-    } else {
-
-      setEditingSubCategory(null);
-
-      setSubCategoryForm({
-
-        name: '',
-
-        displayName: '',
-
-        categoryId: '',
-
-        image: '',
-
-        description: '',
-
-        isFeatured: false,
-
-        displayOrder: 0,
-
-        isActive: true,
-
-      });
-
+  const handleOpenSubCategoryModal = async (subCategory = null) => {
+    try {
+      if (subCategory) {
+        setEditingSubCategory(subCategory);
+        setSubCategoryForm({
+          name: subCategory.name,
+          displayName: subCategory.displayName,
+          categoryId: subCategory.categoryId,
+          icon: subCategory.icon || '',
+          image: subCategory.image,
+          description: subCategory.description,
+          isFeatured: subCategory.isFeatured,
+          displayOrder: subCategory.displayOrder,
+          isActive: subCategory.isActive,
+        });
+      } else {
+        setEditingSubCategory(null);
+        try {
+          const maxDisplayOrder = await subCategoryAPI.getMaxDisplayOrder();
+          const nextDisplayOrder = maxDisplayOrder.data.success ? maxDisplayOrder.data.maxDisplayOrder : 0;
+          setSubCategoryForm({
+            name: '',
+            displayName: '',
+            categoryId: '',
+            image: '',
+            description: '',
+            isFeatured: false,
+            displayOrder: nextDisplayOrder,
+            isActive: true,
+          });
+        } catch (error) {
+          console.error('Error fetching max display order:', error);
+          setSubCategoryForm({
+            name: '',
+            displayName: '',
+            categoryId: '',
+            image: '',
+            description: '',
+            isFeatured: false,
+            displayOrder: 0,
+            isActive: true,
+          });
+        }
+      }
+      setShowSubCategoryModal(true);
+    } catch (error) {
+      console.error('Error opening subcategory modal:', error);
     }
-
-    setShowSubCategoryModal(true);
-
   };
 
 
@@ -1203,6 +1234,8 @@ const AdminDashboard = () => {
       displayName: '',
 
       categoryId: '',
+
+      icon: '',
 
       image: '',
 
@@ -1223,41 +1256,76 @@ const AdminDashboard = () => {
 
 
   const handleSaveSubCategory = async () => {
-
-    try {
-
-      if (editingSubCategory) {
-
-        await subCategoryAPI.update(editingSubCategory.id, subCategoryForm);
-
-        // Update dependent products when subcategory name changes
-
-        if (subCategoryForm.name !== editingSubCategory.name) {
-
-          await updateProductsOnSubcategoryChange(editingSubCategory.id, subCategoryForm.name);
-
-        }
-
-      } else {
-
-        await subCategoryAPI.create(subCategoryForm);
-
-      }
-
-      alert(editingSubCategory ? 'SubCategory updated successfully!' : 'SubCategory created successfully!');
-
-      handleCloseSubCategoryModal();
-
-      loadDashboardData();
-
-    } catch (error) {
-
-      console.error('Error saving subcategory:', error);
-
-      alert('Error saving subcategory');
-
+    // Validate image/icon exclusivity
+    if (subCategoryForm.image && subCategoryForm.icon) {
+      setValidationErrors({ image: 'Only one of Image or Icon can be set, not both' });
+      setToast({
+        show: true,
+        message: 'Only one of Image or Icon can be set, not both',
+        type: 'error'
+      });
+      return;
     }
 
+    try {
+      if (editingSubCategory) {
+        await subCategoryAPI.update(editingSubCategory.id, subCategoryForm);
+        // Update dependent products when subcategory name changes
+        if (subCategoryForm.name !== editingSubCategory.name) {
+          await updateProductsOnSubcategoryChange(editingSubCategory.id, subCategoryForm.name);
+        }
+      } else {
+        await subCategoryAPI.create(subCategoryForm);
+      }
+      setToast({
+        show: true,
+        message: editingSubCategory ? 'SubCategory updated successfully!' : 'SubCategory created successfully!',
+        type: 'success'
+      });
+      handleCloseSubCategoryModal();
+      loadDashboardData();
+    } catch (error) {
+      console.error('Error saving subcategory:', error);
+      console.error('Error response:', error.response?.data);
+      if (error.response && error.response.data && error.response.data.errors) {
+        const backendErrors = error.response.data.errors;
+        console.log('Backend errors type:', typeof backendErrors);
+        console.log('Backend errors:', backendErrors);
+        const errorMap = {};
+        
+        // Handle both array and object errors
+        if (Array.isArray(backendErrors)) {
+          backendErrors.forEach(err => {
+            if (err.toLowerCase().includes('name')) errorMap.name = err;
+            else if (err.toLowerCase().includes('display')) errorMap.displayName = err;
+            else if (err.toLowerCase().includes('category')) errorMap.categoryId = err;
+            else if (err.toLowerCase().includes('icon')) errorMap.icon = err;
+            else if (err.toLowerCase().includes('image')) errorMap.image = err;
+            else if (err.toLowerCase().includes('description')) errorMap.description = err;
+            else if (err.toLowerCase().includes('order')) errorMap.displayOrder = err;
+          });
+        } else {
+          // Handle object errors
+          Object.keys(backendErrors).forEach(key => {
+            errorMap[key] = backendErrors[key];
+          });
+        }
+        
+        setValidationErrors(errorMap);
+        setToast({
+          show: true,
+          message: 'Validation failed. Please check the form for errors.',
+          type: 'error'
+        });
+      } else {
+        const errorMessage = error.response?.data?.error || error.response?.data?.message || 'Unknown error';
+        setToast({
+          show: true,
+          message: 'Error saving subcategory: ' + errorMessage,
+          type: 'error'
+        });
+      }
+    }
   };
 
 
@@ -2792,7 +2860,7 @@ const AdminDashboard = () => {
 
             {activeTab === 'categories' && (
 
-              <CategoriesSection categories={categories} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} handleOpenCategoryModal={handleOpenCategoryModal} handleDeleteCategory={handleDeleteCategory} />
+              <CategoriesSection categories={categories} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} handleOpenCategoryModal={handleOpenCategoryModal} handleDeleteCategory={handleDeleteCategory} showToast={(message, type) => setToast({ show: true, message, type })} />
 
             )}
 
@@ -2800,7 +2868,7 @@ const AdminDashboard = () => {
 
             {activeTab === 'subcategories' && (
 
-              <SubCategoriesSection subCategories={subCategories} subCategoryFilter={subCategoryFilter} setSubCategoryFilter={setSubCategoryFilter} categories={categories} handleOpenSubCategoryModal={handleOpenSubCategoryModal} handleDeleteSubCategory={handleDeleteSubCategory} />
+              <SubCategoriesSection subCategories={subCategories} subCategoryFilter={subCategoryFilter} setSubCategoryFilter={setSubCategoryFilter} categories={categories} handleOpenSubCategoryModal={handleOpenSubCategoryModal} handleDeleteSubCategory={handleDeleteSubCategory} showToast={(message, type) => setToast({ show: true, message, type })} />
 
             )}
 
@@ -2856,6 +2924,12 @@ const AdminDashboard = () => {
 
               handleRemoveImage={handleRemoveImage}
 
+              validationErrors={validationErrors}
+
+              subCategoryValidationRules={subCategoryValidationRules}
+
+              onFieldValidate={onFieldValidate}
+
             />
 
 
@@ -2902,6 +2976,14 @@ const AdminDashboard = () => {
 
             />
 
+            {/* Toast Notification */}
+            <Toast
+              show={toast.show}
+              onClose={() => setToast({ ...toast, show: false })}
+              message={toast.message}
+              type={toast.type}
+            />
+
 
 
             {/* Vendor Modal */}
@@ -2913,6 +2995,8 @@ const AdminDashboard = () => {
               ref={userModalRef}
 
               onSuccess={loadDashboardData}
+
+              showToast={(message, type) => setToast({ show: true, message, type })}
 
             />
 

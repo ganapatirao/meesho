@@ -55,15 +55,6 @@ const DeleteConfirmationModal = ({
           {/* Consequence Message */}
           <div className="text-sm text-gray-600 space-y-2">
             <p className="font-medium text-gray-800">This will permanently delete the {deleteTarget.type}.</p>
-            {deleteTarget.type === 'category' && (
-              <p className="text-gray-500">All subcategories and products in this category will also be affected.</p>
-            )}
-            {deleteTarget.type === 'subcategory' && (
-              <p className="text-gray-500">Products in this subcategory will also be affected.</p>
-            )}
-            {deleteTarget.type === 'user' && (
-              <p className="text-gray-500">All user data, orders, and associated information will be permanently removed.</p>
-            )}
             <p className="text-gray-500">Are you sure you want to continue?</p>
           </div>
         </div>
