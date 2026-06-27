@@ -37,7 +37,6 @@ const ProductDetailPage = () => {
         setProduct(response.data.product);
       }
     } catch (error) {
-      console.error('Error loading product:', error);
     } finally {
       setLoading(false);
     }

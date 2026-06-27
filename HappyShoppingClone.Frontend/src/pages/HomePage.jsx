@@ -35,7 +35,6 @@ const HomePage = () => {
         setSiteConfig(response.data.configuration);
       }
     } catch (error) {
-      console.error('Error loading site configuration:', error);
     }
   };
 
@@ -48,7 +47,6 @@ const HomePage = () => {
         setAllProducts(productsData);
       }
     } catch (error) {
-      console.error('Error loading products:', error);
     } finally {
       setLoading(false);
     }
@@ -61,10 +59,8 @@ const HomePage = () => {
         setCategories(response.data.categories);
       }
     } catch (error) {
-      console.error('Error loading categories:', error);
     }
   };
-
   const handleCategoryClick = (categoryName) => {
     if (selectedCategory === categoryName) {
       setSelectedCategory(null);

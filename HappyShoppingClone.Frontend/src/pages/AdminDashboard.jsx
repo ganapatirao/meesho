@@ -343,13 +343,10 @@ const AdminDashboard = () => {
 
         setBackendValidationRules(rules);
 
-        console.log('Loaded validation rules from backend:', rules);
-
       }
 
     } catch (error) {
 
-      console.warn('Could not load validation rules from backend, using defaults:', error.message);
 
     }
 
@@ -422,7 +419,6 @@ const AdminDashboard = () => {
         setCategoryValidationRules(response.data.rules);
       }
     } catch (error) {
-      console.error('Error fetching category validation rules:', error);
     }
   };
 
@@ -433,7 +429,6 @@ const AdminDashboard = () => {
         setSubCategoryValidationRules(response.data.rules);
       }
     } catch (error) {
-      console.error('Error fetching subcategory validation rules:', error);
     }
   };
 
@@ -444,7 +439,6 @@ const AdminDashboard = () => {
         return response.data.maxDisplayOrder;
       }
     } catch (error) {
-      console.error('Error fetching max display order:', error);
     }
     return 0;
   };
@@ -618,7 +612,6 @@ const AdminDashboard = () => {
 
       setLoading(true);
 
-      console.log('Loading dashboard data...');
 
       const [productsRes, vendorsRes, configRes, categoriesRes, subCategoriesRes, ordersRes] = await Promise.all([
 
@@ -648,17 +641,13 @@ const AdminDashboard = () => {
 
       } catch (userError) {
 
-        console.warn('User API not available:', userError.message);
-
         usersRes = { data: { success: false, users: [] } };
 
       }
 
       
 
-      console.log('Categories response:', categoriesRes.data);
 
-      console.log('SubCategories response:', subCategoriesRes.data);
 
       
 
@@ -724,7 +713,6 @@ const AdminDashboard = () => {
 
       if (categoriesRes.data.success) {
 
-        console.log('Setting categories:', categoriesRes.data.categories);
 
         setCategories(categoriesRes.data.categories);
 
@@ -738,15 +726,12 @@ const AdminDashboard = () => {
 
       } else {
 
-        console.error('Categories API returned success=false');
-
       }
 
       
 
       if (subCategoriesRes.data.success) {
 
-        console.log('Setting subCategories:', subCategoriesRes.data.subCategories);
 
         setSubCategories(subCategoriesRes.data.subCategories);
 
@@ -759,8 +744,6 @@ const AdminDashboard = () => {
         }));
 
       } else {
-
-        console.error('SubCategories API returned success=false');
 
       }
 
@@ -812,8 +795,6 @@ const AdminDashboard = () => {
 
     } catch (error) {
 
-      console.error('Error loading dashboard data:', error);
-
     } finally {
 
       setLoading(false);
@@ -841,9 +822,6 @@ const AdminDashboard = () => {
       }
 
     } catch (error) {
-
-      console.error('Error saving configuration:', error);
-
       setToast({
         show: true,
         message: 'Failed to save configuration',
@@ -954,12 +932,14 @@ const AdminDashboard = () => {
     // Validate image/icon exclusivity
     if (categoryForm.image && categoryForm.icon) {
       setValidationErrors({ image: 'Only one of Image or Icon can be set, not both' });
-      alert('Only one of Image or Icon can be set, not both');
+      setToast({
+        show: true,
+        message: 'Only one of Image or Icon can be set, not both',
+        type: 'error'
+      });
       return;
     }
 
-    console.log('Saving category:', categoryForm);
-    console.log('Image length:', categoryForm.image?.length);
 
     try {
       if (editingCategory) {
@@ -971,16 +951,16 @@ const AdminDashboard = () => {
       } else {
         await categoryAPI.create(categoryForm);
       }
-      alert(editingCategory ? 'Category updated successfully!' : 'Category created successfully!');
+      setToast({
+        show: true,
+        message: editingCategory ? 'Category updated successfully!' : 'Category created successfully!',
+        type: 'success'
+      });
       handleCloseCategoryModal();
       loadDashboardData();
     } catch (error) {
-      console.error('Error saving category:', error);
-      console.error('Error response:', error.response?.data);
       if (error.response && error.response.data && error.response.data.errors) {
         const backendErrors = error.response.data.errors;
-        console.log('Backend errors type:', typeof backendErrors);
-        console.log('Backend errors:', backendErrors);
         const errorMap = {};
         
         // Handle both array and object errors
@@ -1002,7 +982,11 @@ const AdminDashboard = () => {
         }
         setValidationErrors(errorMap);
       }
-      alert('Error saving category: ' + (error.response?.data?.errors?.[0] || error.message));
+      setToast({
+        show: true,
+        message: 'Error saving category: ' + (error.response?.data?.errors?.[0] || error.message),
+        type: 'error'
+      });
     }
   };
 
@@ -1031,8 +1015,6 @@ const AdminDashboard = () => {
       }
 
     } catch (error) {
-
-      console.error('Error updating subcategories on category change:', error);
 
     }
 
@@ -1112,8 +1094,6 @@ const AdminDashboard = () => {
 
     } catch (error) {
 
-      console.error(`Error deleting ${deleteTarget.type}:`, error);
-
       const errorMessage = error.response?.data?.error || error.response?.data?.message || `Error deleting ${deleteTarget.type}`;
       setToast({
         show: true,
@@ -1174,7 +1154,6 @@ const AdminDashboard = () => {
             isActive: true,
           });
         } catch (error) {
-          console.error('Error fetching max display order:', error);
           setSubCategoryForm({
             name: '',
             displayName: '',
@@ -1189,7 +1168,6 @@ const AdminDashboard = () => {
       }
       setShowSubCategoryModal(true);
     } catch (error) {
-      console.error('Error opening subcategory modal:', error);
     }
   };
 
@@ -1259,12 +1237,8 @@ const AdminDashboard = () => {
       handleCloseSubCategoryModal();
       loadDashboardData();
     } catch (error) {
-      console.error('Error saving subcategory:', error);
-      console.error('Error response:', error.response?.data);
       if (error.response && error.response.data && error.response.data.errors) {
         const backendErrors = error.response.data.errors;
-        console.log('Backend errors type:', typeof backendErrors);
-        console.log('Backend errors:', backendErrors);
         const errorMap = {};
         
         // Handle both array and object errors
@@ -1333,8 +1307,6 @@ const AdminDashboard = () => {
       }
 
     } catch (error) {
-
-      console.error('Error updating products on subcategory change:', error);
 
     }
 
@@ -1510,7 +1482,11 @@ const AdminDashboard = () => {
 
       }
 
-      alert(editingProduct ? 'Product updated successfully!' : 'Product created successfully!');
+      setToast({
+        show: true,
+        message: editingProduct ? 'Product updated successfully!' : 'Product created successfully!',
+        type: 'success'
+      });
 
       handleCloseProductModal();
 
@@ -1518,9 +1494,11 @@ const AdminDashboard = () => {
 
     } catch (error) {
 
-      console.error('Error saving product:', error);
-
-      alert('Error saving product');
+      setToast({
+        show: true,
+        message: 'Error saving product',
+        type: 'error'
+      });
 
     }
 
@@ -1699,8 +1677,6 @@ const AdminDashboard = () => {
       loadDashboardData();
 
     } catch (error) {
-
-      console.error('Error saving vendor:', error);
 
       alert('Error saving vendor');
 

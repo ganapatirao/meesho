@@ -30,10 +30,8 @@ const LoginPage = () => {
       const response = await authAPI.getValidationRules();
       if (response.data.success) {
         setValidationRules(response.data.rules);
-        console.log('Validation rules loaded:', response.data.rules);
       }
     } catch (error) {
-      console.error('Error loading validation rules:', error);
     } finally {
       setRulesLoading(false);
     }
@@ -109,7 +107,6 @@ const LoginPage = () => {
         setCaptchaText(response.data.captchaText);
       }
     } catch (error) {
-      console.error('Error generating captcha:', error);
       const simpleCaptcha = Math.random().toString(36).substring(2, 8).toUpperCase();
       setCaptchaText(simpleCaptcha);
     }

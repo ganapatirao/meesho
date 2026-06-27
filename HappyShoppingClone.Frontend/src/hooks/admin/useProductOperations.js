@@ -99,7 +99,6 @@ export const useProductOperations = (loadDashboardData, categories, setDeleteTar
       handleCloseProductModal();
       loadDashboardData();
     } catch (error) {
-      console.error('Error saving product:', error);
       alert('Error saving product');
     }
   };

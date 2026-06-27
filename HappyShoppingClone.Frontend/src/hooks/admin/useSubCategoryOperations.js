@@ -76,7 +76,6 @@ export const useSubCategoryOperations = (loadDashboardData, categories) => {
         }
       }
     } catch (error) {
-      console.error('Error updating products on subcategory change:', error);
     }
   };
 
@@ -94,7 +93,6 @@ export const useSubCategoryOperations = (loadDashboardData, categories) => {
       handleCloseSubCategoryModal();
       loadDashboardData();
     } catch (error) {
-      console.error('Error saving subcategory:', error);
       alert('Error saving subcategory');
     }
   };

@@ -92,7 +92,6 @@ export const useVendorOperations = (loadDashboardData, validateForm, defaultVali
       handleCloseVendorModal();
       loadDashboardData();
     } catch (error) {
-      console.error('Error saving vendor:', error);
       alert('Error saving vendor');
     }
   };

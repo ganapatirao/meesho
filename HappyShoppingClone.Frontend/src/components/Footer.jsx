@@ -33,7 +33,6 @@ const Footer = () => {
         setConfig(response.data.configuration);
       }
     } catch (error) {
-      console.error('Error loading configuration:', error);
     }
   };
 

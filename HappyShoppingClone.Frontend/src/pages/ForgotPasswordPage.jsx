@@ -21,10 +21,8 @@ const ForgotPasswordPage = () => {
       const response = await authAPI.getValidationRules();
       if (response.data.success) {
         setValidationRules(response.data.rules);
-        console.log('Validation rules loaded:', response.data.rules);
       }
     } catch (error) {
-      console.error('Error loading validation rules:', error);
     } finally {
       setRulesLoading(false);
     }

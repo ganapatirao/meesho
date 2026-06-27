@@ -62,7 +62,6 @@ const ShoppingPage = () => {
         setProducts([]);
       }
     } catch (error) {
-      console.error('Error loading products:', error);
       setProducts([]);
     } finally {
       setLoading(false);
@@ -76,7 +75,6 @@ const ShoppingPage = () => {
         setCategories(response.data.categories);
       }
     } catch (error) {
-      console.error('Error loading categories:', error);
     }
   };
 

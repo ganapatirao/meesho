@@ -20,8 +20,6 @@ const UserModal = forwardRef(({ onSuccess, showToast }, ref) => {
   useImperativeHandle(ref, () => ({
     openModal: (user = null) => {
       if (user) {
-        console.log('UserModal received user:', user);
-        console.log('UserModal - User _id:', user._id, 'User Id:', user.Id, 'User id:', user.id);
         setEditingUser(user);
         setUserForm({
           fullName: user.fullName,
@@ -63,7 +61,6 @@ const UserModal = forwardRef(({ onSuccess, showToast }, ref) => {
         setValidationRules(response.data.rules);
       }
     } catch (error) {
-      console.warn('Could not load validation rules:', error);
     }
   };
 
@@ -136,10 +133,7 @@ const UserModal = forwardRef(({ onSuccess, showToast }, ref) => {
 
     try {
       if (editingUser) {
-        console.log('Editing user:', editingUser);
-        console.log('User ID:', editingUser.Id, 'User id:', editingUser.id, 'User _id:', editingUser._id);
         const userId = editingUser.Id || editingUser.id || editingUser._id;
-        console.log('Using userId:', userId);
         
         if (!userId) {
           if (showToast) showToast('Error: User ID is missing. Cannot update user.', 'error');
@@ -161,8 +155,6 @@ const UserModal = forwardRef(({ onSuccess, showToast }, ref) => {
         await userAPI.update(userId, userData);
         if (showToast) showToast('User updated successfully!', 'success');
       } else {
-        console.log('Creating new user with form:', userForm);
-        console.log('Form keys:', Object.keys(userForm));
         // Explicitly create clean object with only necessary fields to avoid duplicate key errors
         const userData = {
           fullName: userForm.fullName,
@@ -172,15 +164,12 @@ const UserModal = forwardRef(({ onSuccess, showToast }, ref) => {
           role: userForm.role,
           isActive: userForm.isActive
         };
-        console.log('Sending to API:', userData);
         await userAPI.create(userData);
         if (showToast) showToast('User created successfully!', 'success');
       }
       handleClose();
       if (onSuccess) onSuccess();
     } catch (error) {
-      console.error('Error saving user:', error);
-      console.error('Error response:', error.response?.data);
       const errorMessage = error.response?.data?.error || error.response?.data?.message || error.message;
       if (showToast) showToast(errorMessage, 'error');
     }
@@ -207,7 +196,6 @@ const UserModal = forwardRef(({ onSuccess, showToast }, ref) => {
       await userAPI.toggleActive(userId);
       if (onSuccess) onSuccess();
     } catch (error) {
-      console.error('Error toggling user status:', error);
       const errorMessage = error.response?.data?.error || error.response?.data?.message || 'Error toggling user status';
       if (showToast) showToast(errorMessage, 'error');
     }
@@ -222,7 +210,6 @@ const UserModal = forwardRef(({ onSuccess, showToast }, ref) => {
       if (showToast) showToast('User deleted successfully!', 'success');
       if (onSuccess) onSuccess();
     } catch (error) {
-      console.error('Error deleting user:', error);
       const errorMessage = error.response?.data?.error || error.response?.data?.message || 'Error deleting user';
       if (showToast) showToast(errorMessage, 'error');
     }

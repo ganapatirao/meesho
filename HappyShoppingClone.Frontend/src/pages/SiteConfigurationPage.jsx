@@ -56,7 +56,6 @@ const SiteConfigurationPage = () => {
         setConfig(response.data.configuration);
       }
     } catch (error) {
-      console.error('Error loading configuration:', error);
     } finally {
       setLoading(false);
     }
@@ -93,7 +92,6 @@ const SiteConfigurationPage = () => {
         loadConfiguration();
       }
     } catch (error) {
-      console.error('Error saving configuration:', error);
       setToast({
         show: true,
         message: 'Failed to save configuration',

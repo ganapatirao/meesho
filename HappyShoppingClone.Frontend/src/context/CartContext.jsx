@@ -33,7 +33,6 @@ export const CartProvider = ({ children }) => {
         setCartCount(response.data.cart.items?.length || 0);
       }
     } catch (error) {
-      console.error('Error loading cart:', error);
     } finally {
       setLoading(false);
     }
@@ -69,7 +68,6 @@ export const CartProvider = ({ children }) => {
       }
       return { success: false };
     } catch (error) {
-      console.error('Error adding to cart:', error);
       return { success: false };
     }
   };
@@ -86,7 +84,6 @@ export const CartProvider = ({ children }) => {
       }
       return { success: false };
     } catch (error) {
-      console.error('Error removing from cart:', error);
       return { success: false };
     }
   };
@@ -112,7 +109,6 @@ export const CartProvider = ({ children }) => {
       }
       return { success: false };
     } catch (error) {
-      console.error('Error updating quantity:', error);
       return { success: false };
     }
   };
@@ -129,7 +125,6 @@ export const CartProvider = ({ children }) => {
       }
       return { success: false };
     } catch (error) {
-      console.error('Error clearing cart:', error);
       return { success: false };
     }
   };

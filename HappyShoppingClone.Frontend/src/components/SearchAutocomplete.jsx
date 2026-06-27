@@ -23,17 +23,14 @@ const SearchAutocomplete = ({ onSearch }) => {
   useEffect(() => {
     const debounceTimer = setTimeout(async () => {
       if (query.length >= 2) {
-        console.log('Searching for:', query);
         setLoading(true);
         try {
           const response = await searchAPI.searchAll(query);
-          console.log('Search response:', response.data);
           if (response.data.success) {
             setResults(response.data.results);
             setIsOpen(true);
           }
         } catch (error) {
-          console.error('Search error:', error);
           setResults(null);
         } finally {
           setLoading(false);

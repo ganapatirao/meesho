@@ -28,7 +28,6 @@ export const useCategoryOperations = (loadDashboardData, validateForm, defaultVa
         setCategoryValidationRules(response.data.rules);
       }
     } catch (error) {
-      console.error('Error fetching category validation rules:', error);
     }
   };
 
@@ -39,7 +38,6 @@ export const useCategoryOperations = (loadDashboardData, validateForm, defaultVa
         return response.data.maxDisplayOrder;
       }
     } catch (error) {
-      console.error('Error fetching max display order:', error);
     }
     return 0;
   };
@@ -102,7 +100,6 @@ export const useCategoryOperations = (loadDashboardData, validateForm, defaultVa
         }
       }
     } catch (error) {
-      console.error('Error updating subcategories on category change:', error);
     }
   };
 
@@ -140,7 +137,6 @@ export const useCategoryOperations = (loadDashboardData, validateForm, defaultVa
       handleCloseCategoryModal();
       loadDashboardData();
     } catch (error) {
-      console.error('Error saving category:', error);
       if (error.response && error.response.data && error.response.data.errors) {
         const backendErrors = error.response.data.errors;
         const errorMap = {};

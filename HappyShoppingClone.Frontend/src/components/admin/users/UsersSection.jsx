@@ -22,9 +22,6 @@ const UsersSection = ({ users, userFilter, setUserFilter, userModalRef, onDelete
   };
 
   const handleEditUser = (user) => {
-    console.log('Editing user from UsersSection:', user);
-    console.log('User keys:', Object.keys(user));
-    console.log('User _id:', user._id, 'User Id:', user.Id, 'User id:', user.id);
     if (userModalRef?.current?.openModal) {
       userModalRef.current.openModal(user);
     }
