@@ -53,10 +53,10 @@ const SearchAutocomplete = ({ onSearch }) => {
         window.location.href = `/product/${item.id}`;
         break;
       case 'category':
-        window.location.href = `/category/${item.id}`;
+        window.location.href = `/shopping?categoryId=${encodeURIComponent(item.id)}`;
         break;
       case 'subcategory':
-        window.location.href = `/subcategory/${item.id}`;
+        window.location.href = `/shopping?subcategoryId=${encodeURIComponent(item.id)}`;
         break;
       default:
         break;

@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { productAPI, categoryAPI, siteConfigAPI } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import { useAuth } from '../context/AuthContext';
 import { Sparkles, TrendingUp, Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [siteConfig, setSiteConfig] = useState({
     site: {
@@ -61,15 +62,8 @@ const HomePage = () => {
     } catch (error) {
     }
   };
-  const handleCategoryClick = (categoryName) => {
-    if (selectedCategory === categoryName) {
-      setSelectedCategory(null);
-      setProducts(allProducts);
-    } else {
-      setSelectedCategory(categoryName);
-      const filtered = allProducts.filter(p => p.category === categoryName);
-      setProducts(filtered);
-    }
+  const handleCategoryClick = (categoryId) => {
+    navigate(`/shopping?categoryId=${encodeURIComponent(categoryId)}`);
   };
 
 
@@ -92,9 +86,9 @@ const HomePage = () => {
     }
   }, [siteConfig.site?.enableSlideshow, siteConfig.site?.slideshowImages]);
 
-  const featuredProducts = products.filter(p => p.isFeatured);
-  const trendingProducts = products.filter(p => p.isTrending);
-  const premierProducts = products.filter(p => p.isPremierExclusive);
+  const featuredProducts = allProducts.filter(p => p.isFeatured);
+  const trendingProducts = allProducts.filter(p => p.isTrending);
+  const premierProducts = allProducts.filter(p => p.isPremierExclusive);
 
   if (loading) {
     return (
@@ -126,7 +120,7 @@ const HomePage = () => {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <div className="text-center text-white px-4">
+                  <div className="text-center text-white px-4 w-full max-w-2xl">
                     <h1 className="text-3xl md:text-5xl font-bold mb-4">{siteConfig.site?.name || 'HappyShopping Clone'}</h1>
                     <p className="text-lg md:text-xl mb-6 opacity-90">{siteConfig.site?.description || 'Your one-stop shop for everything you need'}</p>
                     <a href="/shopping" className="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-pink-100 transition-colors shadow-lg inline-block">
@@ -169,7 +163,7 @@ const HomePage = () => {
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-            <div className="text-center text-white px-4">
+            <div className="text-center text-white px-4 w-full max-w-2xl">
               <h1 className="text-3xl md:text-5xl font-bold mb-4">{siteConfig.site?.name || 'HappyShopping Clone'}</h1>
               <p className="text-lg md:text-xl mb-6 opacity-90">{siteConfig.site?.description || 'Your one-stop shop for everything you need'}</p>
               <a href="/shopping" className="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-pink-100 transition-colors shadow-lg inline-block">
@@ -181,7 +175,7 @@ const HomePage = () => {
       ) : (
         <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-white py-12 md:py-20">
           <div className="container mx-auto px-4">
-            <div className="text-center">
+            <div className="text-center w-full max-w-2xl mx-auto">
               <h1 className="text-3xl md:text-5xl font-bold mb-4">{siteConfig.site?.name || 'Welcome to HappyShopping Clone'}</h1>
               <p className="text-lg md:text-xl mb-6 opacity-90">{siteConfig.site?.description || 'Your one-stop shop for everything you need'}</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -197,20 +191,12 @@ const HomePage = () => {
       {/* Categories Section - Mobile Horizontal Scroll */}
       <div className="container mx-auto px-4 py-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Shop by Category</h2>
-        {selectedCategory && (
-          <div className="mb-4 flex items-center gap-2">
-            <span className="text-purple-600 font-semibold">Filtered by: {selectedCategory}</span>
-            <button onClick={() => handleCategoryClick(selectedCategory)} className="text-red-500 hover:text-red-700 text-sm">Clear Filter</button>
-          </div>
-        )}
         <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide snap-x snap-mandatory md:grid md:grid-cols-6 md:overflow-visible md:pb-0 md:snap-none">
           {categories.slice(0, 12).map((category) => (
             <div 
               key={category.id} 
-              onClick={() => handleCategoryClick(category.name)}
-              className={`flex-shrink-0 w-24 md:w-auto rounded-xl p-4 text-center shadow-md hover:shadow-lg transition-all cursor-pointer snap-start ${
-                selectedCategory === category.name ? 'bg-purple-600 text-white' : 'bg-white'
-              }`}
+              onClick={() => handleCategoryClick(category.id)}
+              className="flex-shrink-0 w-24 md:w-auto rounded-xl p-4 text-center shadow-md hover:shadow-lg transition-all cursor-pointer snap-start bg-white hover:bg-purple-50"
             >
               {category.image ? (
                 <img src={category.image} alt={category.displayName || category.name} className="w-12 h-12 md:w-16 md:h-16 object-cover rounded-lg mx-auto mb-2" />
@@ -221,23 +207,6 @@ const HomePage = () => {
             </div>
           ))}
         </div>
-        
-        {/* Subcategories Section */}
-        {selectedCategory && (
-          <div className="mt-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-4">Subcategories</h3>
-            <div className="flex flex-wrap gap-2">
-              {[...new Set(products.filter(p => p.category === selectedCategory).map(p => p.subCategory))].map((subCategory) => (
-                <button
-                  key={subCategory}
-                  className="px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold hover:bg-purple-200 transition-colors"
-                >
-                  {subCategory}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Premier Section */}
