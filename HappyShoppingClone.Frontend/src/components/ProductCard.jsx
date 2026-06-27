@@ -39,7 +39,7 @@ const ProductCard = ({ product, onToggleWishlist }) => {
       {/* Image Container */}
       <div className="relative">
         <img
-          src={product.imageUrls?.[0] || 'https://via.placeholder.com/300?text=Product'}
+          src={product.imageBase64?.[0] || product.imageUrls?.[0] || 'https://via.placeholder.com/300?text=Product'}
           alt={product.name}
           className="w-full h-36 md:h-48 object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"

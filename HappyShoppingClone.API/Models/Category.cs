@@ -51,6 +51,7 @@ public class CategoryValidationRules
     public FieldRule Name { get; set; } = new();
     public FieldRule DisplayName { get; set; } = new();
     public FieldRule Icon { get; set; } = new();
+    public FieldRule Image { get; set; } = new();
     public FieldRule Description { get; set; } = new();
     public FieldRule DisplayOrder { get; set; } = new();
 }

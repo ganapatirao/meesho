@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { siteConfigAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { Settings, Palette, Layout, Image as ImageIcon, Save, X, Plus, Trash2 } from 'lucide-react';
+import Toast from '../components/Toast';
 
 const SiteConfigurationPage = () => {
   const { isAdmin } = useAuth();
   const [activeTab, setActiveTab] = useState('general');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
   const [config, setConfig] = useState({
     siteName: 'HappyShopping Clone',
     siteDescription: 'Your one-stop shop for everything you need',
@@ -64,7 +66,7 @@ const SiteConfigurationPage = () => {
     try {
       setSaving(true);
       let response;
-      
+
       switch (section) {
         case 'general':
           response = await siteConfigAPI.updateConfiguration(config);
@@ -81,14 +83,22 @@ const SiteConfigurationPage = () => {
         default:
           response = await siteConfigAPI.updateConfiguration(config);
       }
-      
+
       if (response.data.success) {
-        alert('Configuration saved successfully!');
+        setToast({
+          show: true,
+          message: 'Configuration saved successfully!',
+          type: 'success'
+        });
         loadConfiguration();
       }
     } catch (error) {
       console.error('Error saving configuration:', error);
-      alert('Failed to save configuration');
+      setToast({
+        show: true,
+        message: 'Failed to save configuration',
+        type: 'error'
+      });
     } finally {
       setSaving(false);
     }
@@ -404,6 +414,12 @@ const SiteConfigurationPage = () => {
           </main>
         </div>
       </div>
+      <Toast
+        show={toast.show}
+        message={toast.message}
+        type={toast.type}
+        onClose={() => setToast({ ...toast, show: false })}
+      />
     </div>
   );
 };

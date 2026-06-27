@@ -73,6 +73,11 @@ public class CategoryController : ControllerBase
                 MaxLength = 2,
                 ErrorMessage = "Icon cannot exceed 2 characters"
             },
+            Image = new CategoryValidationRules.FieldRule
+            {
+                Required = false,
+                ErrorMessage = "Image must be a valid base64 encoded image"
+            },
             Description = new CategoryValidationRules.FieldRule
             {
                 Required = false,
@@ -115,6 +120,12 @@ public class CategoryController : ControllerBase
         if (!string.IsNullOrWhiteSpace(category.Image) && !string.IsNullOrWhiteSpace(category.Icon))
         {
             return BadRequest(new { success = false, errors = new[] { "Only one of Image or Icon can be set, not both" } });
+        }
+
+        // Validate that at least one of image or icon is set
+        if (string.IsNullOrWhiteSpace(category.Image) && string.IsNullOrWhiteSpace(category.Icon))
+        {
+            return BadRequest(new { success = false, errors = new[] { "Either Image or Icon is required" } });
         }
 
         // Validate base64 image format if provided
@@ -186,6 +197,12 @@ public class CategoryController : ControllerBase
         if (!string.IsNullOrWhiteSpace(category.Image) && !string.IsNullOrWhiteSpace(category.Icon))
         {
             return BadRequest(new { success = false, errors = new[] { "Only one of Image or Icon can be set, not both" } });
+        }
+
+        // Validate that at least one of image or icon is set
+        if (string.IsNullOrWhiteSpace(category.Image) && string.IsNullOrWhiteSpace(category.Icon))
+        {
+            return BadRequest(new { success = false, errors = new[] { "Either Image or Icon is required" } });
         }
 
         // Validate base64 image format if provided

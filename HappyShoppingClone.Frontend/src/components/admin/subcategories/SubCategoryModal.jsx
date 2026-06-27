@@ -1,4 +1,4 @@
-import { X, Plus, Edit, FolderOpen, Image as ImageIcon, Sparkles, Hash, AlignLeft, Layers, Star, CheckCircle2, Folder } from 'lucide-react';
+import { X, Plus, Edit, FolderOpen, Image as ImageIcon, Sparkles, Hash, AlignLeft, Layers, Star, CheckCircle2, Folder, AlertCircle } from 'lucide-react';
 
 const SubCategoryModal = ({ 
   show, 
@@ -20,30 +20,87 @@ const SubCategoryModal = ({
   const validateField = (fieldName, value) => {
     if (!subCategoryValidationRules) return null;
     
+    // Backend returns lowercase property names, so use them directly
     const rules = subCategoryValidationRules[fieldName];
+    
     if (!rules) return null;
 
     let error = null;
 
-    if (rules.Required && (!value || value.trim() === '')) {
-      error = rules.ErrorMessage || `${fieldName} is required`;
+    // Backend uses lowercase property names
+    if (rules.required && (!value || value.trim() === '')) {
+      error = rules.errorMessage || `${fieldName} is required`;
     } else if (value) {
-      if (rules.MinLength && value.length < rules.MinLength) {
-        error = rules.ErrorMessage || `${fieldName} must be at least ${rules.MinLength} characters`;
+      if (rules.minLength && value.length < rules.minLength) {
+        error = rules.errorMessage || `${fieldName} must be at least ${rules.minLength} characters`;
       }
-      if (rules.MaxLength && value.length > rules.MaxLength) {
-        error = rules.ErrorMessage || `${fieldName} cannot exceed ${rules.MaxLength} characters`;
+      if (rules.maxLength && value.length > rules.maxLength) {
+        error = rules.errorMessage || `${fieldName} cannot exceed ${rules.maxLength} characters`;
       }
-      if (rules.Regex && !new RegExp(rules.Regex).test(value)) {
-        error = rules.ErrorMessage || `${fieldName} format is invalid`;
+      if (rules.regex && !new RegExp(rules.regex).test(value)) {
+        error = rules.errorMessage || `${fieldName} format is invalid`;
       }
     }
 
     return error;
   };
 
+  const validateImageIconExclusivity = () => {
+    const hasIcon = subCategoryForm.icon && subCategoryForm.icon.trim() !== '';
+    const hasImage = subCategoryForm.image && subCategoryForm.image.trim() !== '';
+    
+    if (hasIcon && hasImage) {
+      return 'Only one of Icon or Image can be set, not both';
+    }
+    
+    if (!hasIcon && !hasImage) {
+      return 'Either Icon or Image is required';
+    }
+    
+    return null;
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    
+    // Validate individual fields
+    Object.keys(subCategoryForm).forEach(fieldName => {
+      const error = validateField(fieldName, subCategoryForm[fieldName]);
+      if (error) {
+        errors[fieldName] = error;
+      }
+    });
+    
+    // Validate image/icon exclusivity
+    const exclusivityError = validateImageIconExclusivity();
+    if (exclusivityError) {
+      errors.image = exclusivityError;
+      errors.icon = exclusivityError;
+    }
+    
+    return errors;
+  };
+
   const handleFieldBlur = (fieldName, value) => {
     const error = validateField(fieldName, value);
+    
+    // Also validate image/icon exclusivity when icon or image fields are blurred
+    if (fieldName === 'icon' || fieldName === 'image') {
+      const exclusivityError = validateImageIconExclusivity();
+      if (exclusivityError) {
+        if (onFieldValidate) {
+          onFieldValidate('image', exclusivityError);
+          onFieldValidate('icon', exclusivityError);
+        }
+      } else {
+        // Clear exclusivity errors if validation passes
+        if (onFieldValidate) {
+          onFieldValidate('image', null);
+          onFieldValidate('icon', null);
+        }
+      }
+    }
+    
     if (onFieldValidate) {
       onFieldValidate(fieldName, error);
     }
@@ -55,6 +112,37 @@ const SubCategoryModal = ({
     if (validationErrors[fieldName] && onFieldValidate) {
       onFieldValidate(fieldName, null);
     }
+    
+    // If changing icon, clear image and vice versa
+    if (fieldName === 'icon' && value) {
+      setSubCategoryForm(prev => ({ ...prev, image: '' }));
+      if (onFieldValidate) {
+        onFieldValidate('image', null);
+      }
+    }
+    if (fieldName === 'image' && value) {
+      setSubCategoryForm(prev => ({ ...prev, icon: '' }));
+      if (onFieldValidate) {
+        onFieldValidate('icon', null);
+      }
+    }
+  };
+
+  const handleSave = () => {
+    const errors = validateForm();
+    
+    if (Object.keys(errors).length > 0) {
+      // Set all validation errors
+      Object.keys(errors).forEach(fieldName => {
+        if (onFieldValidate) {
+          onFieldValidate(fieldName, errors[fieldName]);
+        }
+      });
+      return;
+    }
+    
+    // If no errors, proceed with save
+    onSave();
   };
 
   return (
@@ -120,7 +208,10 @@ const SubCategoryModal = ({
                 </svg>
               </div>
               {validationErrors.categoryId && (
-                <p className="text-red-500 text-xs mt-1">{validationErrors.categoryId}</p>
+                <div className="mt-2 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-r-lg p-2.5 flex items-start gap-2 animate-in slide-in-from-left duration-200">
+                  <AlertCircle size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
+                  <p className="text-red-700 text-xs font-medium leading-tight">{validationErrors.categoryId}</p>
+                </div>
               )}
             </div>
           </div>
@@ -139,6 +230,7 @@ const SubCategoryModal = ({
                   value={subCategoryForm.name}
                   onChange={(e) => handleFieldChange('name', e.target.value)}
                   onBlur={(e) => handleFieldBlur('name', e.target.value)}
+                  maxLength={subCategoryValidationRules?.Name?.MaxLength || 50}
                   className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all text-sm sm:text-base bg-slate-50/50 ${
                     validationErrors.name 
                       ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' 
@@ -147,7 +239,10 @@ const SubCategoryModal = ({
                   placeholder="e.g., men-clothing"
                 />
                 {validationErrors.name && (
-                  <p className="text-red-500 text-xs mt-1">{validationErrors.name}</p>
+                  <div className="mt-2 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-r-lg p-2.5 flex items-start gap-2 animate-in slide-in-from-left duration-200">
+                    <AlertCircle size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
+                    <p className="text-red-700 text-xs font-medium leading-tight">{validationErrors.name}</p>
+                  </div>
                 )}
               </div>
             </div>
@@ -164,6 +259,7 @@ const SubCategoryModal = ({
                   value={subCategoryForm.displayName}
                   onChange={(e) => handleFieldChange('displayName', e.target.value)}
                   onBlur={(e) => handleFieldBlur('displayName', e.target.value)}
+                  maxLength={subCategoryValidationRules?.DisplayName?.MaxLength || 100}
                   className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all text-sm sm:text-base bg-slate-50/50 ${
                     validationErrors.displayName 
                       ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' 
@@ -172,7 +268,10 @@ const SubCategoryModal = ({
                   placeholder="e.g., Men's Clothing"
                 />
                 {validationErrors.displayName && (
-                  <p className="text-red-500 text-xs mt-1">{validationErrors.displayName}</p>
+                  <div className="mt-2 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-r-lg p-2.5 flex items-start gap-2 animate-in slide-in-from-left duration-200">
+                    <AlertCircle size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
+                    <p className="text-red-700 text-xs font-medium leading-tight">{validationErrors.displayName}</p>
+                  </div>
                 )}
               </div>
             </div>
@@ -190,11 +289,18 @@ const SubCategoryModal = ({
                 <input
                   type="text"
                   value={subCategoryForm.icon}
-                  onChange={(e) => setSubCategoryForm({ ...subCategoryForm, icon: e.target.value, image: '' })}
+                  onChange={(e) => handleFieldChange('icon', e.target.value)}
+                  onBlur={(e) => handleFieldBlur('icon', e.target.value)}
+                  maxLength={subCategoryValidationRules?.Icon?.MaxLength || 2}
                   className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-500/20 transition-all text-sm sm:text-base bg-slate-50/50 text-center text-2xl"
                   placeholder="📦"
-                  maxLength={2}
                 />
+                {validationErrors.icon && (
+                  <div className="mt-2 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-r-lg p-2.5 flex items-start gap-2 animate-in slide-in-from-left duration-200">
+                    <AlertCircle size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
+                    <p className="text-red-700 text-xs font-medium leading-tight">{validationErrors.icon}</p>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -208,10 +314,17 @@ const SubCategoryModal = ({
                 <input
                   type="number"
                   value={subCategoryForm.displayOrder}
-                  onChange={(e) => setSubCategoryForm({ ...subCategoryForm, displayOrder: parseInt(e.target.value) || 0 })}
+                  onChange={(e) => handleFieldChange('displayOrder', e.target.value)}
+                  onBlur={(e) => handleFieldBlur('displayOrder', e.target.value)}
                   className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-500/20 transition-all text-sm sm:text-base bg-slate-50/50"
                   placeholder="0"
                 />
+                {validationErrors.displayOrder && (
+                  <div className="mt-2 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-r-lg p-2.5 flex items-start gap-2 animate-in slide-in-from-left duration-200">
+                    <AlertCircle size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
+                    <p className="text-red-700 text-xs font-medium leading-tight">{validationErrors.displayOrder}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -273,7 +386,10 @@ const SubCategoryModal = ({
               />
             </div>
             {validationErrors.image && (
-              <p className="text-red-500 text-xs mt-1">{validationErrors.image}</p>
+              <div className="mt-2 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-r-lg p-2.5 flex items-start gap-2 animate-in slide-in-from-left duration-200">
+                <AlertCircle size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
+                <p className="text-red-700 text-xs font-medium leading-tight">{validationErrors.image}</p>
+              </div>
             )}
           </div>
 
@@ -287,6 +403,7 @@ const SubCategoryModal = ({
               value={subCategoryForm.description}
               onChange={(e) => handleFieldChange('description', e.target.value)}
               onBlur={(e) => handleFieldBlur('description', e.target.value)}
+              maxLength={subCategoryValidationRules?.Description?.MaxLength || 500}
               className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all resize-none text-sm sm:text-base bg-slate-50/50 ${
                 validationErrors.description 
                   ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' 
@@ -296,7 +413,10 @@ const SubCategoryModal = ({
               placeholder="Subcategory description..."
             />
             {validationErrors.description && (
-              <p className="text-red-500 text-xs mt-1">{validationErrors.description}</p>
+              <div className="mt-2 bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-red-500 rounded-r-lg p-2.5 flex items-start gap-2 animate-in slide-in-from-left duration-200">
+                <AlertCircle size={14} className="text-red-600 mt-0.5 flex-shrink-0" />
+                <p className="text-red-700 text-xs font-medium leading-tight">{validationErrors.description}</p>
+              </div>
             )}
           </div>
 
@@ -357,7 +477,7 @@ const SubCategoryModal = ({
             Cancel
           </button>
           <button
-            onClick={onSave}
+            onClick={handleSave}
             className="flex-1 px-4 sm:px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-700 hover:to-fuchsia-700 text-white rounded-xl font-semibold transition-all shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 flex items-center justify-center gap-2 text-sm sm:text-base"
           >
             {editingSubCategory ? <Edit size={18} /> : <Plus size={18} />}

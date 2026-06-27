@@ -8,6 +8,7 @@ const ProductModal = ({
   productForm, 
   setProductForm, 
   categories,
+  subCategories,
   handleImageDrop,
   convertToBase64,
   handleRemoveImage 
@@ -68,13 +69,13 @@ const ProductModal = ({
               </label>
               <div className="relative">
                 <select
-                  value={productForm.category}
-                  onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
+                  value={productForm.categoryId}
+                  onChange={(e) => setProductForm({ ...productForm, categoryId: e.target.value })}
                   className="w-full px-3 sm:px-4 py-2 sm:py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all appearance-none bg-white"
                 >
                   <option value="">Select a category</option>
                   {categories.map((category) => (
-                    <option key={category.id} value={category.name}>
+                    <option key={category.id} value={category.id}>
                       {category.displayName || category.name}
                     </option>
                   ))}
@@ -93,14 +94,22 @@ const ProductModal = ({
                 SubCategory
               </label>
               <div className="relative">
-                <input
-                  type="text"
-                  value={productForm.subCategory}
-                  onChange={(e) => setProductForm({ ...productForm, subCategory: e.target.value })}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all"
-                  placeholder="Subcategory name"
-                />
+                <select
+                  value={productForm.subCategoryId}
+                  onChange={(e) => setProductForm({ ...productForm, subCategoryId: e.target.value })}
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 pl-11 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all appearance-none bg-white"
+                >
+                  <option value="">Select a subcategory</option>
+                  {subCategories
+                    .filter(sc => !productForm.categoryId || sc.categoryId === productForm.categoryId)
+                    .map((subCategory) => (
+                      <option key={subCategory.id} value={subCategory.id}>
+                        {subCategory.displayName || subCategory.name}
+                      </option>
+                    ))}
+                </select>
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">📂</span>
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">▼</span>
               </div>
             </div>
             <div className="space-y-2">

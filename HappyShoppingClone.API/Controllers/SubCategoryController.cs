@@ -67,6 +67,11 @@ public class SubCategoryController : ControllerBase
                 MaxLength = 2,
                 ErrorMessage = "Icon cannot exceed 2 characters"
             },
+            Image = new SubCategoryValidationRules.FieldRule
+            {
+                Required = false,
+                ErrorMessage = "Image must be a valid base64 encoded image"
+            },
             Description = new SubCategoryValidationRules.FieldRule
             {
                 Required = false,
@@ -109,6 +114,18 @@ public class SubCategoryController : ControllerBase
         if (!IsValidBase64Image(subCategory.Image))
         {
             return BadRequest(new { success = false, errors = new[] { "Invalid image format. Please upload a valid image." } });
+        }
+
+        // Validate image/icon exclusivity - only one can be set
+        if (!string.IsNullOrWhiteSpace(subCategory.Image) && !string.IsNullOrWhiteSpace(subCategory.Icon))
+        {
+            return BadRequest(new { success = false, errors = new[] { "Only one of Image or Icon can be set, not both" } });
+        }
+
+        // Validate that at least one of image or icon is set
+        if (string.IsNullOrWhiteSpace(subCategory.Image) && string.IsNullOrWhiteSpace(subCategory.Icon))
+        {
+            return BadRequest(new { success = false, errors = new[] { "Either Image or Icon is required" } });
         }
 
         subCategory.Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString();
@@ -170,15 +187,52 @@ public class SubCategoryController : ControllerBase
             return BadRequest(new { success = false, errors });
         }
 
-        // Validate base64 image
-        if (!IsValidBase64Image(subCategory.Image))
+        // Merge incoming values with existing values for validation
+        // Empty string means "clear this field", null means "keep existing"
+        var imageToUse = subCategory.Image == "" ? "" : (subCategory.Image ?? existingSubCategory.Image);
+        var iconToUse = subCategory.Icon == "" ? "" : (subCategory.Icon ?? existingSubCategory.Icon);
+
+        // Validate base64 image only if image is being provided/changed
+        if (!string.IsNullOrWhiteSpace(subCategory.Image) && subCategory.Image != existingSubCategory.Image)
         {
-            return BadRequest(new { success = false, errors = new[] { "Invalid image format. Please upload a valid image." } });
+            if (!IsValidBase64Image(subCategory.Image))
+            {
+                return BadRequest(new { success = false, errors = new[] { "Invalid image format. Please upload a valid image." } });
+            }
+        }
+
+        // Validate image/icon exclusivity - only check on incoming values
+        // If user is explicitly setting one and clearing the other, allow it
+        var hasIncomingImage = !string.IsNullOrWhiteSpace(subCategory.Image);
+        var hasIncomingIcon = !string.IsNullOrWhiteSpace(subCategory.Icon);
+        var isClearingImage = subCategory.Image == "";
+        var isClearingIcon = subCategory.Icon == "";
+        
+        // Only validate exclusivity if user is trying to set both
+        if (hasIncomingImage && hasIncomingIcon)
+        {
+            return BadRequest(new { success = false, errors = new[] { "Only one of Image or Icon can be set, not both" } });
+        }
+
+        // Validate that at least one of image or icon is set (on final merged values)
+        if (string.IsNullOrWhiteSpace(imageToUse) && string.IsNullOrWhiteSpace(iconToUse))
+        {
+            return BadRequest(new { success = false, errors = new[] { "Either Image or Icon is required" } });
         }
 
         subCategory.Id = id;
         subCategory.UpdatedAt = DateTime.UtcNow;
         subCategory.CreatedAt = existingSubCategory.CreatedAt;
+        
+        // Preserve existing image/icon if not being updated (null means not provided, empty means clear)
+        if (subCategory.Image == null)
+        {
+            subCategory.Image = existingSubCategory.Image;
+        }
+        if (subCategory.Icon == null)
+        {
+            subCategory.Icon = existingSubCategory.Icon;
+        }
 
         await _context.SubCategories.ReplaceOneAsync(sc => sc.Id == id, subCategory);
         return Ok(new { success = true, subCategory });
@@ -194,8 +248,8 @@ public class SubCategoryController : ControllerBase
             return NotFound(new { success = false, error = "SubCategory not found" });
         }
 
-        // Check if subcategory has products mapped to it by name
-        var products = await _context.Products.Find(p => p.SubCategory == subCategory.Name).ToListAsync();
+        // Check if subcategory has products mapped to it by ID
+        var products = await _context.Products.Find(p => p.SubCategoryId == subCategory.Id).ToListAsync();
         if (products.Any())
         {
             return BadRequest(new { success = false, error = "Cannot delete subcategory because it has products. Please delete the products first." });

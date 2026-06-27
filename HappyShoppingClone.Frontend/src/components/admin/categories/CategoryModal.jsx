@@ -21,50 +21,27 @@ const CategoryModal = ({
                           categoryForm.displayName && categoryForm.displayName.trim() !== '';
 
   const validateField = (fieldName, value) => {
-    // Client-side validation rules
-    const validationRules = {
-      name: {
-        required: true,
-        minLength: 2,
-        maxLength: 50,
-        regex: /^[a-z0-9-]+$/,
-        errorMessage: 'Category name is required, must be 2-50 characters, lowercase letters, numbers, and hyphens only'
-      },
-      displayName: {
-        required: true,
-        minLength: 2,
-        maxLength: 100,
-        errorMessage: 'Display name is required, must be 2-100 characters'
-      },
-      icon: {
-        maxLength: 2,
-        errorMessage: 'Icon cannot exceed 2 characters'
-      },
-      description: {
-        maxLength: 500,
-        errorMessage: 'Description cannot exceed 500 characters'
-      },
-      displayOrder: {
-        errorMessage: 'Display order must be a positive number'
-      }
-    };
-
-    const rules = validationRules[fieldName];
+    if (!categoryValidationRules) return null;
+    
+    // Backend returns lowercase property names, so use them directly
+    const rules = categoryValidationRules[fieldName];
+    
     if (!rules) return null;
 
     let error = null;
 
+    // Backend uses lowercase property names
     if (rules.required && (!value || value.trim() === '')) {
-      error = rules.errorMessage;
+      error = rules.errorMessage || `${fieldName} is required`;
     } else if (value) {
       if (rules.minLength && value.length < rules.minLength) {
-        error = rules.errorMessage;
+        error = rules.errorMessage || `${fieldName} must be at least ${rules.minLength} characters`;
       }
       if (rules.maxLength && value.length > rules.maxLength) {
-        error = rules.errorMessage;
+        error = rules.errorMessage || `${fieldName} cannot exceed ${rules.maxLength} characters`;
       }
       if (rules.regex && !new RegExp(rules.regex).test(value)) {
-        error = rules.errorMessage;
+        error = rules.errorMessage || `${fieldName} format is invalid`;
       }
     }
 
@@ -133,6 +110,7 @@ const CategoryModal = ({
                   value={categoryForm.name}
                   onChange={(e) => handleFieldChange('name', e.target.value)}
                   onBlur={(e) => handleFieldBlur('name', e.target.value)}
+                  maxLength={categoryValidationRules?.Name?.MaxLength || 50}
                   className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all text-sm sm:text-base bg-slate-50/50 ${
                     validationErrors.name 
                       ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' 
@@ -161,6 +139,7 @@ const CategoryModal = ({
                   value={categoryForm.displayName}
                   onChange={(e) => handleFieldChange('displayName', e.target.value)}
                   onBlur={(e) => handleFieldBlur('displayName', e.target.value)}
+                  maxLength={categoryValidationRules?.DisplayName?.MaxLength || 100}
                   className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all text-sm sm:text-base bg-slate-50/50 ${
                     validationErrors.displayName 
                       ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' 
@@ -190,11 +169,15 @@ const CategoryModal = ({
                 <input
                   type="text"
                   value={categoryForm.icon}
-                  onChange={(e) => setCategoryForm({ ...categoryForm, icon: e.target.value })}
+                  onChange={(e) => handleFieldChange('icon', e.target.value)}
+                  onBlur={(e) => handleFieldBlur('icon', e.target.value)}
+                  maxLength={categoryValidationRules?.Icon?.MaxLength || 2}
                   className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-500/20 transition-all text-sm sm:text-base bg-slate-50/50 text-center text-2xl"
                   placeholder="📦"
-                  maxLength={2}
                 />
+                {validationErrors.icon && (
+                  <p className="text-red-500 text-xs mt-1">{validationErrors.icon}</p>
+                )}
               </div>
             </div>
 
@@ -208,10 +191,14 @@ const CategoryModal = ({
                 <input
                   type="number"
                   value={categoryForm.displayOrder}
-                  onChange={(e) => setCategoryForm({ ...categoryForm, displayOrder: parseInt(e.target.value) || 0 })}
+                  onChange={(e) => handleFieldChange('displayOrder', e.target.value)}
+                  onBlur={(e) => handleFieldBlur('displayOrder', e.target.value)}
                   className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-violet-500 focus:ring-4 focus:ring-violet-500/20 transition-all text-sm sm:text-base bg-slate-50/50"
                   placeholder="0"
                 />
+                {validationErrors.displayOrder && (
+                  <p className="text-red-500 text-xs mt-1">{validationErrors.displayOrder}</p>
+                )}
               </div>
             </div>
           </div>
@@ -290,6 +277,7 @@ const CategoryModal = ({
               value={categoryForm.description}
               onChange={(e) => handleFieldChange('description', e.target.value)}
               onBlur={(e) => handleFieldBlur('description', e.target.value)}
+              maxLength={categoryValidationRules?.Description?.MaxLength || 500}
               className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-4 transition-all resize-none text-sm sm:text-base bg-slate-50/50 ${
                 validationErrors.description 
                   ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' 

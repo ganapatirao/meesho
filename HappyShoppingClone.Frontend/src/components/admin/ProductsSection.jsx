@@ -68,7 +68,9 @@ const ProductsSection = ({
               .filter(product => {
                 const matchesSearch = product.name?.toLowerCase().includes(productFilter.search.toLowerCase()) || 
                                     product.description?.toLowerCase().includes(productFilter.search.toLowerCase());
-                const matchesCategory = productFilter.category === '' || product.category === productFilter.category;
+                const category = categories.find(c => c.id === product.categoryId);
+                const categoryName = category?.name || category?.displayName || '';
+                const matchesCategory = productFilter.category === '' || categoryName === productFilter.category;
                 const matchesStatus = productFilter.status === '' || 
                                     (productFilter.status === 'active' && product.isActive) ||
                                     (productFilter.status === 'inactive' && !product.isActive) ||
@@ -76,71 +78,74 @@ const ProductsSection = ({
                                     (productFilter.status === 'trending' && product.isTrending);
                 return matchesSearch && matchesCategory && matchesStatus;
               })
-              .map(product => (
-              <tr key={product.id} className="border-b hover:bg-gray-50">
-                <td className="py-2 sm:py-3 px-2 sm:px-4">
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    <img 
-                      src={product.imageUrls?.[0] || product.imageBase64?.[0] || 'https://via.placeholder.com/50'} 
-                      alt={product.name}
-                      className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-lg"
-                    />
-                    <div>
-                      <p className="font-semibold text-gray-800 text-xs sm:text-sm md:text-base">{product.name}</p>
-                      <p className="text-xs sm:text-sm text-gray-600">{product.category}</p>
-                    </div>
-                  </div>
-                </td>
-                <td className="py-2 sm:py-3 px-2 sm:px-4">
-                  <p className="font-semibold text-xs sm:text-sm md:text-base">₹{product.price?.toLocaleString()}</p>
-                  <p className="text-xs sm:text-sm text-gray-600 line-through">₹{product.originalPrice?.toLocaleString()}</p>
-                </td>
-                <td className="py-2 sm:py-3 px-2 sm:px-4">
-                  <p className="font-semibold text-xs sm:text-sm md:text-base">{product.stock}</p>
-                </td>
-                <td className="py-2 sm:py-3 px-2 sm:px-4">
-                  <p className="text-gray-700 text-xs sm:text-sm md:text-base">{product.category}</p>
-                  <p className="text-xs sm:text-sm text-gray-500">{product.subCategory}</p>
-                </td>
-                <td className="py-2 sm:py-3 px-2 sm:px-4">
-                  <div className="flex flex-wrap gap-1 sm:gap-2">
-                    <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
-                      product.isActive 
-                        ? 'bg-green-100 text-green-700' 
-                        : 'bg-red-100 text-red-700'
-                    }`}>
-                      {product.isActive ? 'Active' : 'Inactive'}
-                    </span>
-                    {product.isFeatured && (
-                      <span className="px-2 sm:px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700">
-                        Featured
-                      </span>
-                    )}
-                    {product.isTrending && (
-                      <span className="px-2 sm:px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">
-                        Trending
-                      </span>
-                    )}
-                  </div>
-                </td>
-                <td className="py-2 sm:py-3 px-2 sm:px-4">
-                  <div className="flex gap-2">
-                    <button 
-                      onClick={() => handleOpenProductModal(product)}
-                      className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                    >
-                      <Edit size={16} sm:size={18} className="text-blue-600" />
-                    </button>
-                    <button 
-                      onClick={() => handleDeleteProduct(product)}
-                      className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                    >
-                      <Trash2 size={16} sm:size={18} className="text-red-600" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+              .map(product => {
+                const category = categories.find(c => c.id === product.categoryId);
+                const categoryName = category?.displayName || category?.name || 'Unknown';
+                return (
+                  <tr key={product.id} className="border-b hover:bg-gray-50">
+                    <td className="py-2 sm:py-3 px-2 sm:px-4">
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <img 
+                          src={product.imageBase64?.[0] || product.imageUrls?.[0] || 'https://via.placeholder.com/50'} 
+                          alt={product.name}
+                          className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-lg"
+                        />
+                        <div>
+                          <p className="font-semibold text-gray-800 text-xs sm:text-sm md:text-base">{product.name}</p>
+                          <p className="text-xs sm:text-sm text-gray-600">{categoryName}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-4">
+                      <p className="font-semibold text-xs sm:text-sm md:text-base">₹{product.price?.toLocaleString()}</p>
+                      <p className="text-xs sm:text-sm text-gray-600 line-through">₹{product.originalPrice?.toLocaleString()}</p>
+                    </td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-4">
+                      <p className="font-semibold text-xs sm:text-sm md:text-base">{product.stock}</p>
+                    </td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-4">
+                      <p className="text-gray-700 text-xs sm:text-sm md:text-base">{categoryName}</p>
+                    </td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-4">
+                      <div className="flex flex-wrap gap-1 sm:gap-2">
+                        <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
+                          product.isActive 
+                            ? 'bg-green-100 text-green-700' 
+                            : 'bg-red-100 text-red-700'
+                        }`}>
+                          {product.isActive ? 'Active' : 'Inactive'}
+                        </span>
+                        {product.isFeatured && (
+                          <span className="px-2 sm:px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700">
+                            Featured
+                          </span>
+                        )}
+                        {product.isTrending && (
+                          <span className="px-2 sm:px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">
+                            Trending
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="py-2 sm:py-3 px-2 sm:px-4">
+                      <div className="flex gap-2">
+                        <button 
+                          onClick={() => handleOpenProductModal(product)}
+                          className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                        >
+                          <Edit size={16} sm:size={18} className="text-blue-600" />
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteProduct(product)}
+                          className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                        >
+                          <Trash2 size={16} sm:size={18} className="text-red-600" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
         {products.length === 0 && (

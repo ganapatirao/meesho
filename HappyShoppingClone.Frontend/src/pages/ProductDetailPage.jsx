@@ -88,14 +88,14 @@ const ProductDetailPage = () => {
           <div className="space-y-4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden">
               <img
-                src={product.imageUrls?.[selectedImage] || 'https://via.placeholder.com/600?text=Product'}
+                src={(product.imageBase64 || product.imageUrls)?.[selectedImage] || 'https://via.placeholder.com/600?text=Product'}
                 alt={product.name}
                 className="w-full h-96 object-cover"
               />
             </div>
-            {product.imageUrls?.length > 1 && (
+            {(product.imageBase64 || product.imageUrls)?.length > 1 && (
               <div className="grid grid-cols-4 gap-2">
-                {product.imageUrls.map((url, index) => (
+                {(product.imageBase64 || product.imageUrls).map((url, index) => (
                   <button
                     key={index}
                     onClick={() => setSelectedImage(index)}

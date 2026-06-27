@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 import { useNavigate } from 'react-router-dom';
 
-import { productAPI, vendorAPI, orderAPI, seedAPI, siteConfigAPI, categoryAPI, subCategoryAPI, userAPI, validationRulesAPI } from '../services/api';
+import { productAPI, vendorAPI, orderAPI, siteConfigAPI, categoryAPI, subCategoryAPI, userAPI, validationRulesAPI } from '../services/api';
 
 import { 
 
@@ -281,13 +281,13 @@ const AdminDashboard = () => {
 
     originalPrice: '',
 
-    category: '',
+    categoryId: '',
 
-    subCategory: '',
+    subCategoryId: '',
 
     stock: '',
 
-    imageUrls: [],
+    imageBase64: [],
 
     isActive: true,
 
@@ -1378,9 +1378,9 @@ const AdminDashboard = () => {
 
         originalPrice: product.originalPrice,
 
-        category: product.category,
+        categoryId: product.categoryId || '',
 
-        subCategory: product.subCategory,
+        subCategoryId: product.subCategoryId || '',
 
         stock: product.stock,
 
@@ -1390,7 +1390,7 @@ const AdminDashboard = () => {
 
         isTrending: product.isTrending,
 
-        imageUrls: product.imageUrls || [],
+        imageBase64: product.imageBase64 || product.imageUrls || [],
 
       });
 
@@ -1408,13 +1408,13 @@ const AdminDashboard = () => {
 
         originalPrice: '',
 
-        category: '',
+        categoryId: '',
 
-        subCategory: '',
+        subCategoryId: '',
 
         stock: '',
 
-        imageUrls: [],
+        imageBase64: [],
 
         isActive: true,
 
@@ -1448,19 +1448,19 @@ const AdminDashboard = () => {
 
       originalPrice: '',
 
-      category: '',
+      categoryId: '',
 
-      subCategory: '',
+      subCategoryId: '',
 
       stock: '',
+
+      imageBase64: [],
 
       isActive: true,
 
       isFeatured: false,
 
       isTrending: false,
-
-      imageUrls: [],
 
     });
 
@@ -1493,6 +1493,8 @@ const AdminDashboard = () => {
           ? Math.round(((parseFloat(productForm.originalPrice) - parseFloat(productForm.price)) / parseFloat(productForm.originalPrice)) * 100)
 
           : 0,
+
+        imageBase64: productForm.imageBase64,
 
       };
 
@@ -1808,7 +1810,7 @@ const AdminDashboard = () => {
 
           ...prev,
 
-          imageUrls: [...prev.imageUrls, base64]
+          imageBase64: [...prev.imageBase64, base64]
 
         }));
 
@@ -1842,7 +1844,7 @@ const AdminDashboard = () => {
 
         ...prev,
 
-        imageUrls: prev.imageUrls.filter((_, i) => i !== index)
+        imageBase64: prev.imageBase64.filter((_, i) => i !== index)
 
       }));
 
@@ -2909,6 +2911,8 @@ const AdminDashboard = () => {
               setProductForm={setProductForm}
 
               categories={categories}
+
+              subCategories={subCategories}
 
               handleImageDrop={handleImageDrop}
 
