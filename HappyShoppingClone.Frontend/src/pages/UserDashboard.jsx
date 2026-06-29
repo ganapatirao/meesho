@@ -35,6 +35,10 @@ const UserDashboard = () => {
     cvv: '',
     isDefault: false
   });
+  const [settingsForm, setSettingsForm] = useState({
+    fullName: '',
+    phoneNumber: ''
+  });
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -48,6 +52,45 @@ const UserDashboard = () => {
       setActiveTab(tab);
     }
   }, [searchParams]);
+
+  // Load saved addresses from localStorage
+  useEffect(() => {
+    if (user?.id) {
+      const storedAddresses = localStorage.getItem(`savedAddresses_${user.id}`);
+      if (storedAddresses) {
+        setAddresses(JSON.parse(storedAddresses));
+      }
+      // Load wishlist from user data
+      if (user.wishlist) {
+        setWishlist(user.wishlist);
+      }
+      // Load orders from backend
+      fetchOrders();
+      // Load payment methods from localStorage
+      const storedPaymentMethods = localStorage.getItem(`paymentMethods_${user.id}`);
+      if (storedPaymentMethods) {
+        setPaymentMethods(JSON.parse(storedPaymentMethods));
+      }
+      // Load settings form with user data
+      setSettingsForm({
+        fullName: user.fullName || '',
+        phoneNumber: user.phoneNumber || ''
+      });
+    }
+  }, [user]);
+
+  const fetchOrders = async () => {
+    try {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5041/api';
+      const response = await fetch(`${API_BASE_URL}/order/user/${user.id}`);
+      const data = await response.json();
+      if (data.success) {
+        setOrders(data.orders || []);
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
 
   const handleLogout = () => {
     logout();
@@ -92,18 +135,23 @@ const UserDashboard = () => {
   };
 
   const handleSaveAddress = () => {
+    let updatedAddresses;
     if (editingAddress) {
-      setAddresses(addresses.map(a => a.id === editingAddress.id ? { ...addressForm, id: editingAddress.id } : a));
+      updatedAddresses = addresses.map(a => a.id === editingAddress.id ? { ...addressForm, id: editingAddress.id } : a);
     } else {
-      setAddresses([...addresses, { ...addressForm, id: Date.now().toString() }]);
+      updatedAddresses = [...addresses, { ...addressForm, id: Date.now().toString() }];
     }
+    setAddresses(updatedAddresses);
+    localStorage.setItem(`savedAddresses_${user.id}`, JSON.stringify(updatedAddresses));
     handleCloseAddressModal();
     alert(editingAddress ? 'Address updated successfully!' : 'Address added successfully!');
   };
 
   const handleDeleteAddress = (id) => {
     if (confirm('Are you sure you want to delete this address?')) {
-      setAddresses(addresses.filter(a => a.id !== id));
+      const updatedAddresses = addresses.filter(a => a.id !== id);
+      setAddresses(updatedAddresses);
+      localStorage.setItem(`savedAddresses_${user.id}`, JSON.stringify(updatedAddresses));
       alert('Address deleted successfully!');
     }
   };
@@ -125,9 +173,37 @@ const UserDashboard = () => {
   };
 
   const handleSavePayment = () => {
-    setPaymentMethods([...paymentMethods, { ...paymentForm, id: Date.now().toString(), last4: paymentForm.cardNumber.slice(-4) }]);
+    const updatedPaymentMethods = [...paymentMethods, { ...paymentForm, id: Date.now().toString(), last4: paymentForm.cardNumber.slice(-4) }];
+    setPaymentMethods(updatedPaymentMethods);
+    localStorage.setItem(`paymentMethods_${user.id}`, JSON.stringify(updatedPaymentMethods));
     handleClosePaymentModal();
     alert('Payment method added successfully!');
+  };
+
+  const handleSaveSettings = async () => {
+    try {
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5041/api';
+      const response = await fetch(`${API_BASE_URL}/user/${user.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fullName: settingsForm.fullName,
+          phoneNumber: settingsForm.phoneNumber
+        })
+      });
+      const data = await response.json();
+      if (data.success) {
+        alert('Settings updated successfully!');
+        // Update user context if needed
+      } else {
+        alert('Failed to update settings');
+      }
+    } catch (error) {
+      console.error('Error updating settings:', error);
+      alert('Failed to update settings');
+    }
   };
 
   if (loading) {
@@ -349,26 +425,91 @@ const UserDashboard = () => {
             {activeTab === 'orders' && (
               <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                 <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4">My Orders</h2>
-                <div className="text-center py-8 sm:py-12 text-gray-500">
-                  <ShoppingBag size={40} className="sm:size-48 mx-auto mb-4 text-gray-300" />
-                  <p className="text-sm sm:text-base">No orders yet</p>
-                  <a href="/shopping" className="text-purple-600 hover:text-purple-800 font-semibold mt-2 inline-block text-sm sm:text-base">
-                    Start Shopping
-                  </a>
-                </div>
+                {orders.length === 0 ? (
+                  <div className="text-center py-8 sm:py-12 text-gray-500">
+                    <ShoppingBag size={40} className="sm:size-48 mx-auto mb-4 text-gray-300" />
+                    <p className="text-sm sm:text-base">No orders yet</p>
+                    <a href="/shopping" className="text-purple-600 hover:text-purple-800 font-semibold mt-2 inline-block text-sm sm:text-base">
+                      Start Shopping
+                    </a>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {orders.map((order) => (
+                      <div key={order.id} className="border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                          <div>
+                            <p className="font-semibold text-gray-800 text-sm">Order #{order.id?.substring(0, 8).toUpperCase()}</p>
+                            <p className="text-xs text-gray-600">{new Date(order.orderDate).toLocaleDateString()}</p>
+                          </div>
+                          <span className={`px-3 py-1 rounded-full text-xs font-semibold w-fit ${
+                            order.status === 'Pending' ? 'bg-yellow-100 text-yellow-700' :
+                            order.status === 'Confirmed' ? 'bg-blue-100 text-blue-700' :
+                            order.status === 'Shipped' ? 'bg-purple-100 text-purple-700' :
+                            order.status === 'Delivered' ? 'bg-green-100 text-green-700' :
+                            order.status === 'Cancelled' ? 'bg-red-100 text-red-700' :
+                            'bg-gray-100 text-gray-700'
+                          }`}>
+                            {order.status}
+                          </span>
+                        </div>
+                        <div className="space-y-2 mb-3">
+                          {order.items?.map((item, index) => (
+                            <div key={index} className="flex items-center gap-3 text-sm">
+                              <div className="w-12 h-12 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                                {item.imageUrl ? (
+                                  <img src={item.imageUrl} alt={item.productName} className="w-full h-full object-cover" />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center">
+                                    <ShoppingBag size={16} className="text-gray-400" />
+                                  </div>
+                                )}
+                              </div>
+                              <div className="flex-1">
+                                <p className="font-medium text-gray-800 text-xs line-clamp-1">{item.productName}</p>
+                                <p className="text-xs text-gray-600">Qty: {item.quantity} | {item.color} {item.size && `| ${item.size}`}</p>
+                              </div>
+                              <p className="font-semibold text-purple-600 text-sm">₹{(item.price * item.quantity).toLocaleString()}</p>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="border-t border-gray-200 pt-3 flex justify-between items-center">
+                          <span className="text-sm text-gray-600">Total</span>
+                          <span className="font-bold text-lg text-gray-900">₹{order.finalAmount?.toLocaleString() || 0}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 
             {activeTab === 'wishlist' && (
               <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
                 <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-4">My Wishlist</h2>
-                <div className="text-center py-8 sm:py-12 text-gray-500">
-                  <Heart size={40} className="sm:size-48 mx-auto mb-4 text-gray-300" />
-                  <p className="text-sm sm:text-base">Your wishlist is empty</p>
-                  <a href="/shopping" className="text-purple-600 hover:text-purple-800 font-semibold mt-2 inline-block text-sm sm:text-base">
-                    Explore Products
-                  </a>
-                </div>
+                {wishlist.length === 0 ? (
+                  <div className="text-center py-8 sm:py-12 text-gray-500">
+                    <Heart size={40} className="sm:size-48 mx-auto mb-4 text-gray-300" />
+                    <p className="text-sm sm:text-base">Your wishlist is empty</p>
+                    <a href="/shopping" className="text-purple-600 hover:text-purple-800 font-semibold mt-2 inline-block text-sm sm:text-base">
+                      Explore Products
+                    </a>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {wishlist.map((productId) => (
+                      <div key={productId} className="border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow">
+                        <div className="w-full h-40 bg-gray-100 rounded-lg mb-3 flex items-center justify-center">
+                          <ShoppingBag size={32} className="text-gray-400" />
+                        </div>
+                        <p className="font-semibold text-gray-800 text-sm mb-2">Product ID: {productId}</p>
+                        <button className="w-full bg-red-50 hover:bg-red-100 text-red-600 py-2 rounded-lg text-sm font-semibold transition-colors">
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 
@@ -475,7 +616,8 @@ const UserDashboard = () => {
                     <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Full Name</label>
                     <input
                       type="text"
-                      defaultValue={user?.fullName || ''}
+                      value={settingsForm.fullName}
+                      onChange={(e) => setSettingsForm({ ...settingsForm, fullName: e.target.value })}
                       className="w-full px-3 sm:px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm sm:text-base"
                     />
                   </div>
@@ -483,7 +625,7 @@ const UserDashboard = () => {
                     <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Email</label>
                     <input
                       type="email"
-                      defaultValue={user?.email || ''}
+                      value={user?.email || ''}
                       disabled
                       className="w-full px-3 sm:px-4 py-2 border rounded-lg bg-gray-100 focus:outline-none text-sm sm:text-base"
                     />
@@ -492,11 +634,12 @@ const UserDashboard = () => {
                     <label className="block text-xs sm:text-sm font-semibold text-gray-700 mb-1">Phone Number</label>
                     <input
                       type="tel"
-                      defaultValue={user?.phoneNumber || ''}
+                      value={settingsForm.phoneNumber}
+                      onChange={(e) => setSettingsForm({ ...settingsForm, phoneNumber: e.target.value })}
                       className="w-full px-3 sm:px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm sm:text-base"
                     />
                   </div>
-                  <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg font-semibold text-sm sm:text-base">
+                  <button onClick={handleSaveSettings} className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg font-semibold text-sm sm:text-base">
                     Save Changes
                   </button>
                 </div>

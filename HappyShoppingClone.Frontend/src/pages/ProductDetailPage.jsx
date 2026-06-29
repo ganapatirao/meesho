@@ -4,6 +4,7 @@ import { productAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { API_BASE_URL } from '../services/api';
 import { useCart } from '../context/CartContext';
+import Toast from '../components/Toast';
 import { 
   ShoppingCart, 
   Heart, 
@@ -34,6 +35,7 @@ const ProductDetailPage = () => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [reviewSummary, setReviewSummary] = useState(null);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
 
   useEffect(() => {
     loadProduct();
@@ -79,7 +81,7 @@ const ProductDetailPage = () => {
 
   const handleAddToCart = async () => {
     if (!selectedVariant) {
-      alert('Please select a variant');
+      setToast({ show: true, message: 'Please select a variant', type: 'error' });
       return;
     }
 
@@ -93,9 +95,9 @@ const ProductDetailPage = () => {
 
     const result = await addToCart(productWithVariant, quantity);
     if (result.success) {
-      alert('Added to cart successfully!');
+      setToast({ show: true, message: 'Added to cart successfully!', type: 'success' });
     } else {
-      alert('Failed to add to cart');
+      setToast({ show: true, message: 'Failed to add to cart', type: 'error' });
     }
   };
 
@@ -140,6 +142,7 @@ const ProductDetailPage = () => {
   }
 
   return (
+    <>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       {/* Mobile Header */}
       <div className="md:hidden sticky top-16 z-40 bg-white shadow-md p-4">
@@ -473,6 +476,13 @@ const ProductDetailPage = () => {
         </div>
       </div>
     </div>
+    <Toast
+      show={toast.show}
+      onClose={() => setToast({ ...toast, show: false })}
+      message={toast.message}
+      type={toast.type}
+    />
+    </>
   );
 };
 

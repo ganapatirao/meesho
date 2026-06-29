@@ -562,44 +562,48 @@ const CartPage = () => {
 
   if (checkoutStep === 'payment') {
     return (
-      <div className="min-h-screen bg-gray-50 py-4 md:py-8 lg:py-10">
-        <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
-          {/* Workflow Progress Indicator */}
-          <div className="mb-6 md:mb-8">
-            <div className="flex items-center justify-center gap-2 md:gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-purple-600 rounded-full flex items-center justify-center">
-                  <ShoppingBag size={16} md:size={20} className="text-white" />
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        {/* Fixed Header with Workflow Progress */}
+        <div className="bg-white shadow-md sticky top-0 z-50">
+          <div className="container mx-auto px-3 sm:px-4 max-w-6xl py-3 md:py-4">
+            <div className="flex items-center justify-center gap-1 sm:gap-2 md:gap-4">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-purple-600 rounded-full flex items-center justify-center">
+                  <ShoppingBag size={12} sm:size={16} md:size={20} className="text-white" />
                 </div>
-                <span className="text-xs md:text-sm font-semibold text-purple-600 hidden sm:block">Cart</span>
+                <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-purple-600 hidden sm:block">Cart</span>
               </div>
-              <div className="w-8 md:w-12 h-1 bg-purple-600 rounded-full"></div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-purple-600 rounded-full flex items-center justify-center">
-                  <MapPin size={16} md:size={20} className="text-white" />
+              <div className="w-4 sm:w-8 md:w-12 h-0.5 sm:h-1 bg-purple-600 rounded-full"></div>
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-purple-600 rounded-full flex items-center justify-center">
+                  <MapPin size={12} sm:size={16} md:size={20} className="text-white" />
                 </div>
-                <span className="text-xs md:text-sm font-semibold text-purple-600 hidden sm:block">Shipping</span>
+                <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-purple-600 hidden sm:block">Shipping</span>
               </div>
-              <div className="w-8 md:w-12 h-1 bg-purple-600 rounded-full"></div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-purple-600 rounded-full flex items-center justify-center">
-                  <CreditCard size={16} md:size={20} className="text-white" />
+              <div className="w-4 sm:w-8 md:w-12 h-0.5 sm:h-1 bg-purple-600 rounded-full"></div>
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-purple-600 rounded-full flex items-center justify-center">
+                  <CreditCard size={12} sm:size={16} md:size={20} className="text-white" />
                 </div>
-                <span className="text-xs md:text-sm font-semibold text-purple-600 hidden sm:block">Payment</span>
+                <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-purple-600 hidden sm:block">Payment</span>
               </div>
-              <div className="w-8 md:w-12 h-1 bg-gray-300 rounded-full"></div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                  <CheckCircle size={16} md:size={20} className="text-gray-400" />
+              <div className="w-4 sm:w-8 md:w-12 h-0.5 sm:h-1 bg-gray-300 rounded-full"></div>
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                  <CheckCircle size={12} sm:size={16} md:size={20} className="text-gray-400" />
                 </div>
-                <span className="text-xs md:text-sm font-semibold text-gray-400 hidden sm:block">Complete</span>
+                <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-400 hidden sm:block">Complete</span>
               </div>
             </div>
           </div>
+        </div>
 
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6 md:mb-8 text-center">
-            Payment Method
-          </h1>
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto py-4 md:py-6 lg:py-8">
+          <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4 md:mb-6 text-center">
+              Payment Method
+            </h1>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
             {/* Payment Options */}
@@ -873,6 +877,30 @@ const CartPage = () => {
             <div className="space-y-4 md:space-y-6">
               <div className="bg-white rounded-2xl shadow-sm p-5 md:p-6 sticky top-20 lg:top-24 border border-gray-100">
                 <h2 className="text-xl font-bold text-gray-900 mb-5">Order Summary</h2>
+
+                {/* Product Items */}
+                <div className="space-y-3 mb-6 max-h-60 overflow-y-auto">
+                  {cart?.items?.map((item) => (
+                    <div key={`${item.productId}-${item.variantId}`} className="flex gap-3 pb-3 border-b border-gray-100">
+                      <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                        {item.productImage ? (
+                          <img src={item.productImage} alt={item.productName} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <ShoppingBag size={20} className="text-gray-400" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-gray-800 text-sm line-clamp-1">{item.productName}</p>
+                        <p className="text-xs text-gray-600">Qty: {item.quantity} | {item.color} {item.size && `| ${item.size}`}</p>
+                        <p className="text-purple-600 font-bold text-sm">₹{(item.price * item.quantity).toLocaleString()}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Price Breakdown */}
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600 text-sm">Subtotal</span>
@@ -940,50 +968,55 @@ const CartPage = () => {
             </div>
           </div>
         </div>
+        </div>
       </div>
     );
   }
 
   if (checkoutStep === 'shipping') {
     return (
-      <div className="min-h-screen bg-gray-50 py-4 md:py-8 lg:py-10">
-        <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
-          {/* Workflow Progress Indicator */}
-          <div className="mb-6 md:mb-8">
-            <div className="flex items-center justify-center gap-2 md:gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-purple-600 rounded-full flex items-center justify-center">
-                  <ShoppingBag size={16} md:size={20} className="text-white" />
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        {/* Fixed Header with Workflow Progress */}
+        <div className="bg-white shadow-md sticky top-0 z-50">
+          <div className="container mx-auto px-3 sm:px-4 max-w-6xl py-3 md:py-4">
+            <div className="flex items-center justify-center gap-1 sm:gap-2 md:gap-4">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-purple-600 rounded-full flex items-center justify-center">
+                  <ShoppingBag size={12} sm:size={16} md:size={20} className="text-white" />
                 </div>
-                <span className="text-xs md:text-sm font-semibold text-purple-600 hidden sm:block">Cart</span>
+                <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-purple-600 hidden sm:block">Cart</span>
               </div>
-              <div className="w-8 md:w-12 h-1 bg-purple-600 rounded-full"></div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-purple-600 rounded-full flex items-center justify-center">
-                  <MapPin size={16} md:size={20} className="text-white" />
+              <div className="w-4 sm:w-8 md:w-12 h-0.5 sm:h-1 bg-purple-600 rounded-full"></div>
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-purple-600 rounded-full flex items-center justify-center">
+                  <MapPin size={12} sm:size={16} md:size={20} className="text-white" />
                 </div>
-                <span className="text-xs md:text-sm font-semibold text-purple-600 hidden sm:block">Shipping</span>
+                <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-purple-600 hidden sm:block">Shipping</span>
               </div>
-              <div className="w-8 md:w-12 h-1 bg-gray-300 rounded-full"></div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                  <CreditCard size={16} md:size={20} className="text-gray-400" />
+              <div className="w-4 sm:w-8 md:w-12 h-0.5 sm:h-1 bg-gray-300 rounded-full"></div>
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                  <CreditCard size={12} sm:size={16} md:size={20} className="text-gray-400" />
                 </div>
-                <span className="text-xs md:text-sm font-semibold text-gray-400 hidden sm:block">Payment</span>
+                <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-400 hidden sm:block">Payment</span>
               </div>
-              <div className="w-8 md:w-12 h-1 bg-gray-300 rounded-full"></div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                  <CheckCircle size={16} md:size={20} className="text-gray-400" />
+              <div className="w-4 sm:w-8 md:w-12 h-0.5 sm:h-1 bg-gray-300 rounded-full"></div>
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                  <CheckCircle size={12} sm:size={16} md:size={20} className="text-gray-400" />
                 </div>
-                <span className="text-xs md:text-sm font-semibold text-gray-400 hidden sm:block">Complete</span>
+                <span className="text-[10px] sm:text-xs md:text-sm font-semibold text-gray-400 hidden sm:block">Complete</span>
               </div>
             </div>
           </div>
+        </div>
 
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-6 md:mb-8 text-center">
-            Shipping Information
-          </h1>
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto py-4 md:py-6 lg:py-8">
+          <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4 md:mb-6 text-center">
+              Shipping Information
+            </h1>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
             {/* Address Forms */}
@@ -1431,14 +1464,13 @@ const CartPage = () => {
 
             {/* Order Summary */}
             <div className="space-y-4 md:space-y-6">
-              <div className="bg-white rounded-xl shadow-md p-4 md:p-6 sticky top-20 lg:top-24 border border-gray-200">
-                <h2 className="text-lg font-bold text-gray-800 mb-4 md:mb-6 flex items-center gap-2">
-                  <Package size={18} className="text-purple-600" />
-                  Order Summary
-                </h2>
-                <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
+              <div className="bg-white rounded-2xl shadow-sm p-5 md:p-6 sticky top-20 lg:top-24 border border-gray-100">
+                <h2 className="text-xl font-bold text-gray-900 mb-5">Order Summary</h2>
+
+                {/* Product Items */}
+                <div className="space-y-3 mb-6 max-h-60 overflow-y-auto">
                   {cart?.items?.map((item) => (
-                    <div key={`${item.productId}-${item.variantId}`} className="flex gap-3 pb-3 border-b border-gray-200">
+                    <div key={`${item.productId}-${item.variantId}`} className="flex gap-3 pb-3 border-b border-gray-100">
                       <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                         {item.productImage ? (
                           <img src={item.productImage} alt={item.productName} className="w-full h-full object-cover" />
@@ -1456,6 +1488,8 @@ const CartPage = () => {
                     </div>
                   ))}
                 </div>
+
+                {/* Price Breakdown */}
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-600 text-sm">Subtotal</span>
@@ -1498,6 +1532,7 @@ const CartPage = () => {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     );
