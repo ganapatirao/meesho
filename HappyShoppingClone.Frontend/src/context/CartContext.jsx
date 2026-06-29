@@ -93,11 +93,11 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const removeFromCart = async (productId) => {
+  const removeFromCart = async (productId, variantId) => {
     try {
       if (!cart) return { success: false };
       
-      const response = await cartAPI.removeFromCart(cart.id, productId);
+      const response = await cartAPI.removeFromCart(cart.id, productId, variantId);
       if (response.data.success) {
         setCart(response.data.cart);
         setCartCount(response.data.cart.items?.length || 0);
@@ -105,31 +105,23 @@ export const CartProvider = ({ children }) => {
       }
       return { success: false };
     } catch (error) {
+      console.error('Remove from cart error:', error);
       return { success: false };
     }
   };
 
-  const updateQuantity = async (productId, quantity) => {
+  const updateQuantity = async (productId, variantId, quantity) => {
     try {
       if (!cart) return { success: false };
 
-      const updatedItems = cart.items.map(item =>
-        item.productId === productId ? { ...item, quantity } : item
-      );
-
-      const updatedCart = {
-        ...cart,
-        items: updatedItems,
-        totalAmount: updatedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)
-      };
-
-      const response = await cartAPI.updateCart(cart.id, updatedCart);
+      const response = await cartAPI.updateCartItem(cart.id, productId, { variantId, quantity });
       if (response.data.success) {
         setCart(response.data.cart);
         return { success: true };
       }
       return { success: false };
     } catch (error) {
+      console.error('Update quantity error:', error);
       return { success: false };
     }
   };

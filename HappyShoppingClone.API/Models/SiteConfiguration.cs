@@ -9,6 +9,7 @@ public class SiteConfiguration
     public HeaderConfiguration Header { get; set; } = new();
     public FooterConfiguration Footer { get; set; } = new();
     public ThemeConfiguration? Theme { get; set; }
+    public ValidationConfiguration? Validation { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 }
@@ -197,4 +198,57 @@ public class ContactFieldNew
     public string Icon { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
     public string Value { get; set; } = string.Empty;
+}
+
+public class ValidationConfiguration
+{
+    public AddressValidation Address { get; set; } = new();
+    public PaymentValidation Payment { get; set; } = new();
+}
+
+public class AddressValidation
+{
+    public int FullNameMinLength { get; set; } = 2;
+    public int FullNameMaxLength { get; set; } = 100;
+    public string FullNamePattern { get; set; } = "^[a-zA-Z\\s\\-']+$";
+    
+    public int PhoneNumberMinLength { get; set; } = 10;
+    public int PhoneNumberMaxLength { get; set; } = 10;
+    public string PhoneNumberPattern { get; set; } = "^[6-9]\\d{9}$";
+    
+    public int AddressLine1MinLength { get; set; } = 5;
+    public int AddressLine1MaxLength { get; set; } = 200;
+    
+    public int AddressLine2MaxLength { get; set; } = 200;
+    
+    public int CityMinLength { get; set; } = 2;
+    public int CityMaxLength { get; set; } = 50;
+    public string CityPattern { get; set; } = "^[a-zA-Z\\s\\-']+$";
+    
+    public int StateMinLength { get; set; } = 2;
+    public int StateMaxLength { get; set; } = 50;
+    public string StatePattern { get; set; } = "^[a-zA-Z\\s\\-']+$";
+    
+    public int PinCodeMinLength { get; set; } = 6;
+    public int PinCodeMaxLength { get; set; } = 6;
+    public string PinCodePattern { get; set; } = "^\\d{6}$";
+    
+    public List<string> AddressTypes { get; set; } = new() { "Home", "Office", "Other" };
+}
+
+public class PaymentValidation
+{
+    public string UpiIdPattern { get; set; } = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+$";
+    
+    public int CardNumberMinLength { get; set; } = 16;
+    public int CardNumberMaxLength { get; set; } = 16;
+    public string CardNumberPattern { get; set; } = "^\\d{16}$";
+    
+    public int CardHolderNameMinLength { get; set; } = 2;
+    public int CardHolderNameMaxLength { get; set; } = 100;
+    public string CardHolderNamePattern { get; set; } = "^[a-zA-Z\\s\\-']+$";
+    
+    public string CardExpiryPattern { get; set; } = "^(0[1-9]|1[0-2])/\\d{2}$";
+    
+    public List<string> BankNames { get; set; } = new() { "SBI", "HDFC", "ICICI", "Axis", "Kotak", "Other" };
 }

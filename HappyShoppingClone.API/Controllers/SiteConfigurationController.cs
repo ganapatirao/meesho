@@ -117,4 +117,26 @@ public class SiteConfigurationController : ControllerBase
             return Ok(new { success = true, configuration = config });
         }
     }
+
+    [HttpPut("validation")]
+    public async Task<ActionResult> UpdateValidationConfiguration([FromBody] ValidationConfiguration validation)
+    {
+        var config = await _context.SiteConfigurations.Find(_ => true).FirstOrDefaultAsync();
+        if (config == null)
+        {
+            var newConfig = new SiteConfiguration { Validation = validation };
+            newConfig.Id = null;
+            newConfig.CreatedAt = DateTime.UtcNow;
+            newConfig.UpdatedAt = DateTime.UtcNow;
+            await _context.SiteConfigurations.InsertOneAsync(newConfig);
+            return Ok(new { success = true, configuration = newConfig });
+        }
+        else
+        {
+            config.Validation = validation;
+            config.UpdatedAt = DateTime.UtcNow;
+            await _context.SiteConfigurations.ReplaceOneAsync(c => c.Id == config.Id, config);
+            return Ok(new { success = true, configuration = config });
+        }
+    }
 }

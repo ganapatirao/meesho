@@ -101,7 +101,8 @@ export const cartAPI = {
   getCart: (userId) => api.get(`/cart/${userId}`),
   addToCart: (data) => api.post('/cart', data),
   updateCart: (cartId, data) => api.put(`/cart/${cartId}`, data),
-  removeFromCart: (cartId, itemId) => api.delete(`/cart/${cartId}/item/${itemId}`),
+  updateCartItem: (cartId, itemId, data) => api.put(`/cart/${cartId}/item/${itemId}`, data),
+  removeFromCart: (cartId, itemId, variantId) => api.delete(`/cart/${cartId}/item/${itemId}/${variantId}`),
   clearCart: (cartId) => api.delete(`/cart/${cartId}`),
 };
 

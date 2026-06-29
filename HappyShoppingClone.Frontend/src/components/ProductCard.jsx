@@ -2,9 +2,11 @@ import { Heart, ShoppingCart, Star } from 'lucide-react';
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
+import Toast from './Toast';
 
 const ProductCard = ({ product, onToggleWishlist }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
   const { addToCart } = useCart();
   const navigate = useNavigate();
   const discountPercentage = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
@@ -25,9 +27,9 @@ const ProductCard = ({ product, onToggleWishlist }) => {
     e.stopPropagation();
     const result = await addToCart(product);
     if (result.success) {
-      alert('Added to cart!');
+      setToast({ show: true, message: 'Added to cart!', type: 'success' });
     } else {
-      alert('Failed to add to cart. Please login first.');
+      setToast({ show: true, message: 'Failed to add to cart. Please login first.', type: 'error' });
     }
   };
 
@@ -105,6 +107,14 @@ const ProductCard = ({ product, onToggleWishlist }) => {
           {product.stock > 10 ? `Only ${product.stock} left` : `Hurry! Only ${product.stock} left`}
         </p>
       </div>
+
+      {/* Toast Notification */}
+      <Toast
+        show={toast.show}
+        onClose={() => setToast({ ...toast, show: false })}
+        message={toast.message}
+        type={toast.type}
+      />
     </div>
   );
 };
